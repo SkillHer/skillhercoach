@@ -34,7 +34,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     if (messages.length === 0) {
       const initialMessage: Message = {
         id: Date.now().toString(),
-        text: `Hello ${user.name}! I'm Clara, your personal coach for wellness and career growth. How can I support you today?`,
+        text: `Hello ${user.name}! 👋 I'm Clara, your personal coach for wellness and career growth. How can I support you today? ✨`,
         sender: 'clara',
         timestamp: new Date(),
         emotion: 'cheerful'
@@ -79,22 +79,22 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     }, 1000);
   };
   
-  // Simple response generator (placeholder for real AI integration)
+  // Enhanced response generator with emojis
   const generateResponse = (userInput: string): string => {
     const userInputLower = userInput.toLowerCase();
     
     if (userInputLower.includes('hello') || userInputLower.includes('hi')) {
-      return `Hello! It's wonderful to connect with you today. How are you feeling?`;
+      return `Hello! 👋 It's wonderful to connect with you today. How are you feeling? 😊`;
     } else if (userInputLower.includes('stress') || userInputLower.includes('anxious') || userInputLower.includes('anxiety')) {
-      return `I understand that feeling stressed can be overwhelming. Try taking a few deep breaths. Remember that it's okay to take breaks and prioritize your wellbeing. Would you like to talk more about what's causing your stress?`;
+      return `I understand that feeling stressed can be overwhelming. 😔 Try taking a few deep breaths. 🧘‍♀️ Remember that it's okay to take breaks and prioritize your wellbeing. Would you like to talk more about what's causing your stress?`;
     } else if (userInputLower.includes('career') || userInputLower.includes('job') || userInputLower.includes('work')) {
-      return `Your career journey is unique and important. Many women face challenges in the workplace, but your skills and perspective are valuable. Would you like to explore strategies for career growth or work-life balance?`;
+      return `Your career journey is unique and important. 💼 Many women face challenges in the workplace, but your skills and perspective are valuable. ✨ Would you like to explore strategies for career growth or work-life balance? 🌱`;
     } else if (userInputLower.includes('sad') || userInputLower.includes('depressed') || userInputLower.includes('unhappy')) {
-      return `I'm sorry to hear you're feeling down. Your emotions are valid, and it takes courage to acknowledge them. Would it help to talk about what specifically is making you feel this way?`;
+      return `I'm sorry to hear you're feeling down. 💙 Your emotions are valid, and it takes courage to acknowledge them. Would it help to talk about what specifically is making you feel this way?`;
     } else if (userInputLower.includes('goal') || userInputLower.includes('plan') || userInputLower.includes('future')) {
-      return `Setting meaningful goals is a powerful way to create the future you want. What specific area of your life would you like to focus on? We can break down big goals into smaller, achievable steps.`;
+      return `Setting meaningful goals is a powerful way to create the future you want. 🎯 What specific area of your life would you like to focus on? We can break down big goals into smaller, achievable steps. 📝`;
     } else {
-      return `Thank you for sharing. I'm here to support your journey of growth and wellbeing. Would you like to explore specific strategies for personal development or discuss any challenges you're facing?`;
+      return `Thank you for sharing. 💫 I'm here to support your journey of growth and wellbeing. Would you like to explore specific strategies for personal development or discuss any challenges you're facing? 🌿`;
     }
   };
   
