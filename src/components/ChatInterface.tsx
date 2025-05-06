@@ -4,6 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle } from "lucide-react";
 import { useChatHistory } from '../hooks/useChatHistory';
+import { generateAIResponse, formatMessagesForOpenRouter, OpenRouterMessage } from '../services/openRouterService';
 
 // Define the message type
 interface Message {
@@ -61,9 +62,12 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     addMessage(userMessage);
     setInput('');
     
-    // Simulate AI response with slight delay
-    setTimeout(() => {
-      const responseText = generateResponse(input.trim());
+    try {
+      // Format previous messages for OpenRouter
+      const previousMessages = formatMessagesForOpenRouter(messages);
+      
+      // Get AI response from OpenRouter
+      const responseText = await generateAIResponse(input.trim(), user.name, previousMessages);
       const emotion = detectEmotion(input.trim());
       
       const claraResponse: Message = {
@@ -75,26 +79,21 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
       };
       
       addMessage(claraResponse);
+    } catch (error) {
+      console.error("Error in AI response:", error);
+      
+      // Fallback response if API fails
+      const fallbackResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "I'm having trouble connecting right now. Let's try again in a moment! 🙂",
+        sender: 'clara',
+        timestamp: new Date(),
+        emotion: 'empathetic'
+      };
+      
+      addMessage(fallbackResponse);
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
-  };
-  
-  // Enhanced response generator with emojis
-  const generateResponse = (userInput: string): string => {
-    const userInputLower = userInput.toLowerCase();
-    
-    if (userInputLower.includes('hello') || userInputLower.includes('hi')) {
-      return `Hello! 👋 It's wonderful to connect with you today. How are you feeling? 😊`;
-    } else if (userInputLower.includes('stress') || userInputLower.includes('anxious') || userInputLower.includes('anxiety')) {
-      return `I understand that feeling stressed can be overwhelming. 😔 Try taking a few deep breaths. 🧘‍♀️ Remember that it's okay to take breaks and prioritize your wellbeing. Would you like to talk more about what's causing your stress?`;
-    } else if (userInputLower.includes('career') || userInputLower.includes('job') || userInputLower.includes('work')) {
-      return `Your career journey is unique and important. 💼 Many women face challenges in the workplace, but your skills and perspective are valuable. ✨ Would you like to explore strategies for career growth or work-life balance? 🌱`;
-    } else if (userInputLower.includes('sad') || userInputLower.includes('depressed') || userInputLower.includes('unhappy')) {
-      return `I'm sorry to hear you're feeling down. 💙 Your emotions are valid, and it takes courage to acknowledge them. Would it help to talk about what specifically is making you feel this way?`;
-    } else if (userInputLower.includes('goal') || userInputLower.includes('plan') || userInputLower.includes('future')) {
-      return `Setting meaningful goals is a powerful way to create the future you want. 🎯 What specific area of your life would you like to focus on? We can break down big goals into smaller, achievable steps. 📝`;
-    } else {
-      return `Thank you for sharing. 💫 I'm here to support your journey of growth and wellbeing. Would you like to explore specific strategies for personal development or discuss any challenges you're facing? 🌿`;
     }
   };
   
@@ -173,7 +172,11 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
             disabled={isSubmitting || !input.trim()} 
             className="bg-clara-lavender hover:bg-clara-lavender/90"
           >
-            <Send size={18} />
+            {isSubmitting ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <Send size={18} />
+            )}
           </Button>
         </div>
       </form>
