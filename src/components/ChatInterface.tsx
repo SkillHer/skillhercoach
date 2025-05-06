@@ -2,9 +2,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Send, MessageCircle } from "lucide-react";
+import { Send, MessageCircle, Trash2 } from "lucide-react";
 import { useChatHistory } from '../hooks/useChatHistory';
 import { generateAIResponse, formatMessagesForOpenRouter, OpenRouterMessage } from '../services/openRouterService';
+import { useToast } from "@/hooks/use-toast";
 
 // Define the message type
 interface Message {
@@ -22,8 +23,9 @@ interface ChatInterfaceProps {
 const ChatInterface = ({ user }: ChatInterfaceProps) => {
   const [input, setInput] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { messages, addMessage } = useChatHistory(user.id);
+  const { messages, addMessage, clearHistory } = useChatHistory(user.id);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
   
   // Scroll to bottom whenever messages change
   useEffect(() => {
@@ -96,6 +98,17 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
       setIsSubmitting(false);
     }
   };
+
+  const handleClearChat = () => {
+    // Show confirmation before clearing
+    if (window.confirm("Are you sure you want to clear the chat history?")) {
+      clearHistory();
+      toast({
+        title: "Chat cleared",
+        description: "Your chat history has been cleared.",
+      });
+    }
+  };
   
   // Simple emotion detection (placeholder for more sophisticated analysis)
   const detectEmotion = (userInput: string): 'neutral' | 'empathetic' | 'inspiring' | 'cheerful' | 'assertive' => {
@@ -132,6 +145,22 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
 
   return (
     <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-clara-lavender/10 overflow-hidden">
+      <div className="flex justify-between items-center p-3 border-b border-gray-200">
+        <div className="flex items-center">
+          <MessageCircle size={18} className="text-clara-lavender mr-2" />
+          <span className="font-medium">Chat with Clara</span>
+        </div>
+        <Button 
+          variant="ghost" 
+          size="sm"
+          onClick={handleClearChat}
+          className="text-gray-500 hover:text-red-500"
+        >
+          <Trash2 size={16} className="mr-1" />
+          Clear Chat
+        </Button>
+      </div>
+      
       <ScrollArea className="flex-grow p-4">
         <div className="space-y-4">
           {messages.map((message) => (

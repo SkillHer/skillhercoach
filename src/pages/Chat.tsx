@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ChatInterface from '../components/ChatInterface';
 import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
 import getSupabaseClient from '../services/supabaseClient';
 
 interface UserProfile {
@@ -15,7 +14,6 @@ interface UserProfile {
 
 const Chat = () => {
   const { user } = useAuth();
-  const { toast } = useToast();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const supabase = getSupabaseClient();
   
@@ -50,15 +48,6 @@ const Chat = () => {
     name: userName,
     // Add profile data to be used in the chat
     profile: profile || {}
-  };
-
-  const handleLogout = () => {
-    // This function is no longer needed here as logout is handled in AuthContext
-    // It's kept for compatibility with any UI elements that might use it
-    toast({
-      title: "Use the navbar to log out",
-      description: "Please use the logout option in the navigation menu.",
-    });
   };
 
   return (
