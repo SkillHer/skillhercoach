@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Send, MessageCircle } from "lucide-react";
 import { useChatHistory } from '../hooks/useChatHistory';
 import { generateAIResponse, formatMessagesForOpenRouter, OpenRouterMessage } from '../services/openRouterService';
+import { useToast } from "@/hooks/use-toast";
 
 // Define the message type
 interface Message {
@@ -24,6 +25,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { messages, addMessage } = useChatHistory(user.id);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
   
   // Scroll to bottom whenever messages change
   useEffect(() => {
@@ -63,6 +65,8 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     setInput('');
     
     try {
+      console.log("Preparing to send message to OpenRouter API");
+      
       // Format previous messages for OpenRouter
       const previousMessages = formatMessagesForOpenRouter(messages);
       
@@ -79,13 +83,21 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
       };
       
       addMessage(claraResponse);
+      console.log("Successfully received and processed AI response");
     } catch (error) {
       console.error("Error in AI response:", error);
+      
+      // Show error toast
+      toast({
+        title: "Connection Error",
+        description: "Unable to connect to CoachClara's AI assistant. Please check your internet connection and try again.",
+        variant: "destructive",
+      });
       
       // Fallback response if API fails
       const fallbackResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I'm having trouble connecting right now. Let's try again in a moment! 🙂",
+        text: "I'm having trouble connecting right now. Please check your internet connection and try again in a moment! 🙂",
         sender: 'clara',
         timestamp: new Date(),
         emotion: 'empathetic'
