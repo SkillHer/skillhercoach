@@ -56,11 +56,6 @@ const Chat = () => {
       <main className="flex-grow pt-20">
         <div className="container-custom">
           <div className="flex flex-col h-[calc(100vh-12rem)]">
-            <div className="flex justify-between items-center mb-4">
-              <h1 className="font-serif text-2xl md:text-3xl font-bold text-clara-lavender">
-                Your Coach <span className="text-clara-gold">Clara</span>
-              </h1>
-            </div>
             <ChatInterface user={chatUser} />
           </div>
         </div>
