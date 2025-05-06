@@ -18,8 +18,10 @@ const Navbar = () => {
         title: "Logged out successfully",
         description: "You have been logged out of your account.",
       });
-      // Add navigation to login page after logout
-      navigate('/login');
+      // Force navigation to login page after logout
+      setTimeout(() => {
+        navigate('/login', { replace: true });
+      }, 100);
     } catch (error) {
       console.error('Logout error:', error);
       toast({
