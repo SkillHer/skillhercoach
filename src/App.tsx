@@ -8,7 +8,6 @@ import Chat from "./pages/Chat";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
-import SupabaseConnectionCheck from "./components/SupabaseConnectionCheck";
 import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
@@ -20,9 +19,6 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="container mx-auto pt-8">
-            <SupabaseConnectionCheck />
-          </div>
           <Routes>
             {/* Public routes */}
             <Route path="/login" element={<Login />} />
