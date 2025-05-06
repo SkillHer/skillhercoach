@@ -1,53 +1,32 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ChatInterface from '../components/ChatInterface';
-import UserAuth from '../components/UserAuth';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 const Chat = () => {
-  const [user, setUser] = useState<null | { id: string; name: string }>(null);
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const { user } = useAuth();
   const { toast } = useToast();
   
-  // Check for existing user in localStorage
-  useEffect(() => {
-    const savedUser = localStorage.getItem('coachClara_user');
-    if (savedUser) {
-      try {
-        const parsedUser = JSON.parse(savedUser);
-        setUser(parsedUser);
-        toast({
-          title: "Welcome back!",
-          description: `Great to see you again, ${parsedUser.name}.`,
-        });
-      } catch (e) {
-        localStorage.removeItem('coachClara_user');
-      }
-    } else {
-      setIsAuthOpen(true);
-    }
-  }, []);
-
-  const handleLogin = (userData: { id: string; name: string }) => {
-    setUser(userData);
-    localStorage.setItem('coachClara_user', JSON.stringify(userData));
-    setIsAuthOpen(false);
-    toast({
-      title: "Welcome to CoachClara!",
-      description: `Hello ${userData.name}, I'm here to support your growth journey.`,
-    });
+  // Extract user name from Supabase user metadata or email
+  const userName = user?.user_metadata?.full_name || 
+                  (user?.email ? user.email.split('@')[0] : 'User');
+  
+  // Create an object compatible with what ChatInterface expects
+  const chatUser = {
+    id: user?.id || '',
+    name: userName
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('coachClara_user');
-    setUser(null);
+    // This function is no longer needed here as logout is handled in AuthContext
+    // It's kept for compatibility with any UI elements that might use it
     toast({
-      title: "Logged out",
-      description: "Hope to see you again soon!",
+      title: "Use the navbar to log out",
+      description: "Please use the logout option in the navigation menu.",
     });
-    setIsAuthOpen(true);
   };
 
   return (
@@ -55,24 +34,14 @@ const Chat = () => {
       <Navbar />
       <main className="flex-grow pt-20">
         <div className="container-custom">
-          {user ? (
-            <div className="flex flex-col h-[calc(100vh-12rem)]">
-              <div className="flex justify-between items-center mb-4">
-                <h1 className="font-serif text-2xl md:text-3xl font-bold text-clara-lavender">
-                  Your Coach <span className="text-clara-gold">Clara</span>
-                </h1>
-                <button 
-                  onClick={handleLogout}
-                  className="text-sm text-clara-lavender hover:text-clara-gold transition-colors"
-                >
-                  Logout
-                </button>
-              </div>
-              <ChatInterface user={user} />
+          <div className="flex flex-col h-[calc(100vh-12rem)]">
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="font-serif text-2xl md:text-3xl font-bold text-clara-lavender">
+                Your Coach <span className="text-clara-gold">Clara</span>
+              </h1>
             </div>
-          ) : (
-            <UserAuth isOpen={isAuthOpen} onLogin={handleLogin} />
-          )}
+            <ChatInterface user={chatUser} />
+          </div>
         </div>
       </main>
       <Footer />
