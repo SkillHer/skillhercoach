@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Chat from "./pages/Chat";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import ProfileSetup from "./pages/ProfileSetup";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -25,6 +26,11 @@ const App = () => (
             <Route path="/signup" element={<SignUp />} />
             
             {/* Protected routes */}
+            <Route path="/profile-setup" element={
+              <ProtectedRoute>
+                <ProfileSetup />
+              </ProtectedRoute>
+            } />
             <Route path="/chat" element={
               <ProtectedRoute>
                 <Chat />

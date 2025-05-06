@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -67,12 +66,12 @@ const SignUp = () => {
 
       toast({
         title: "Sign Up Successful",
-        description: "Check your email to confirm your account.",
+        description: "Your account has been created.",
       });
 
-      // If auto-confirmation is enabled, this will navigate automatically
-      if (data?.user && !data?.user?.identities?.[0]?.identity_data?.email_verified) {
-        navigate('/login');
+      // Redirect to profile setup instead of login
+      if (data?.user) {
+        navigate('/profile-setup');
       }
     } catch (error: any) {
       toast({
