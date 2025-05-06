@@ -4,8 +4,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2 } from "lucide-react";
 import { useChatHistory } from '../hooks/useChatHistory';
-import { generateAIResponse, formatMessagesForOpenRouter, OpenRouterMessage } from '../services/openRouterService';
+import { generateAIResponse, formatMessagesForOpenRouter } from '../services/openRouterService';
 import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
 
 // Define the message type
 interface Message {
@@ -24,12 +25,19 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   const [input, setInput] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { messages, addMessage, clearHistory } = useChatHistory(user.id);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   
-  // Scroll to bottom whenever messages change
+  // Scroll to bottom whenever messages change, but prevent page from scrolling
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current && scrollAreaRef.current) {
+      // Only scroll the messages container, not the whole page
+      const scrollContainer = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]');
+      if (scrollContainer) {
+        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+      }
+    }
   }, [messages]);
 
   // Initial greeting message
@@ -161,7 +169,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
         </Button>
       </div>
       
-      <ScrollArea className="flex-grow p-4">
+      <ScrollArea className="flex-grow p-4" ref={scrollAreaRef}>
         <div className="space-y-4">
           {messages.map((message) => (
             <div 
@@ -188,12 +196,12 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
       
       <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4">
         <div className="flex items-center gap-2">
-          <input
+          <Input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-grow p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-clara-lavender/50"
+            className="flex-grow"
             disabled={isSubmitting}
           />
           <Button 
