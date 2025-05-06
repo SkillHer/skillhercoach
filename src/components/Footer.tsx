@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="bg-clara-charcoal text-white">
       <div className="container-custom py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="md:col-span-2">
             <a href="/" className="flex items-center space-x-2 mb-4">
               <span className="font-serif text-2xl font-bold text-white">Coach<span className="text-clara-gold">Clara</span></span>
@@ -32,22 +32,6 @@ const Footer = () => {
                 </svg>
               </a>
             </div>
-          </div>
-          <div>
-            <h3 className="font-semibold text-white mb-4 text-lg">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a></li>
-              <li><a href="#modules" className="text-gray-300 hover:text-white transition-colors">Coaching</a></li>
-              <li><a href="#testimonials" className="text-gray-300 hover:text-white transition-colors">Testimonials</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-white mb-4 text-lg">Support</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Terms of Use</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
-            </ul>
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center md:text-left text-gray-400">
