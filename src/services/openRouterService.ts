@@ -24,8 +24,6 @@ export const generateAIResponse = async (
   previousMessages: OpenRouterMessage[] = []
 ): Promise<string> => {
   try {
-    console.log("OpenRouter API - Generating response for:", userName);
-    
     // Create system message for Clara's persona
     const systemMessage: OpenRouterMessage = {
       role: "system",
@@ -48,11 +46,7 @@ export const generateAIResponse = async (
       userMessageObj
     ];
     
-    console.log("Sending request to OpenRouter with messages:", messages.length);
-    
-    // Add timeout to prevent hanging requests
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+    console.log("Sending request to OpenRouter:", messages);
     
     // Make API call to OpenRouter
     const response = await fetch(OPENROUTER_API_URL, {
@@ -68,36 +62,22 @@ export const generateAIResponse = async (
         messages,
         temperature: 0.7,
         max_tokens: 300
-      }),
-      signal: controller.signal
+      })
     });
     
-    // Clear timeout after request completes
-    clearTimeout(timeoutId);
-    
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
-      console.error("OpenRouter API error status:", response.status);
-      console.error("OpenRouter API error details:", errorData);
-      
-      if (response.status === 429) {
-        return "I've reached my limit for conversations right now. Please try again in a few moments! 🙂";
-      }
-      
+      const errorData = await response.json();
+      console.error("OpenRouter API error:", errorData);
       throw new Error(`API error: ${response.status}`);
     }
     
     const data = await response.json() as OpenRouterResponse;
+    console.log("OpenRouter API response:", data);
+    
     return data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response at the moment.";
   } catch (error) {
     console.error("Error generating AI response:", error);
-    
-    // Check if it's an abort error (timeout)
-    if (error instanceof DOMException && error.name === "AbortError") {
-      return "Our connection timed out. Please check your internet connection and try again.";
-    }
-    
-    return "I'm experiencing some technical difficulties. Please check your internet connection and try again in a moment! 🙂";
+    return "I'm experiencing some technical difficulties. Let's try again in a moment! 🙂";
   }
 };
 
