@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { MessageCircle, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
@@ -36,11 +36,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <nav className="flex items-center gap-4">
-          <Link to="/chat" className="flex items-center gap-1 text-sm font-medium text-clara-lavender hover:text-clara-gold transition-colors">
-            <MessageCircle size={16} />
-            <span>Chat with Clara</span>
-          </Link>
+        <nav className="flex items-center">
           <Button 
             variant="ghost" 
             size="sm" 
