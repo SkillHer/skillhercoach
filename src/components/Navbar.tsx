@@ -2,13 +2,14 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 const Navbar = () => {
   const { signOut } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -17,6 +18,8 @@ const Navbar = () => {
         title: "Logged out successfully",
         description: "You have been logged out of your account.",
       });
+      // Add navigation to login page after logout
+      navigate('/login');
     } catch (error) {
       console.error('Logout error:', error);
       toast({

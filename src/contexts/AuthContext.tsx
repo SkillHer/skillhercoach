@@ -116,7 +116,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       throw new Error('Supabase client not initialized');
     }
 
-    await supabase.auth.signOut();
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      // Clear user state after signout
+      setSession(null);
+      setUser(null);
+    } catch (error) {
+      console.error('Error signing out:', error);
+      throw error;
+    }
   };
 
   return (
