@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import ChatInterface from '../components/ChatInterface';
 import { useAuth } from '@/contexts/AuthContext';
 import getSupabaseClient from '../services/supabaseClient';
@@ -55,12 +54,11 @@ const Chat = () => {
       <Navbar />
       <main className="flex-grow pt-20">
         <div className="container-custom">
-          <div className="flex flex-col h-[calc(100vh-12rem)]">
+          <div className="flex flex-col h-[calc(100vh-5rem)]">
             <ChatInterface user={chatUser} />
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };
