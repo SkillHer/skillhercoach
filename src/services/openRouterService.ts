@@ -141,7 +141,7 @@ const splitIntoMessageChunks = (text: string): string[] => {
 // Converts our message format to OpenRouter format
 export const formatMessagesForOpenRouter = (messages: any[]): OpenRouterMessage[] => {
   return messages.map(msg => ({
-    role: msg.sender === 'clara' ? 'assistant' : 'user',
+    role: msg.sender === 'skillher' ? 'assistant' : 'user',
     content: msg.text
   }));
 };

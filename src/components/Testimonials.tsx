@@ -5,13 +5,13 @@ import { Card } from "@/components/ui/card";
 const Testimonials = () => {
   const testimonials = [
     {
-      quote: "CoachClara helped me find balance between my demanding executive role and my personal wellbeing. The personalized coaching has been transformative.",
+      quote: "Skillher Coach helped me find balance between my demanding executive role and my personal wellbeing. The personalized coaching has been transformative.",
       name: "Sarah J.",
       title: "Marketing Director",
       image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop"
     },
     {
-      quote: "The career coaching modules gave me the confidence to negotiate a promotion I'd been hesitant to pursue. Clara's guidance was exactly what I needed.",
+      quote: "The career coaching modules gave me the confidence to negotiate a promotion I'd been hesitant to pursue. Skillher Coach's guidance was exactly what I needed.",
       name: "Michelle L.",
       title: "Senior Software Engineer",
       image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=100&auto=format&fit=crop"
@@ -28,9 +28,9 @@ const Testimonials = () => {
     <section id="testimonials" className="py-16 bg-clara-lavender/5">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">Women Empowered by Clara</h2>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">Women Empowered by Skillher Coach</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Hear from women who have transformed their wellness practices and advanced their careers with CoachClara.
+            Hear from women who have transformed their wellness practices and advanced their careers with Skillher Coach.
           </p>
         </div>
 

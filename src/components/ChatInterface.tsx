@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
@@ -13,7 +14,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 interface Message {
   id: string;
   text: string;
-  sender: 'user' | 'clara';
+  sender: 'user' | 'skillher';
   timestamp: Date;
   emotion?: 'neutral' | 'empathetic' | 'inspiring' | 'cheerful' | 'assertive';
 }
@@ -49,8 +50,8 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     
     // Add initial greeting based on selected interest
     const greetingText = selectedInterest === 'career' 
-      ? `Hello ${user.name}! 👋 I'm Clara, your personal coach focused on women's career development. Whether you're looking to advance in your current role, negotiate a salary, or improve your work-life balance, I'm here to help! How can I support your career goals today? ✨`
-      : `Hello ${user.name}! 👋 I'm Clara, your personal wellness coach focused on women's health. I can help with topics like stress management, fitness, nutrition, or hormonal health. What aspect of your wellbeing would you like to focus on today? ✨`;
+      ? `Hello ${user.name}! 👋 I'm your Skillher Coach, focused on women's career development. Whether you're looking to advance in your current role, negotiate a salary, or improve your work-life balance, I'm here to help! How can I support your career goals today? ✨`
+      : `Hello ${user.name}! 👋 I'm your Skillher Coach, focused on women's health. I can help with topics like stress management, fitness, nutrition, or hormonal health. What aspect of your wellbeing would you like to focus on today? ✨`;
       
     // Ensure we have a valid timestamp
     const timestamp = new Date();
@@ -58,7 +59,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     const initialMessage: Message = {
       id: timestamp.getTime().toString(),
       text: greetingText,
-      sender: 'clara',
+      sender: 'skillher',
       timestamp: timestamp,
       emotion: 'cheerful'
     };
@@ -115,15 +116,15 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
         const delay = i * 500; // 500ms delay between messages
         
         setTimeout(() => {
-          const claraResponse: Message = {
+          const skillherResponse: Message = {
             id: (Date.now() + i + 1).toString(),
             text: messageText,
-            sender: 'clara',
+            sender: 'skillher',
             timestamp: new Date(),
             emotion: emotion
           };
           
-          addMessage(claraResponse);
+          addMessage(skillherResponse);
         }, delay);
       }
     } catch (error) {
@@ -133,7 +134,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
       const fallbackResponse: Message = {
         id: (Date.now() + 1).toString(),
         text: "I'm having trouble connecting right now. Let's try again in a moment! 🙂",
-        sender: 'clara',
+        sender: 'skillher',
         timestamp: new Date(),
         emotion: 'empathetic'
       };
@@ -207,7 +208,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
         <div className="flex justify-between items-center p-3 border-b border-gray-200">
           <div className="flex items-center">
             <MessageCircle size={18} className="text-clara-lavender mr-2" />
-            <span className="font-medium">Chat with Clara</span>
+            <span className="font-medium">Chat with Skillher Coach</span>
           </div>
         </div>
         
@@ -232,7 +233,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
             Back
           </Button>
           <MessageCircle size={18} className="text-clara-lavender mr-2" />
-          <span className="font-medium">Chat with Clara</span>
+          <span className="font-medium">Chat with Skillher Coach</span>
         </div>
         <Button 
           variant="ghost" 

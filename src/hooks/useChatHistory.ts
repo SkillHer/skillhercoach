@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 interface Message {
   id: string;
   text: string;
-  sender: 'user' | 'clara';
+  sender: 'user' | 'skillher';
   timestamp: Date;
   emotion?: 'neutral' | 'empathetic' | 'inspiring' | 'cheerful' | 'assertive';
 }
@@ -14,13 +14,13 @@ export const useChatHistory = (userId: string) => {
 
   // Load messages from localStorage on mount
   useEffect(() => {
-    const savedMessages = localStorage.getItem(`coachClara_chat_${userId}`);
+    const savedMessages = localStorage.getItem(`skillherCoach_chat_${userId}`);
     if (savedMessages) {
       try {
         setMessages(JSON.parse(savedMessages));
       } catch (e) {
         console.error('Error loading chat history:', e);
-        localStorage.removeItem(`coachClara_chat_${userId}`);
+        localStorage.removeItem(`skillherCoach_chat_${userId}`);
       }
     }
   }, [userId]);
@@ -28,7 +28,7 @@ export const useChatHistory = (userId: string) => {
   // Save messages to localStorage whenever they change
   useEffect(() => {
     if (messages.length > 0) {
-      localStorage.setItem(`coachClara_chat_${userId}`, JSON.stringify(messages));
+      localStorage.setItem(`skillherCoach_chat_${userId}`, JSON.stringify(messages));
     }
   }, [messages, userId]);
 
@@ -39,7 +39,7 @@ export const useChatHistory = (userId: string) => {
 
   // Clear chat history
   const clearHistory = () => {
-    localStorage.removeItem(`coachClara_chat_${userId}`);
+    localStorage.removeItem(`skillherCoach_chat_${userId}`);
     setMessages([]);
   };
 
