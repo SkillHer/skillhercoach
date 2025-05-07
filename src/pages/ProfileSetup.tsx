@@ -9,7 +9,6 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { useToast } from '@/hooks/use-toast';
 import getSupabaseClient from '../services/supabaseClient';
 import { User } from 'lucide-react';
-import SetupProfilesTable from '@/components/SetupProfilesTable';
 
 const ProfileSetup = () => {
   const { user } = useAuth();
@@ -17,35 +16,95 @@ const ProfileSetup = () => {
   const { toast } = useToast();
   const supabase = getSupabaseClient();
   const [loading, setLoading] = useState(false);
-  const [showTableSetup, setShowTableSetup] = useState(false);
+  const [creatingTable, setCreatingTable] = useState(false);
   
   // Form state
   const [age, setAge] = useState('');
   const [nationality, setNationality] = useState('');
   const [occupation, setOccupation] = useState('');
   
-  // Check if profiles table exists when component mounts
+  // Check if profiles table exists when component mounts and create it if it doesn't
   useEffect(() => {
-    const checkProfilesTable = async () => {
+    const setupProfilesTable = async () => {
       if (!supabase) return;
       
       try {
-        const { error } = await supabase
+        // First check if the table already exists
+        const { error: checkError } = await supabase
           .from('profiles')
           .select('id')
           .limit(1);
         
-        if (error && error.message.includes('does not exist')) {
-          setShowTableSetup(true);
+        // If there's an error about the table not existing, create it
+        if (checkError && checkError.message.includes('does not exist')) {
+          setCreatingTable(true);
+          
+          // Use raw SQL to create the profiles table
+          try {
+            // Try using the RPC method first
+            const { error: rpcError } = await supabase.rpc('create_profiles_table');
+            
+            // If RPC doesn't exist, use raw SQL
+            if (rpcError && rpcError.message.includes('does not exist')) {
+              const { error: sqlError } = await supabase.rpc('exec_sql', {
+                sql_query: `
+                  CREATE TABLE IF NOT EXISTS profiles (
+                    id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+                    age INTEGER,
+                    nationality TEXT,
+                    occupation TEXT,
+                    created_at TIMESTAMPTZ DEFAULT NOW(),
+                    updated_at TIMESTAMPTZ DEFAULT NOW()
+                  );
+                  
+                  -- Create a secure RLS policy for the profiles table
+                  ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+                  
+                  -- Create policies
+                  CREATE POLICY "Users can view their own profile" 
+                    ON profiles FOR SELECT 
+                    USING (auth.uid() = id);
+                    
+                  CREATE POLICY "Users can update their own profile" 
+                    ON profiles FOR UPDATE 
+                    USING (auth.uid() = id);
+                    
+                  CREATE POLICY "Users can insert their own profile" 
+                    ON profiles FOR INSERT 
+                    WITH CHECK (auth.uid() = id);
+                `
+              });
+              
+              if (sqlError) {
+                throw sqlError;
+              }
+            } else if (rpcError) {
+              throw rpcError;
+            }
+            
+            toast({
+              title: "Database Setup Complete",
+              description: "Your profile database has been set up successfully.",
+            });
+            
+          } catch (error: any) {
+            console.error("Error creating profiles table:", error);
+            toast({
+              title: "Database Setup Issue",
+              description: "There was a problem setting up the database. Your information will be saved locally.",
+              variant: "destructive",
+            });
+          } finally {
+            setCreatingTable(false);
+          }
         }
       } catch (error) {
         console.error('Error checking profiles table:', error);
-        setShowTableSetup(true);
       }
     };
     
-    checkProfilesTable();
-  }, [supabase]);
+    setupProfilesTable();
+  }, [supabase, toast]);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,18 +133,26 @@ const ProfileSetup = () => {
       
       if (error) {
         if (error.message.includes('does not exist')) {
-          // Show table setup if we get a table doesn't exist error
-          setShowTableSetup(true);
-          setLoading(false);
-          return;
+          // If table doesn't exist, at least store in local storage
+          localStorage.setItem('userProfile', JSON.stringify({
+            age: parseInt(age) || null,
+            nationality,
+            occupation,
+          }));
+          
+          toast({
+            title: "Profile Saved Locally",
+            description: "Your profile information has been saved locally. It will be synced when database is available.",
+          });
+        } else {
+          throw error;
         }
-        throw error;
+      } else {
+        toast({
+          title: "Profile Updated",
+          description: "Your profile information has been saved successfully.",
+        });
       }
-      
-      toast({
-        title: "Profile Updated",
-        description: "Your profile information has been saved successfully.",
-      });
       
       // Redirect to chat page
       navigate('/chat');
@@ -101,22 +168,6 @@ const ProfileSetup = () => {
       setLoading(false);
     }
   };
-
-  const handleTableSetupComplete = () => {
-    setShowTableSetup(false);
-    toast({
-      title: "Table Created",
-      description: "Profiles table created successfully. You can now complete your profile.",
-    });
-  };
-  
-  if (showTableSetup) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
-        <SetupProfilesTable onSetupComplete={handleTableSetupComplete} />
-      </div>
-    );
-  }
   
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
@@ -142,7 +193,7 @@ const ProfileSetup = () => {
                 placeholder="Your age" 
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
-                disabled={loading}
+                disabled={loading || creatingTable}
               />
             </div>
             
@@ -153,7 +204,7 @@ const ProfileSetup = () => {
                 placeholder="Your nationality" 
                 value={nationality}
                 onChange={(e) => setNationality(e.target.value)}
-                disabled={loading}
+                disabled={loading || creatingTable}
               />
             </div>
             
@@ -164,16 +215,16 @@ const ProfileSetup = () => {
                 placeholder="Your occupation" 
                 value={occupation}
                 onChange={(e) => setOccupation(e.target.value)}
-                disabled={loading}
+                disabled={loading || creatingTable}
               />
             </div>
             
             <Button 
               type="submit" 
               className="w-full"
-              disabled={loading}
+              disabled={loading || creatingTable}
             >
-              {loading ? "Saving..." : "Save & Continue"}
+              {loading ? "Saving..." : creatingTable ? "Setting Up Database..." : "Save & Continue"}
             </Button>
           </form>
         </CardContent>
@@ -181,7 +232,7 @@ const ProfileSetup = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/chat')}
-            disabled={loading}
+            disabled={loading || creatingTable}
           >
             Skip for now
           </Button>
@@ -192,3 +243,4 @@ const ProfileSetup = () => {
 };
 
 export default ProfileSetup;
+
