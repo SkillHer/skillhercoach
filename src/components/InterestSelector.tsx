@@ -104,8 +104,8 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
             className="w-full bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-lg flex items-center justify-center"
             onClick={() => window.open('https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M', '_blank')}
           >
-            <Link className="mr-2" />
-            <span>Chat with other members of our community</span>
+            <span>Join our community</span>
+            <ArrowRight className="ml-2" />
           </Button>
         </div>
       </div>
