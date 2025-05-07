@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
@@ -20,10 +19,11 @@ interface Message {
 }
 
 interface ChatInterfaceProps {
-  user: { id: string; name: string };
+  user: { id: string; name: string; profile: Record<string, any> };
+  initialPrompt?: string; // Added initialPrompt as an optional prop
 }
 
-const ChatInterface = ({ user }: ChatInterfaceProps) => {
+const ChatInterface = ({ user, initialPrompt }: ChatInterfaceProps) => {
   const [input, setInput] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { messages, addMessage, clearHistory } = useChatHistory(user.id);
@@ -42,6 +42,14 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     }
   }, [messages]);
 
+  // Process initialPrompt if provided
+  useEffect(() => {
+    if (initialPrompt && messages.length === 0) {
+      console.log("Processing initial prompt:", initialPrompt);
+      setInput(initialPrompt);
+    }
+  }, [initialPrompt, messages.length]);
+  
   // Handle interest selection
   const handleInterestSelect = (selectedInterest: 'career' | 'health') => {
     console.log("Interest selected in ChatInterface:", selectedInterest);
@@ -66,6 +74,14 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     
     console.log("Adding initial message:", initialMessage);
     addMessage(initialMessage);
+    
+    // If there's an initialPrompt, submit it after a short delay
+    if (initialPrompt) {
+      setTimeout(() => {
+        setInput(initialPrompt);
+        handleSubmit(new Event('submit') as unknown as React.FormEvent);
+      }, 1000);
+    }
   };
   
   // Handle selecting a suggested prompt
