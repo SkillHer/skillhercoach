@@ -38,18 +38,23 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3">
               <li><Link to="/" className="text-gray-300 hover:text-white transition-colors">Home</Link></li>
-              <li><a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a></li>
-              <li><a href="#modules" className="text-gray-300 hover:text-white transition-colors">Coaching Modules</a></li>
-              <li><a href="#testimonials" className="text-gray-300 hover:text-white transition-colors">Testimonials</a></li>
-              <li><Link to="/login" className="text-gray-300 hover:text-white transition-colors">Login</Link></li>
+              <li><Link to="/chat" className="text-gray-300 hover:text-white transition-colors">Chat with Clara</Link></li>
+              <li><a href="/#features" className="text-gray-300 hover:text-white transition-colors">Features</a></li>
+              <li><a href="/#modules" className="text-gray-300 hover:text-white transition-colors">Coaching Modules</a></li>
+              <li><a href="/#testimonials" className="text-gray-300 hover:text-white transition-colors">Testimonials</a></li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4">About skillher</h3>
-            <p className="text-gray-300 mb-4">
+            <h3 className="text-lg font-semibold mb-4">Account</h3>
+            <ul className="space-y-3">
+              <li><Link to="/login" className="text-gray-300 hover:text-white transition-colors">Login</Link></li>
+              <li><Link to="/signup" className="text-gray-300 hover:text-white transition-colors">Sign Up</Link></li>
+              <li><Link to="/chat" className="text-gray-300 hover:text-white transition-colors">Chat Dashboard</Link></li>
+            </ul>
+            <p className="text-gray-300 mt-4">
               skillher is dedicated to empowering women through personalized career guidance and wellness coaching, helping them achieve balance and success in all aspects of life.
             </p>
-            <Link to="/signup" className="text-clara-gold hover:text-clara-gold/80 transition-colors font-medium">
+            <Link to="/signup" className="text-clara-gold hover:text-clara-gold/80 transition-colors font-medium mt-2 inline-block">
               Join the Community →
             </Link>
           </div>

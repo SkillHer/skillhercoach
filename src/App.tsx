@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import Chat from "./pages/Chat";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
@@ -42,8 +43,11 @@ const App = () => (
             {/* Landing page */}
             <Route path="/" element={<Index />} />
             
+            {/* 404 page */}
+            <Route path="/404" element={<NotFound />} />
+            
             {/* Default redirect for unknown routes */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/404" replace />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

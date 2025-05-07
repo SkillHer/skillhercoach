@@ -31,6 +31,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         {!isMobile && (
           <div className="flex items-center space-x-6">
+            <Link to="/" className="text-gray-600 hover:text-clara-lavender transition-colors">Home</Link>
             {isLandingPage && (
               <>
                 <a href="#features" className="text-gray-600 hover:text-clara-lavender transition-colors">Features</a>
@@ -68,6 +69,13 @@ const Navbar = () => {
       {isMobile && isMenuOpen && (
         <div className="container-custom py-4 bg-white border-t">
           <div className="flex flex-col space-y-4">
+            <Link 
+              to="/" 
+              className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
             {isLandingPage && (
               <>
                 <a 
