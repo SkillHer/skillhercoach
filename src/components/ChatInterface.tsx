@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
@@ -21,7 +22,7 @@ interface Message {
 interface ChatInterfaceProps {
   user: { id: string; name: string; profile: Record<string, any> };
   initialPrompt?: string;
-  selectedInterest?: 'career' | 'health';
+  selectedInterest?: 'career' | 'health' | 'other';
 }
 
 const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceProps) => {
@@ -30,7 +31,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   const { messages, addMessage, clearHistory } = useChatHistory(user.id);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const [interest, setInterest] = useState<'career' | 'health' | null>(selectedInterest || null);
+  const [interest, setInterest] = useState<'career' | 'health' | 'other' | null>(selectedInterest || null);
   const [showSelector, setShowSelector] = useState(messages.length === 0 && !selectedInterest);
   const isMobile = useIsMobile();
   
@@ -60,15 +61,21 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   }, [initialPrompt, messages.length]);
   
   // Handle interest selection
-  const handleInterestSelect = (selectedInterest: 'career' | 'health') => {
+  const handleInterestSelect = (selectedInterest: 'career' | 'health' | 'other') => {
     console.log("Interest selected in ChatInterface:", selectedInterest);
     setInterest(selectedInterest);
     setShowSelector(false);
     
     // Add initial greeting based on selected interest
-    const greetingText = selectedInterest === 'career' 
-      ? `Hello ${user.name}! 👋 I'm your Skillher Coach, focused on women's career development. Whether you're looking to advance in your current role, negotiate a salary, or improve your work-life balance, I'm here to help! How can I support your career goals today? ✨`
-      : `Hello ${user.name}! 👋 I'm your Skillher Coach, focused on women's health. I can help with topics like stress management, fitness, nutrition, or hormonal health. What aspect of your wellbeing would you like to focus on today? ✨`;
+    let greetingText = '';
+    
+    if (selectedInterest === 'career') {
+      greetingText = `Hello ${user.name}! 👋 I'm your Skillher Coach, focused on women's career development. Whether you're looking to advance in your current role, negotiate a salary, or improve your work-life balance, I'm here to help! How can I support your career goals today? ✨`;
+    } else if (selectedInterest === 'health') {
+      greetingText = `Hello ${user.name}! 👋 I'm your Skillher Coach, focused on women's health. I can help with topics like stress management, fitness, nutrition, or hormonal health. What aspect of your wellbeing would you like to focus on today? ✨`;
+    } else {
+      greetingText = `Hello ${user.name}! 👋 I'm your Skillher Coach. I'm here to support you with whatever's on your mind today. Feel free to ask about any topic you'd like to discuss, and we can explore it together! ✨`;
+    }
       
     // Ensure we have a valid timestamp
     const timestamp = new Date();
@@ -121,9 +128,14 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
       const previousMessages = formatMessagesForOpenRouter(messages);
       
       // Enhanced system prompt based on selected interest
-      const interestContext = interest === 'career'
-        ? "focused on women's career development, leadership skills, workplace challenges, and professional growth"
-        : "focused on women's health, wellness, fitness, nutrition, and hormonal balance";
+      let interestContext = "";
+      if (interest === 'career') {
+        interestContext = "focused on women's career development, leadership skills, workplace challenges, and professional growth";
+      } else if (interest === 'health') {
+        interestContext = "focused on women's health, wellness, fitness, nutrition, and hormonal balance";
+      } else {
+        interestContext = "focused on providing personalized guidance and support for women across various aspects of their personal and professional lives";
+      }
       
       // Get AI response from OpenRouter with the enhanced context
       const responseText = await generateAIResponse(

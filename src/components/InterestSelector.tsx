@@ -3,17 +3,17 @@ import React from 'react';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Briefcase, Heart, ArrowRight } from "lucide-react";
+import { Briefcase, Heart, ArrowRight, MoreHorizontal } from "lucide-react";
 
 interface InterestSelectorProps {
-  onSelect: (interest: 'career' | 'health') => void;
+  onSelect: (interest: 'career' | 'health' | 'other') => void;
 }
 
 const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
-  const [selectedInterest, setSelectedInterest] = React.useState<'career' | 'health' | null>(null);
+  const [selectedInterest, setSelectedInterest] = React.useState<'career' | 'health' | 'other' | null>(null);
 
   // Handle selection of interest
-  const handleInterestSelect = (interest: 'career' | 'health') => {
+  const handleInterestSelect = (interest: 'career' | 'health' | 'other') => {
     console.log("Setting selected interest to:", interest);
     setSelectedInterest(interest);
   };
@@ -35,7 +35,7 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
       <RadioGroup 
         className="gap-4"
         value={selectedInterest || ""}
-        onValueChange={(value) => handleInterestSelect(value as 'career' | 'health')}
+        onValueChange={(value) => handleInterestSelect(value as 'career' | 'health' | 'other')}
       >
         <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors"
              onClick={() => handleInterestSelect('career')}>
@@ -61,6 +61,20 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
             </div>
             <p className="text-sm text-gray-500">
               Explore topics like self-care, mental health, fitness, nutrition, and hormonal health.
+            </p>
+          </div>
+        </div>
+        
+        <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors"
+             onClick={() => handleInterestSelect('other')}>
+          <RadioGroupItem value="other" id="other" className="mt-1" />
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <MoreHorizontal size={18} className="text-clara-lavender" />
+              <Label htmlFor="other" className="font-medium cursor-pointer">Others/Not Mentioned</Label>
+            </div>
+            <p className="text-sm text-gray-500">
+              Discuss any other topics or concerns that don't fall into the categories above.
             </p>
           </div>
         </div>
