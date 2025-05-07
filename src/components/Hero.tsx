@@ -35,8 +35,8 @@ const Hero = () => {
     setImageError(true);
   };
 
-  // Use direct import URL with correct path
-  const imageSrc = "https://513afb7a-b336-4b65-b602-7c4a400c352a.lovableproject.com/lovable-uploads/ac0c403f-fd7e-4b72-bc7c-a79da174590c.png";
+  // Use a public URL that's accessible without path resolution issues
+  const imageSrc = "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80";
 
   useEffect(() => {
     // Preload the image
@@ -78,7 +78,7 @@ const Hero = () => {
               <div className="absolute -top-6 -left-6 w-64 h-64 bg-clara-lavender/20 rounded-full blur-3xl"></div>
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-clara-sage/20 rounded-full blur-3xl"></div>
               <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-4">
-                <AspectRatio ratio={1} className="w-full rounded-lg overflow-hidden bg-gray-100">
+                <AspectRatio ratio={16/9} className="w-full rounded-lg overflow-hidden bg-gray-100">
                   {!imageLoaded && !imageError && (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-10 h-10 border-4 border-clara-lavender border-t-transparent rounded-full animate-spin"></div>
