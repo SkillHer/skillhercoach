@@ -1,8 +1,10 @@
 
 import React from 'react';
 import { Card } from "@/components/ui/card";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Testimonials = () => {
+  const isMobile = useIsMobile();
   const testimonials = [
     {
       quote: "SkillHer Coach helped me find balance between my demanding executive role and my personal wellbeing. The personalized coaching has been transformative.",
@@ -45,11 +47,17 @@ const Testimonials = () => {
                   <p className="text-gray-600 italic mb-6">{testimonial.quote}</p>
                 </div>
                 <div className="flex items-center">
-                  <div className="h-12 w-12 rounded-full overflow-hidden mr-4">
+                  <div className="h-12 w-12 rounded-full overflow-hidden mr-4 bg-gray-100 flex-shrink-0">
                     <img 
                       src={testimonial.image} 
                       alt={testimonial.name} 
                       className="h-full w-full object-cover"
+                      onError={(e) => {
+                        // Fallback for image loading errors
+                        const target = e.target as HTMLImageElement;
+                        console.error(`Failed to load image: ${target.src}`);
+                        target.src = "public/placeholder.svg";
+                      }}
                     />
                   </div>
                   <div>
