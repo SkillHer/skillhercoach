@@ -44,14 +44,22 @@ export const generateAIResponse = async (
       content: userMessage
     };
     
-    // Combine all messages (limited to last 10 for context)
+    // Filter and sanitize previous messages to prevent invalid JSON
+    const sanitizedMessages = previousMessages
+      .filter(msg => msg.role && msg.content)
+      .map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }));
+    
+    // Combine all messages (limited to last 6 for context)
     const messages = [
       systemMessage,
-      ...previousMessages.slice(-10),
+      ...sanitizedMessages.slice(-6),
       userMessageObj
     ];
     
-    console.log("Sending request to OpenRouter:", messages);
+    console.log("Sending request to OpenRouter with sanitized messages");
     
     // Make API call to OpenRouter
     const response = await fetch(OPENROUTER_API_URL, {
@@ -77,7 +85,6 @@ export const generateAIResponse = async (
     }
     
     const data = await response.json() as OpenRouterResponse;
-    console.log("OpenRouter API response:", data);
     
     // Get the formatted response text
     const responseText = data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response at the moment.";
@@ -111,8 +118,11 @@ const formatResponseText = (text: string): string => {
 
 // Converts our message format to OpenRouter format
 export const formatMessagesForOpenRouter = (messages: any[]): OpenRouterMessage[] => {
-  return messages.map(msg => ({
-    role: msg.sender === 'skillher' ? 'assistant' : 'user',
-    content: msg.text
-  }));
+  return messages
+    .filter(msg => msg && msg.sender && msg.text) // Filter out invalid messages
+    .map(msg => ({
+      role: msg.sender === 'skillher' ? 'assistant' : 'user',
+      content: typeof msg.text === 'string' ? msg.text : ''
+    }))
+    .filter(msg => msg.content); // Additional filter for empty content
 };
