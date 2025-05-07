@@ -294,6 +294,20 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
             )}
           </Button>
         </div>
+        
+        {/* Show prompt suggestions for mobile users */}
+        {interest && messages.length <= 1 && (
+          <div className="mt-4 md:hidden">
+            <p className="text-sm font-medium text-gray-500 mb-2">Suggested questions:</p>
+            <div className="flex overflow-x-auto pb-2 gap-2">
+              <SuggestedPrompts 
+                interest={interest}
+                onSelectPrompt={handleSelectPrompt}
+                variant="mobile"
+              />
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );

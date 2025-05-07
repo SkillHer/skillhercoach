@@ -6,9 +6,10 @@ import { MessageCircle } from "lucide-react";
 interface SuggestedPromptsProps {
   interest: 'career' | 'health';
   onSelectPrompt: (prompt: string) => void;
+  variant?: 'default' | 'mobile';
 }
 
-const SuggestedPrompts = ({ interest, onSelectPrompt }: SuggestedPromptsProps) => {
+const SuggestedPrompts = ({ interest, onSelectPrompt, variant = 'default' }: SuggestedPromptsProps) => {
   const careerPrompts = [
     "How can I negotiate a salary increase?",
     "What strategies can help me achieve work-life balance?",
@@ -27,6 +28,27 @@ const SuggestedPrompts = ({ interest, onSelectPrompt }: SuggestedPromptsProps) =
 
   const prompts = interest === 'career' ? careerPrompts : healthPrompts;
 
+  // For mobile variant, show horizontal scrolling buttons
+  if (variant === 'mobile') {
+    return (
+      <>
+        {prompts.map((prompt, index) => (
+          <Button
+            key={index}
+            variant="outline"
+            size="sm"
+            className="whitespace-nowrap border-clara-lavender/20 hover:bg-clara-lavender/10 flex-shrink-0"
+            onClick={() => onSelectPrompt(prompt)}
+          >
+            <MessageCircle size={14} className="mr-2 text-clara-lavender shrink-0" />
+            <span className="truncate">{prompt}</span>
+          </Button>
+        ))}
+      </>
+    );
+  }
+
+  // Default desktop variant with vertical layout
   return (
     <div className="space-y-3">
       <h3 className="text-sm font-medium text-gray-500">Suggested topics:</h3>
