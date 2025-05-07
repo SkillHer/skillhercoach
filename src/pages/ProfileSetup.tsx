@@ -70,12 +70,12 @@ const ProfileSetup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
-      <Card className="w-full max-w-md">
+    <div className="flex items-center justify-center min-h-screen bg-anita-cream p-4">
+      <Card className="w-full max-w-md border-anita-lavender/20">
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-              <UserCircle2 className="h-6 w-6 text-primary" />
+            <div className="w-12 h-12 bg-anita-purple/10 rounded-full flex items-center justify-center">
+              <UserCircle2 className="h-6 w-6 text-anita-purple" />
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-center">Complete Your Profile</CardTitle>
@@ -94,6 +94,7 @@ const ProfileSetup = () => {
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
                 disabled={loading}
+                className="border-anita-lavender/20 focus-visible:ring-anita-purple"
               />
             </div>
             
@@ -105,6 +106,7 @@ const ProfileSetup = () => {
                 value={nationality}
                 onChange={(e) => setNationality(e.target.value)}
                 disabled={loading}
+                className="border-anita-lavender/20 focus-visible:ring-anita-purple"
               />
             </div>
             
@@ -116,12 +118,13 @@ const ProfileSetup = () => {
                 value={occupation}
                 onChange={(e) => setOccupation(e.target.value)}
                 disabled={loading}
+                className="border-anita-lavender/20 focus-visible:ring-anita-purple"
               />
             </div>
             
             <Button 
               type="submit" 
-              className="w-full"
+              className="w-full bg-anita-purple hover:bg-anita-purple/90 text-white"
               disabled={loading}
             >
               {loading ? "Saving Profile..." : "Continue"}

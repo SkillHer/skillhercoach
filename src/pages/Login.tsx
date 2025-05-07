@@ -23,6 +23,7 @@ const Login = () => {
   // Get redirect path and initialPrompt from location state
   const redirectPath = location.state?.redirectAfterLogin || '/chat';
   const initialPrompt = location.state?.initialPrompt || null;
+  const selectedInterest = location.state?.selectedInterest || null;
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -56,7 +57,12 @@ const Login = () => {
       
       // Navigate to the redirect path with the initialPrompt if available
       if (initialPrompt) {
-        navigate(redirectPath, { state: { initialPrompt } });
+        navigate(redirectPath, { 
+          state: { 
+            initialPrompt,
+            selectedInterest
+          }
+        });
       } else {
         navigate(redirectPath);
       }
@@ -72,16 +78,16 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
-      <Card className="w-full max-w-md">
+    <div className="flex items-center justify-center min-h-screen bg-anita-cream p-4">
+      <Card className="w-full max-w-md border-anita-lavender/20">
         <CardHeader className="space-y-1">
-          <Link to="/" className="flex items-center text-primary hover:underline mb-4">
+          <Link to="/" className="flex items-center text-anita-purple hover:underline mb-4">
             <ArrowLeft className="mr-1 h-4 w-4" />
             Back to Home
           </Link>
           <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-              <LogIn className="h-6 w-6 text-primary" />
+            <div className="w-12 h-12 bg-anita-purple/10 rounded-full flex items-center justify-center">
+              <LogIn className="h-6 w-6 text-anita-purple" />
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-center">Login</CardTitle>
@@ -100,12 +106,13 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
+                className="border-anita-lavender/20 focus-visible:ring-anita-purple"
               />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+                <Link to="/forgot-password" className="text-sm text-anita-purple hover:underline">
                   Forgot password?
                 </Link>
               </div>
@@ -117,6 +124,7 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={loading}
+                  className="border-anita-lavender/20 focus-visible:ring-anita-purple"
                 />
                 <button 
                   type="button" 
@@ -133,7 +141,7 @@ const Login = () => {
             </div>
             <Button 
               type="submit" 
-              className="w-full"
+              className="w-full bg-anita-purple hover:bg-anita-purple/90 text-white"
               disabled={loading}
             >
               {loading ? "Signing In..." : "Sign In"}
@@ -143,7 +151,7 @@ const Login = () => {
         <CardFooter className="flex flex-col space-y-2">
           <div className="text-center text-sm">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-primary hover:underline font-medium">
+            <Link to="/signup" className="text-anita-purple hover:underline font-medium">
               Sign Up
             </Link>
           </div>

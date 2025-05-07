@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
@@ -34,8 +33,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   const [interest, setInterest] = useState<'career' | 'health' | 'other' | null>(selectedInterest || null);
   const [showSelector, setShowSelector] = useState(messages.length === 0 && !selectedInterest);
   const isMobile = useIsMobile();
-  
-  console.log("Current state - messages:", messages.length, "showSelector:", showSelector, "interest:", interest, "selectedInterest:", selectedInterest);
   
   // Scroll to bottom whenever messages change
   useEffect(() => {
@@ -212,31 +209,25 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   const getMessageStyle = (emotion?: string) => {
     switch (emotion) {
       case 'empathetic':
-        return 'bg-purple-100 border-skillher-lavender';
+        return 'bg-anita-lavender/20 border-anita-lavender';
       case 'inspiring':
-        return 'bg-blue-50 border-blue-300';
+        return 'bg-anita-teal/20 border-anita-teal';
       case 'cheerful':
-        return 'bg-yellow-50 border-skillher-gold';
+        return 'bg-anita-pink/20 border-anita-pink';
       case 'assertive':
-        return 'bg-orange-50 border-orange-300';
+        return 'bg-anita-teal/20 border-anita-teal';
       default:
         return 'bg-gray-50 border-gray-200';
     }
   };
 
-  // Debug messages on render
-  useEffect(() => {
-    console.log("ChatInterface rendering - showSelector:", showSelector, "messages length:", messages.length, "interest:", interest);
-  }, [showSelector, messages.length, interest]);
-
   // Show interest selector if no messages or interest not selected yet
   if (showSelector) {
-    console.log("Showing interest selector");
     return (
-      <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-skillher-lavender/10 overflow-hidden">
+      <div className="flex flex-col h-full bg-anita-cream rounded-xl shadow-md border border-anita-lavender/20 overflow-hidden">
         <div className="flex justify-between items-center p-3 border-b border-gray-200">
           <div className="flex items-center">
-            <MessageCircle size={18} className="text-skillher-lavender mr-2" />
+            <MessageCircle size={18} className="text-anita-purple mr-2" />
             <span className="font-medium">Chat with Skillher Coach</span>
           </div>
         </div>
@@ -249,19 +240,19 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   }
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-skillher-lavender/10 overflow-hidden">
+    <div className="flex flex-col h-full bg-anita-cream rounded-xl shadow-md border border-anita-lavender/20 overflow-hidden">
       <div className="flex justify-between items-center p-3 border-b border-gray-200">
         <div className="flex items-center gap-2">
           <Button 
             variant="ghost" 
             size="sm"
             onClick={handleBackToSelector}
-            className="text-gray-500 hover:text-skillher-lavender"
+            className="text-gray-500 hover:text-anita-purple"
           >
             <ArrowLeft size={16} className="mr-1" />
             Back
           </Button>
-          <MessageCircle size={18} className="text-skillher-lavender mr-2" />
+          <MessageCircle size={18} className="text-anita-purple mr-2" />
           <span className="font-medium">Chat with Skillher Coach</span>
         </div>
         <Button 
@@ -286,7 +277,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
                 <div 
                   className={`max-w-[80%] p-3 rounded-lg border ${
                     message.sender === 'user' 
-                      ? 'bg-skillher-lavender/10 border-skillher-lavender/20' 
+                      ? 'bg-anita-purple/10 border-anita-purple/20' 
                       : getMessageStyle(message.emotion)
                   }`}
                 >
@@ -315,7 +306,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
           <Button 
             type="submit" 
             disabled={isSubmitting || !input.trim()} 
-            className="bg-skillher-lavender hover:bg-skillher-lavender/90"
+            className="bg-anita-purple hover:bg-anita-purple/90 text-white"
           >
             {isSubmitting ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

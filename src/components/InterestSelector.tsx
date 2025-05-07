@@ -14,20 +14,18 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
 
   // Handle selection of interest
   const handleInterestSelect = (interest: 'career' | 'health' | 'other') => {
-    console.log("Setting selected interest to:", interest);
     setSelectedInterest(interest);
   };
 
   // Handle continue button click - call the onSelect prop with the chosen interest
   const handleContinue = () => {
-    console.log("Continue button clicked, selected interest:", selectedInterest);
     if (selectedInterest) {
       onSelect(selectedInterest);
     }
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm max-h-[80vh] overflow-y-auto">
+    <div className="p-6 bg-white rounded-lg border border-anita-lavender/20 shadow-sm max-h-[80vh] overflow-y-auto">
       <h2 className="text-lg font-medium text-center mb-6">
         What area would you like to focus on today?
       </h2>
@@ -37,12 +35,12 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
         value={selectedInterest || ""}
         onValueChange={(value) => handleInterestSelect(value as 'career' | 'health' | 'other')}
       >
-        <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors"
+        <div className="flex items-start space-x-3 bg-anita-purple/10 p-3 rounded-md cursor-pointer hover:bg-anita-purple/20 transition-colors"
              onClick={() => handleInterestSelect('career')}>
           <RadioGroupItem value="career" id="career" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <Briefcase size={18} className="text-clara-lavender" />
+              <Briefcase size={18} className="text-anita-teal" />
               <Label htmlFor="career" className="font-medium cursor-pointer">Career Development</Label>
             </div>
             <p className="text-sm text-gray-500">
@@ -51,12 +49,12 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
           </div>
         </div>
 
-        <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors"
+        <div className="flex items-start space-x-3 bg-anita-pink/10 p-3 rounded-md cursor-pointer hover:bg-anita-pink/20 transition-colors"
              onClick={() => handleInterestSelect('health')}>
           <RadioGroupItem value="health" id="health" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <Heart size={18} className="text-clara-lavender" />
+              <Heart size={18} className="text-anita-pink" />
               <Label htmlFor="health" className="font-medium cursor-pointer">Health & Wellness</Label>
             </div>
             <p className="text-sm text-gray-500">
@@ -65,12 +63,12 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
           </div>
         </div>
         
-        <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors"
+        <div className="flex items-start space-x-3 bg-anita-lavender/10 p-3 rounded-md cursor-pointer hover:bg-anita-lavender/20 transition-colors"
              onClick={() => handleInterestSelect('other')}>
           <RadioGroupItem value="other" id="other" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <MoreHorizontal size={18} className="text-clara-lavender" />
+              <MoreHorizontal size={18} className="text-anita-lavender" />
               <Label htmlFor="other" className="font-medium cursor-pointer">Others/Not Mentioned</Label>
             </div>
             <p className="text-sm text-gray-500">
@@ -84,7 +82,7 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
         <div className="space-y-3">
           {/* Continue button with icon and animation */}
           <Button 
-            className="w-full bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-lg flex items-center justify-center"
+            className="w-full bg-anita-purple hover:bg-anita-purple/90 text-white transition-all py-6 text-lg flex items-center justify-center"
             onClick={handleContinue}
             disabled={!selectedInterest}
           >
@@ -99,9 +97,9 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
             </p>
           )}
           
-          {/* WhatsApp Community Button - now with same styling as Continue button */}
+          {/* WhatsApp Community Button */}
           <Button 
-            className="w-full bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-lg flex items-center justify-center"
+            className="w-full bg-anita-teal hover:bg-anita-teal/90 text-white transition-all py-6 text-lg flex items-center justify-center"
             onClick={() => window.open('https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M', '_blank')}
           >
             <span>Join our community</span>

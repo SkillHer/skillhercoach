@@ -51,10 +51,10 @@ const SuggestedPrompts = ({ interest, onSelectPrompt, variant = 'default' }: Sug
             key={index}
             variant="outline"
             size="sm"
-            className="whitespace-nowrap border-clara-lavender/20 hover:bg-clara-lavender/10 flex-shrink-0"
+            className="whitespace-nowrap border-anita-purple/20 hover:bg-anita-lavender/20 flex-shrink-0"
             onClick={() => onSelectPrompt(prompt)}
           >
-            <MessageCircle size={14} className="mr-2 text-clara-lavender shrink-0" />
+            <MessageCircle size={14} className="mr-2 text-anita-purple shrink-0" />
             <span className="truncate">{prompt}</span>
           </Button>
         ))}
@@ -71,10 +71,10 @@ const SuggestedPrompts = ({ interest, onSelectPrompt, variant = 'default' }: Sug
           <Button
             key={index}
             variant="outline"
-            className="justify-start text-left h-auto py-2 border-clara-lavender/20 hover:bg-clara-lavender/10"
+            className="justify-start text-left h-auto py-2 border-anita-purple/20 hover:bg-anita-lavender/20"
             onClick={() => onSelectPrompt(prompt)}
           >
-            <MessageCircle size={14} className="mr-2 text-clara-lavender shrink-0" />
+            <MessageCircle size={14} className="mr-2 text-anita-purple shrink-0" />
             <span className="truncate">{prompt}</span>
           </Button>
         ))}
