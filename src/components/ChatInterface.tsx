@@ -26,7 +26,6 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   const [input, setInput] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { messages, addMessage, clearHistory } = useChatHistory(user.id);
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const [interest, setInterest] = useState<'career' | 'health' | null>(null);
@@ -36,12 +35,8 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   
   // Scroll to bottom whenever messages change
   useEffect(() => {
-    if (messagesEndRef.current && scrollAreaRef.current) {
-      // Only scroll the messages container, not the whole page
-      const scrollContainer = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]');
-      if (scrollContainer) {
-        scrollContainer.scrollTop = scrollContainer.scrollHeight;
-      }
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
 
@@ -228,8 +223,8 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
         </Button>
       </div>
       
-      <div className="flex flex-grow">
-        <ScrollArea className="flex-grow p-4" ref={scrollAreaRef}>
+      <div className="flex flex-grow overflow-hidden">
+        <div className="flex-grow overflow-y-auto p-4">
           <div className="space-y-4">
             {messages.map((message) => (
               <div 
@@ -252,7 +247,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
             ))}
             <div ref={messagesEndRef} />
           </div>
-        </ScrollArea>
+        </div>
         
         {interest && (
           <div className="w-64 border-l border-gray-200 p-4 hidden md:block overflow-y-auto">
