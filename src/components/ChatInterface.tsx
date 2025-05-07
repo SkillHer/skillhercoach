@@ -20,20 +20,21 @@ interface Message {
 
 interface ChatInterfaceProps {
   user: { id: string; name: string; profile: Record<string, any> };
-  initialPrompt?: string; // Added initialPrompt as an optional prop
+  initialPrompt?: string;
+  selectedInterest?: 'career' | 'health';
 }
 
-const ChatInterface = ({ user, initialPrompt }: ChatInterfaceProps) => {
+const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceProps) => {
   const [input, setInput] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { messages, addMessage, clearHistory } = useChatHistory(user.id);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const [interest, setInterest] = useState<'career' | 'health' | null>(null);
-  const [showSelector, setShowSelector] = useState(messages.length === 0);
+  const [interest, setInterest] = useState<'career' | 'health' | null>(selectedInterest || null);
+  const [showSelector, setShowSelector] = useState(messages.length === 0 && !selectedInterest);
   const isMobile = useIsMobile();
   
-  console.log("Current state - messages:", messages.length, "showSelector:", showSelector, "interest:", interest);
+  console.log("Current state - messages:", messages.length, "showSelector:", showSelector, "interest:", interest, "selectedInterest:", selectedInterest);
   
   // Scroll to bottom whenever messages change
   useEffect(() => {
@@ -41,6 +42,14 @@ const ChatInterface = ({ user, initialPrompt }: ChatInterfaceProps) => {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
+
+  // Process initialPrompt and selectedInterest if provided
+  useEffect(() => {
+    if (selectedInterest && messages.length === 0) {
+      console.log("Using selected interest:", selectedInterest);
+      handleInterestSelect(selectedInterest);
+    }
+  }, [selectedInterest, messages.length]);
 
   // Process initialPrompt if provided
   useEffect(() => {

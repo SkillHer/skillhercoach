@@ -9,6 +9,7 @@ const Chat = () => {
   const { user } = useAuth();
   const location = useLocation();
   const initialPrompt = location.state?.initialPrompt;
+  const selectedInterest = location.state?.selectedInterest;
   
   // Extract user name from Supabase user metadata or email
   const userName = user?.user_metadata?.full_name || 
@@ -28,7 +29,11 @@ const Chat = () => {
       <main className="flex-grow pt-20">
         <div className="container-custom">
           <div className="flex flex-col h-[calc(100vh-5rem)]">
-            <ChatInterface user={chatUser} initialPrompt={initialPrompt} />
+            <ChatInterface 
+              user={chatUser} 
+              initialPrompt={initialPrompt}
+              selectedInterest={selectedInterest}
+            />
           </div>
         </div>
       </main>

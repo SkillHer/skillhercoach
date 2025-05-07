@@ -52,13 +52,13 @@ const CoachingModules = () => {
     }
   ];
 
-  const handleLearnMore = (prompt: string) => {
+  const handleLearnMore = (prompt: string, interest: 'career' | 'health') => {
     if (user) {
-      // User is logged in, navigate to chat with the prompt
-      navigate('/chat', { state: { initialPrompt: prompt } });
+      // User is logged in, navigate to chat with the prompt and interest
+      navigate('/chat', { state: { initialPrompt: prompt, selectedInterest: interest } });
     } else {
       // User is not logged in, navigate to login
-      navigate('/login', { state: { redirectAfterLogin: '/chat', initialPrompt: prompt } });
+      navigate('/login', { state: { redirectAfterLogin: '/chat', initialPrompt: prompt, selectedInterest: interest } });
     }
   };
 
@@ -90,7 +90,7 @@ const CoachingModules = () => {
                     <Button 
                       variant="outline" 
                       className="w-full border-clara-lavender text-clara-lavender hover:bg-clara-lavender/10"
-                      onClick={() => handleLearnMore(module.prompt)}
+                      onClick={() => handleLearnMore(module.prompt, 'health')}
                     >
                       Learn More
                     </Button>
@@ -117,7 +117,7 @@ const CoachingModules = () => {
                     <Button 
                       variant="outline" 
                       className="w-full border-clara-sage text-clara-sage hover:bg-clara-sage/10"
-                      onClick={() => handleLearnMore(module.prompt)}
+                      onClick={() => handleLearnMore(module.prompt, 'career')}
                     >
                       Learn More
                     </Button>
