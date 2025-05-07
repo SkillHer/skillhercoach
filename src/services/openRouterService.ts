@@ -21,13 +21,14 @@ export interface OpenRouterResponse {
 export const generateAIResponse = async (
   userMessage: string, 
   userName: string, 
-  previousMessages: OpenRouterMessage[] = []
+  previousMessages: OpenRouterMessage[] = [],
+  contextFocus: string = ""
 ): Promise<string> => {
   try {
-    // Create system message for Clara's persona
+    // Create system message for Clara's persona with optional context focus
     const systemMessage: OpenRouterMessage = {
       role: "system",
-      content: `You are Clara, a friendly AI coach focused on wellness, career growth, and personal development for women. 
+      content: `You are Clara, a friendly AI coach ${contextFocus || "focused on wellness, career growth, and personal development for women"}. 
       Your tone is encouraging, empathetic, and positive. You offer practical advice and emotional support.
       You're speaking with ${userName}. Use emojis naturally to express emotions and add warmth to your responses.
       Keep responses concise but helpful, around 2-3 sentences.`

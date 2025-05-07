@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,8 @@ import { useChatHistory } from '../hooks/useChatHistory';
 import { generateAIResponse, formatMessagesForOpenRouter } from '../services/openRouterService';
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
+import InterestSelector from './InterestSelector';
+import SuggestedPrompts from './SuggestedPrompts';
 
 // Define the message type
 interface Message {
@@ -28,8 +29,10 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const [interest, setInterest] = useState<'career' | 'health' | null>(null);
+  const [showSelector, setShowSelector] = useState(messages.length === 0);
   
-  // Scroll to bottom whenever messages change, but prevent page from scrolling
+  // Scroll to bottom whenever messages change
   useEffect(() => {
     if (messagesEndRef.current && scrollAreaRef.current) {
       // Only scroll the messages container, not the whole page
@@ -40,19 +43,31 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     }
   }, [messages]);
 
-  // Initial greeting message
-  useEffect(() => {
-    if (messages.length === 0) {
-      const initialMessage: Message = {
-        id: Date.now().toString(),
-        text: `Hello ${user.name}! 👋 I'm Clara, your personal coach for wellness and career growth. How can I support you today? ✨`,
-        sender: 'clara',
-        timestamp: new Date(),
-        emotion: 'cheerful'
-      };
-      addMessage(initialMessage);
-    }
-  }, []);
+  // Handle interest selection
+  const handleInterestSelect = (selectedInterest: 'career' | 'health') => {
+    setInterest(selectedInterest);
+    setShowSelector(false);
+    
+    // Add initial greeting based on selected interest
+    const greetingText = selectedInterest === 'career' 
+      ? `Hello ${user.name}! 👋 I'm Clara, your personal coach focused on women's career development. Whether you're looking to advance in your current role, negotiate a salary, or improve your work-life balance, I'm here to help! How can I support your career goals today? ✨`
+      : `Hello ${user.name}! 👋 I'm Clara, your personal wellness coach focused on women's health. I can help with topics like stress management, fitness, nutrition, or hormonal health. What aspect of your wellbeing would you like to focus on today? ✨`;
+      
+    const initialMessage: Message = {
+      id: Date.now().toString(),
+      text: greetingText,
+      sender: 'clara',
+      timestamp: new Date(),
+      emotion: 'cheerful'
+    };
+    
+    addMessage(initialMessage);
+  };
+  
+  // Handle selecting a suggested prompt
+  const handleSelectPrompt = (prompt: string) => {
+    setInput(prompt);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,8 +91,19 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
       // Format previous messages for OpenRouter
       const previousMessages = formatMessagesForOpenRouter(messages);
       
-      // Get AI response from OpenRouter
-      const responseText = await generateAIResponse(input.trim(), user.name, previousMessages);
+      // Enhanced system prompt based on selected interest
+      const interestContext = interest === 'career'
+        ? "focused on women's career development, leadership skills, workplace challenges, and professional growth"
+        : "focused on women's health, wellness, fitness, nutrition, and hormonal balance";
+      
+      // Get AI response from OpenRouter with the enhanced context
+      const responseText = await generateAIResponse(
+        input.trim(), 
+        user.name, 
+        previousMessages,
+        interestContext
+      );
+      
       const emotion = detectEmotion(input.trim());
       
       const claraResponse: Message = {
@@ -111,6 +137,8 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     // Show confirmation before clearing
     if (window.confirm("Are you sure you want to clear the chat history?")) {
       clearHistory();
+      setShowSelector(true);
+      setInterest(null);
       toast({
         title: "Chat cleared",
         description: "Your chat history has been cleared.",
@@ -151,6 +179,24 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     }
   };
 
+  // Show interest selector if no messages
+  if (showSelector) {
+    return (
+      <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-clara-lavender/10 overflow-hidden">
+        <div className="flex justify-between items-center p-3 border-b border-gray-200">
+          <div className="flex items-center">
+            <MessageCircle size={18} className="text-clara-lavender mr-2" />
+            <span className="font-medium">Chat with Clara</span>
+          </div>
+        </div>
+        
+        <div className="flex-grow flex items-center justify-center p-4">
+          <InterestSelector onSelect={handleInterestSelect} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-clara-lavender/10 overflow-hidden">
       <div className="flex justify-between items-center p-3 border-b border-gray-200">
@@ -169,30 +215,41 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
         </Button>
       </div>
       
-      <ScrollArea className="flex-grow p-4" ref={scrollAreaRef}>
-        <div className="space-y-4">
-          {messages.map((message) => (
-            <div 
-              key={message.id} 
-              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
+      <div className="flex flex-grow">
+        <ScrollArea className="flex-grow p-4" ref={scrollAreaRef}>
+          <div className="space-y-4">
+            {messages.map((message) => (
               <div 
-                className={`max-w-[80%] p-3 rounded-lg border ${
-                  message.sender === 'user' 
-                    ? 'bg-clara-lavender/10 border-clara-lavender/20' 
-                    : getMessageStyle(message.emotion)
-                }`}
+                key={message.id} 
+                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <p className="text-sm md:text-base">{message.text}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </p>
+                <div 
+                  className={`max-w-[80%] p-3 rounded-lg border ${
+                    message.sender === 'user' 
+                      ? 'bg-clara-lavender/10 border-clara-lavender/20' 
+                      : getMessageStyle(message.emotion)
+                  }`}
+                >
+                  <p className="text-sm md:text-base">{message.text}</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-      </ScrollArea>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+        </ScrollArea>
+        
+        {interest && (
+          <div className="w-64 border-l border-gray-200 p-4 hidden md:block overflow-y-auto">
+            <SuggestedPrompts 
+              interest={interest} 
+              onSelectPrompt={handleSelectPrompt} 
+            />
+          </div>
+        )}
+      </div>
       
       <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4">
         <div className="flex items-center gap-2">

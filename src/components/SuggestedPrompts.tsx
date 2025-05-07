@@ -1,0 +1,50 @@
+
+import React from 'react';
+import { Button } from "@/components/ui/button";
+import { MessageCircle } from "lucide-react";
+
+interface SuggestedPromptsProps {
+  interest: 'career' | 'health';
+  onSelectPrompt: (prompt: string) => void;
+}
+
+const SuggestedPrompts = ({ interest, onSelectPrompt }: SuggestedPromptsProps) => {
+  const careerPrompts = [
+    "How can I negotiate a salary increase?",
+    "What strategies can help me achieve work-life balance?",
+    "I'm feeling stuck in my career. How can I find new opportunities?",
+    "How can I deal with imposter syndrome at work?",
+    "What leadership skills should I develop to advance my career?"
+  ];
+
+  const healthPrompts = [
+    "What are some stress management techniques I can practice daily?",
+    "How can I improve my sleep quality?",
+    "What simple exercises can I incorporate into my busy schedule?",
+    "How can I maintain hormonal balance naturally?",
+    "What nutritional needs should women prioritize?"
+  ];
+
+  const prompts = interest === 'career' ? careerPrompts : healthPrompts;
+
+  return (
+    <div className="space-y-3">
+      <h3 className="text-sm font-medium text-gray-500">Suggested topics:</h3>
+      <div className="grid grid-cols-1 gap-2">
+        {prompts.map((prompt, index) => (
+          <Button
+            key={index}
+            variant="outline"
+            className="justify-start text-left h-auto py-2 border-clara-lavender/20 hover:bg-clara-lavender/10"
+            onClick={() => onSelectPrompt(prompt)}
+          >
+            <MessageCircle size={14} className="mr-2 text-clara-lavender shrink-0" />
+            <span className="truncate">{prompt}</span>
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default SuggestedPrompts;
