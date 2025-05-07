@@ -1,16 +1,24 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Hero = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const isMobile = useIsMobile();
+
+  // Reset image state when viewport changes
+  useEffect(() => {
+    setImageLoaded(false);
+    setImageError(false);
+  }, [isMobile]);
 
   const handleLearnMore = () => {
     // Scroll to features if on home page, otherwise navigate based on auth state
@@ -53,12 +61,12 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-          <div className="md:w-1/2 mt-12 md:mt-0">
-            <div className="relative">
+          <div className="md:w-1/2 mt-12 md:mt-0 w-full">
+            <div className="relative w-full">
               <div className="absolute -top-6 -left-6 w-64 h-64 bg-clara-lavender/20 rounded-full blur-3xl"></div>
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-clara-sage/20 rounded-full blur-3xl"></div>
-              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-6">
-                <div className="aspect-video bg-clara-cream rounded-lg overflow-hidden">
+              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-4 sm:p-6 w-full">
+                <div className="aspect-video bg-clara-cream rounded-lg overflow-hidden w-full">
                   <AspectRatio ratio={16 / 9} className="rounded-lg relative">
                     {!imageLoaded && !imageError && (
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -71,10 +79,11 @@ const Hero = () => {
                       alt="Skillher Coach"
                       className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                       onLoad={() => setImageLoaded(true)}
-                      onError={() => {
-                        console.error("Failed to load image");
+                      onError={(e) => {
+                        console.error("Failed to load image:", e);
                         setImageError(true);
                       }}
+                      loading="eager"
                     />
                     
                     {imageError && (
