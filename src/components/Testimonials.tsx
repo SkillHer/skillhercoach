@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -9,13 +10,13 @@ const Testimonials = () => {
       quote: "SkillHer Coach helped me find balance between my demanding executive role and my personal wellbeing. The personalized coaching has been transformative.",
       name: "Sarah J.",
       title: "Marketing Director",
-      image: "/lovable-uploads/b0b4206a-5fd0-40a8-adce-73d48f71f945.png"
+      image: "/lovable-uploads/834d91fb-488f-4fd9-b17b-10aec4974328.png"
     },
     {
       quote: "The career coaching modules gave me the confidence to negotiate a promotion I'd been hesitant to pursue. SkillHer Coach's guidance was exactly what I needed.",
       name: "Michelle L.",
       title: "Senior Software Engineer",
-      image: "/lovable-uploads/89d9527e-b46b-4c6d-b55c-652064b895b0.png"
+      image: "/lovable-uploads/bc7e2e26-eefa-42db-98d8-940766bd33ac.png"
     },
     {
       quote: "As a startup founder, I was burning out fast. The wellness coaching helped me create sustainable practices that improved both my health and my company.",
