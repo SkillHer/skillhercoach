@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Heart, Star, Users, Medal } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 const Features = () => {
   const features = [
@@ -24,7 +23,7 @@ const Features = () => {
       icon: <Medal className="h-8 w-8 text-clara-charcoal" />,
       title: "Achievement Tracking",
       description: "Monitor your progress, celebrate milestones, and visualize your growth in both wellness and career domains.",
-      badge: "CLOSED BETA"
+      badge: "closed beta"
     }
   ];
 
@@ -47,9 +46,9 @@ const Features = () => {
               <div className="mb-4 flex justify-between items-center">
                 <div>{feature.icon}</div>
                 {feature.badge && (
-                  <Badge className="bg-red-500 hover:bg-red-600 text-white text-xs">
+                  <span className="bg-clara-lavender text-white text-xs px-2.5 py-0.5 rounded-full">
                     {feature.badge}
-                  </Badge>
+                  </span>
                 )}
               </div>
               <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
