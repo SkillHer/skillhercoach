@@ -27,13 +27,13 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm w-full max-w-md mx-auto overflow-auto">
+    <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm max-h-[80vh] overflow-y-auto">
       <h2 className="text-lg font-medium text-center mb-6">
         What area would you like to focus on today?
       </h2>
       
       <RadioGroup 
-        className="flex flex-col gap-4 mb-6"
+        className="gap-4 mb-6"
         value={selectedInterest || ""}
         onValueChange={(value) => handleInterestSelect(value as 'career' | 'health' | 'other')}
       >
@@ -80,14 +80,15 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
         </div>
       </RadioGroup>
       
-      <div className="mt-6 sticky bottom-0 bg-white pt-2">
+      <div className="sticky bottom-0 pt-2 bg-white">
+        {/* Continue button with icon and animation */}
         <Button 
-          className="w-full bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-white text-lg flex items-center justify-center"
+          className="w-full bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-lg flex items-center justify-center"
           onClick={handleContinue}
           disabled={!selectedInterest}
         >
           <span>Continue</span>
-          <ArrowRight className="ml-2" />
+          <ArrowRight className="ml-2 animate-pulse" />
         </Button>
         
         {/* Visual indicator when no interest is selected */}
