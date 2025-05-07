@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin, Mail } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -23,6 +23,9 @@ const Footer = () => {
               </a>
               <a href="https://www.linkedin.com/company/skillher-org/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
                 <Linkedin className="h-6 w-6" />
+              </a>
+              <a href="mailto:skillherhq@gmail.com" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
+                <Mail className="h-6 w-6" />
               </a>
             </div>
           </div>
