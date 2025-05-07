@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
+
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const Hero = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
 
   const handleLearnMore = () => {
     // Scroll to features if on home page, otherwise navigate based on auth state
@@ -24,27 +21,6 @@ const Hero = () => {
       navigate('/login');
     }
   };
-
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-    console.log("Image loaded successfully");
-  };
-
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    console.error("Image failed to load:", e);
-    setImageError(true);
-  };
-
-  // Use a public URL that's accessible without path resolution issues
-  const imageSrc = "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80";
-
-  useEffect(() => {
-    // Preload the image
-    const img = new Image();
-    img.src = imageSrc;
-    img.onload = handleImageLoad;
-    img.onerror = (e) => handleImageError(e as any);
-  }, [imageSrc]);
 
   return (
     <section className="pt-24 pb-16 md:pt-32 md:pb-24">
@@ -77,29 +53,14 @@ const Hero = () => {
             <div className="relative">
               <div className="absolute -top-6 -left-6 w-64 h-64 bg-clara-lavender/20 rounded-full blur-3xl"></div>
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-clara-sage/20 rounded-full blur-3xl"></div>
-              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-4">
-                <AspectRatio ratio={16/9} className="w-full rounded-lg overflow-hidden bg-gray-100">
-                  {!imageLoaded && !imageError && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-10 h-10 border-4 border-clara-lavender border-t-transparent rounded-full animate-spin"></div>
-                    </div>
-                  )}
-                  
-                  {imageError ? (
-                    <div className="flex flex-col items-center justify-center h-full">
-                      <div className="text-gray-400 mb-2">Image could not be loaded</div>
-                      <Skeleton className="w-full h-full" />
-                    </div>
-                  ) : (
-                    <img 
-                      src={imageSrc}
-                      alt="Skillher Coach" 
-                      className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                      onLoad={handleImageLoad}
-                      onError={handleImageError}
-                    />
-                  )}
-                </AspectRatio>
+              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-6">
+                <div className="aspect-video bg-clara-cream rounded-lg mb-6 flex items-center justify-center">
+                  <img 
+                    src="/lovable-uploads/b665f060-0309-4955-bba1-4a4fe6334dd6.png" 
+                    alt="Skillher Coach" 
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                </div>
               </div>
             </div>
           </div>

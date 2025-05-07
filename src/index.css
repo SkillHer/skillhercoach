@@ -95,5 +95,3 @@
     @apply container px-4 md:px-6 max-w-screen-xl mx-auto;
   }
 }
-
-/* Remove App.css rules as they'll be overridden by Tailwind anyway */
