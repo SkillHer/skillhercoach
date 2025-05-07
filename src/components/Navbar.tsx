@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -25,8 +24,7 @@ const Navbar = () => {
         
         {/* Logo and Name */}
         <Link to="/" className="flex items-center space-x-2">
-          <span className="font-serif text-2xl font-bold">Coach<span className="text-clara-lavender">Clara</span></span>
-          <span className="text-xs bg-clara-cream text-clara-charcoal px-2 py-1 rounded-full">by skillher</span>
+          <span className="font-serif text-2xl font-bold">Coach<span className="text-clara-lavender">Skillher</span></span>
         </Link>
 
         {/* Desktop Navigation */}

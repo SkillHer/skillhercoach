@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div>
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <span className="font-serif text-2xl font-bold text-white">Coach<span className="text-clara-gold">Clara</span></span>
+              <span className="font-serif text-2xl font-bold text-white">Coach<span className="text-clara-gold">Skillher</span></span>
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
               Your AI-powered partner for holistic personal development, focused on empowering women to achieve balance between wellness and career success.
@@ -38,7 +38,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3">
               <li><Link to="/" className="text-gray-300 hover:text-white transition-colors">Home</Link></li>
-              <li><Link to="/chat" className="text-gray-300 hover:text-white transition-colors">Chat with Clara</Link></li>
+              <li><Link to="/chat" className="text-gray-300 hover:text-white transition-colors">Chat with Coach</Link></li>
               <li><a href="/#features" className="text-gray-300 hover:text-white transition-colors">Features</a></li>
               <li><a href="/#modules" className="text-gray-300 hover:text-white transition-colors">Coaching Modules</a></li>
               <li><a href="/#testimonials" className="text-gray-300 hover:text-white transition-colors">Testimonials</a></li>
@@ -52,7 +52,7 @@ const Footer = () => {
               <li><Link to="/chat" className="text-gray-300 hover:text-white transition-colors">Chat Dashboard</Link></li>
             </ul>
             <p className="text-gray-300 mt-4">
-              skillher is dedicated to empowering women through personalized career guidance and wellness coaching, helping them achieve balance and success in all aspects of life.
+              Coach Skillher is dedicated to empowering women through personalized career guidance and wellness coaching, helping them achieve balance and success in all aspects of life.
             </p>
             <Link to="/signup" className="text-clara-gold hover:text-clara-gold/80 transition-colors font-medium mt-2 inline-block">
               Join the Community →
@@ -60,7 +60,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center md:text-left text-gray-400">
-          <p>&copy; {currentYear} skillher. All rights reserved. CoachClara is a product of skillher.</p>
+          <p>&copy; {currentYear} Coach Skillher. All rights reserved.</p>
         </div>
       </div>
     </footer>
