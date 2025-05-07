@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div>
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <span className="font-serif text-2xl font-bold text-white">SkillHer<span className="text-clara-gold">Coach</span></span>
+              <span className="font-serif text-2xl font-bold text-white">SkillHer<span className="text-clara-lavender">Coach</span></span>
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
               Your AI-powered partner for holistic personal development, focused on empowering women to achieve balance between wellness and career success.
@@ -46,7 +46,7 @@ const Footer = () => {
             <p className="text-gray-300 mt-4">
               SkillHer Coach is dedicated to empowering women through personalized career guidance and wellness coaching, helping them achieve balance and success in all aspects of life.
             </p>
-            <a href="https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M" target="_blank" rel="noopener noreferrer" className="text-clara-gold hover:text-clara-gold/80 transition-colors font-medium mt-2 inline-block">
+            <a href="https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M" target="_blank" rel="noopener noreferrer" className="text-clara-lavender hover:text-clara-lavender/80 transition-colors font-medium mt-2 inline-block">
               Join the Community →
             </a>
           </div>
