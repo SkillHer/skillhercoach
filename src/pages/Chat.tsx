@@ -1,11 +1,14 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ChatInterface from '../components/ChatInterface';
 import { useAuth } from '@/contexts/AuthContext';
 
 const Chat = () => {
   const { user } = useAuth();
+  const location = useLocation();
+  const initialPrompt = location.state?.initialPrompt;
   
   // Extract user name from Supabase user metadata or email
   const userName = user?.user_metadata?.full_name || 
@@ -25,7 +28,7 @@ const Chat = () => {
       <main className="flex-grow pt-20">
         <div className="container-custom">
           <div className="flex flex-col h-[calc(100vh-5rem)]">
-            <ChatInterface user={chatUser} />
+            <ChatInterface user={chatUser} initialPrompt={initialPrompt} />
           </div>
         </div>
       </main>

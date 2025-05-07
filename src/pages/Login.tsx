@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,7 +17,12 @@ const Login = () => {
   
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
+
+  // Get redirect path and initialPrompt from location state
+  const redirectPath = location.state?.redirectAfterLogin || '/chat';
+  const initialPrompt = location.state?.initialPrompt || null;
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -49,7 +54,12 @@ const Login = () => {
         description: "Welcome back!",
       });
       
-      navigate('/chat');
+      // Navigate to the redirect path with the initialPrompt if available
+      if (initialPrompt) {
+        navigate(redirectPath, { state: { initialPrompt } });
+      } else {
+        navigate(redirectPath);
+      }
     } catch (error: any) {
       toast({
         title: "Login Failed",

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,7 +19,12 @@ const SignUp = () => {
   
   const { signUp } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
+
+  // Get redirect path and initialPrompt from location state
+  const redirectPath = location.state?.redirectAfterLogin || '/profile-setup';
+  const initialPrompt = location.state?.initialPrompt || null;
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -70,9 +75,14 @@ const SignUp = () => {
         description: "Your account has been created.",
       });
 
-      // Redirect to profile setup instead of login
+      // Store initialPrompt in localStorage to use it after the profile setup
+      if (initialPrompt) {
+        localStorage.setItem('pendingPrompt', initialPrompt);
+      }
+
+      // Redirect to profile setup or chat
       if (data?.user) {
-        navigate('/profile-setup');
+        navigate(redirectPath);
       }
     } catch (error: any) {
       toast({

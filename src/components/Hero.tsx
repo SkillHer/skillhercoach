@@ -1,9 +1,27 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const handleLearnMore = () => {
+    // Scroll to features if on home page, otherwise navigate based on auth state
+    if (window.location.pathname === '/') {
+      const featuresElement = document.getElementById('features');
+      if (featuresElement) {
+        featuresElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (user) {
+      navigate('/chat');
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <section className="pt-24 pb-16 md:pt-32 md:pb-24">
       <div className="container-custom">
@@ -16,16 +34,19 @@ const Hero = () => {
               Skillher Coach helps women achieve balance, purpose, and success through personalized guidance for both personal wellbeing and professional growth.
             </p>
             <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link to="/signup">
+              <Link to={user ? "/chat" : "/signup"}>
                 <Button size="lg" className="bg-clara-lavender hover:bg-clara-lavender/90">
                   Start Your Journey
                 </Button>
               </Link>
-              <a href="#features">
-                <Button size="lg" variant="outline" className="border-clara-lavender text-clara-lavender hover:bg-clara-lavender/10">
-                  Learn More
-                </Button>
-              </a>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-clara-lavender text-clara-lavender hover:bg-clara-lavender/10"
+                onClick={handleLearnMore}
+              >
+                Learn More
+              </Button>
             </div>
           </div>
           <div className="md:w-1/2 mt-12 md:mt-0">
