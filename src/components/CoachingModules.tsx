@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -52,16 +51,6 @@ const CoachingModules = () => {
     }
   ];
 
-  const handleLearnMore = (prompt: string, interest: 'career' | 'health') => {
-    if (user) {
-      // User is logged in, navigate to chat with the prompt and interest
-      navigate('/chat', { state: { initialPrompt: prompt, selectedInterest: interest } });
-    } else {
-      // User is not logged in, navigate to login
-      navigate('/login', { state: { redirectAfterLogin: '/chat', initialPrompt: prompt, selectedInterest: interest } });
-    }
-  };
-
   return (
     <section id="modules" className="py-16">
       <div className="container-custom">
@@ -86,14 +75,7 @@ const CoachingModules = () => {
                         <Badge className="bg-clara-lavender hover:bg-clara-lavender/90">{module.badge}</Badge>
                       )}
                     </div>
-                    <p className="text-gray-600 mb-4">{module.description}</p>
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-clara-lavender text-clara-lavender hover:bg-clara-lavender/10"
-                      onClick={() => handleLearnMore(module.prompt, 'health')}
-                    >
-                      Learn More
-                    </Button>
+                    <p className="text-gray-600">{module.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -113,14 +95,7 @@ const CoachingModules = () => {
                         <Badge className="bg-clara-sage hover:bg-clara-sage/90">{module.badge}</Badge>
                       )}
                     </div>
-                    <p className="text-gray-600 mb-4">{module.description}</p>
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-clara-sage text-clara-sage hover:bg-clara-sage/10"
-                      onClick={() => handleLearnMore(module.prompt, 'career')}
-                    >
-                      Learn More
-                    </Button>
+                    <p className="text-gray-600">{module.description}</p>
                   </CardContent>
                 </Card>
               ))}
