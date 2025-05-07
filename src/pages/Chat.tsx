@@ -1,52 +1,22 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Navbar from '../components/Navbar';
 import ChatInterface from '../components/ChatInterface';
 import { useAuth } from '@/contexts/AuthContext';
-import getSupabaseClient from '../services/supabaseClient';
-
-interface UserProfile {
-  age?: number | null;
-  nationality?: string | null;
-  occupation?: string | null;
-}
 
 const Chat = () => {
   const { user } = useAuth();
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const supabase = getSupabaseClient();
   
   // Extract user name from Supabase user metadata or email
   const userName = user?.user_metadata?.full_name || 
                   (user?.email ? user.email.split('@')[0] : 'User');
   
-  // Fetch user profile data when component mounts
-  useEffect(() => {
-    if (user?.id) {
-      const fetchProfile = async () => {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('age, nationality, occupation')
-          .eq('id', user.id)
-          .single();
-          
-        if (error) {
-          console.error('Error fetching profile:', error);
-        } else if (data) {
-          setProfile(data);
-        }
-      };
-      
-      fetchProfile();
-    }
-  }, [user?.id]);
-  
-  // Create an object compatible with what ChatInterface expects
+  // Create a simplified chat user object
   const chatUser = {
     id: user?.id || '',
     name: userName,
-    // Add profile data to be used in the chat
-    profile: profile || {}
+    // Empty profile object since we're removing profile features
+    profile: {}
   };
 
   return (
