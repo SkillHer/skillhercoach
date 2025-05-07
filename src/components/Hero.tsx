@@ -66,32 +66,30 @@ const Hero = () => {
               <div className="absolute -top-6 -left-6 w-64 h-64 bg-clara-lavender/20 rounded-full blur-3xl"></div>
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-clara-sage/20 rounded-full blur-3xl"></div>
               <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-4 sm:p-6 w-full">
-                <div className="aspect-video bg-clara-cream rounded-lg overflow-hidden w-full">
-                  <AspectRatio ratio={16 / 9} className="rounded-lg relative">
-                    {!imageLoaded && !imageError && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Skeleton className="w-full h-full rounded-lg" />
-                      </div>
-                    )}
-                    
-                    <img
-                      src="/lovable-uploads/bcdab618-e711-4683-909b-ce31cae7f3ec.png"
-                      alt="Skillher Coach"
-                      className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                      onLoad={() => setImageLoaded(true)}
-                      onError={(e) => {
-                        console.error("Failed to load image:", e);
-                        setImageError(true);
-                      }}
-                      loading="eager"
-                    />
-                    
-                    {imageError && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
-                        <p className="text-gray-500">Unable to load image</p>
-                      </div>
-                    )}
-                  </AspectRatio>
+                <div className="h-[400px] sm:h-[450px] md:h-[500px] bg-clara-cream rounded-lg overflow-hidden w-full">
+                  <img
+                    src="/lovable-uploads/bcdab618-e711-4683-909b-ce31cae7f3ec.png"
+                    alt="Skillher Coach"
+                    className={`w-full h-full object-contain transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    onLoad={() => setImageLoaded(true)}
+                    onError={(e) => {
+                      console.error("Failed to load image:", e);
+                      setImageError(true);
+                    }}
+                    loading="eager"
+                  />
+                  
+                  {!imageLoaded && !imageError && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Skeleton className="w-full h-full rounded-lg" />
+                    </div>
+                  )}
+                  
+                  {imageError && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
+                      <p className="text-gray-500">Unable to load image</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
