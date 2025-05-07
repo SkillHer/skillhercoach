@@ -27,13 +27,13 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm w-full max-w-md mx-auto">
+    <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm w-full max-w-md mx-auto overflow-auto">
       <h2 className="text-lg font-medium text-center mb-6">
         What area would you like to focus on today?
       </h2>
       
       <RadioGroup 
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 mb-6"
         value={selectedInterest || ""}
         onValueChange={(value) => handleInterestSelect(value as 'career' | 'health' | 'other')}
       >
@@ -80,7 +80,7 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
         </div>
       </RadioGroup>
       
-      <div className="mt-6">
+      <div className="mt-6 sticky bottom-0 bg-white pt-2">
         <Button 
           className="w-full bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-white text-lg flex items-center justify-center"
           onClick={handleContinue}
