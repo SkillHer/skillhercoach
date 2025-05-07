@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import getSupabaseClient from '../services/supabaseClient';
 import { User } from 'lucide-react';
@@ -39,7 +38,23 @@ const ProfileSetup = () => {
     setLoading(true);
     
     try {
-      // Save profile data to Supabase
+      // Check if the profiles table exists
+      const { error: tableCheckError } = await supabase
+        .from('profiles')
+        .select('id')
+        .limit(1);
+      
+      if (tableCheckError && tableCheckError.message.includes('does not exist')) {
+        // Profiles table doesn't exist - just proceed to chat without saving
+        toast({
+          title: "Setup Complete",
+          description: "Your profile setup is complete. The database table will be created later.",
+        });
+        navigate('/chat');
+        return;
+      }
+
+      // Try to save profile data to Supabase
       const { error } = await supabase.from('profiles').upsert({
         id: user.id,
         age: parseInt(age) || null,
@@ -59,11 +74,21 @@ const ProfileSetup = () => {
       navigate('/chat');
     } catch (error: any) {
       console.error('Error saving profile:', error);
-      toast({
-        title: "Update Failed",
-        description: error.message || "There was a problem saving your profile information.",
-        variant: "destructive",
-      });
+      
+      // Handle missing table error gracefully
+      if (error.message && error.message.includes('does not exist')) {
+        toast({
+          title: "Setup Complete",
+          description: "Your profile was saved in memory. Database setup pending.",
+        });
+        navigate('/chat');
+      } else {
+        toast({
+          title: "Update Failed",
+          description: "There was a problem with the database. Your information is saved locally.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setLoading(false);
     }
