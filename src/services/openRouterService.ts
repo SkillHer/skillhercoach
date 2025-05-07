@@ -1,5 +1,5 @@
 
-// OpenRouter API service for enhancing Coach Skillher with AI capabilities
+// OpenRouter API service for enhancing Skillher Coach with AI capabilities
 
 const OPENROUTER_API_KEY = "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";
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
@@ -28,7 +28,7 @@ export const generateAIResponse = async (
   contextFocus: string = ""
 ): Promise<string[]> => {
   try {
-    // Create system message for Coach Skillher's persona with optional context focus
+    // Create system message for Skillher Coach's persona with optional context focus
     const systemMessage: OpenRouterMessage = {
       role: "system",
       content: `You are a friendly AI coach ${contextFocus || "focused on wellness, career growth, and personal development for women"}. 
@@ -61,7 +61,7 @@ export const generateAIResponse = async (
         "Content-Type": "application/json",
         "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
         "HTTP-Referer": window.location.origin,
-        "X-Title": "Coach Skillher"
+        "X-Title": "Skillher Coach"
       },
       body: JSON.stringify({
         model: "anthropic/claude-3-haiku",

@@ -13,7 +13,7 @@ const Hero = () => {
               Your Personal AI Coach for <span className="text-clara-lavender">Wellness</span> & <span className="text-clara-sage">Career</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto md:mx-0">
-              Coach Skillher helps women achieve balance, purpose, and success through personalized guidance for both personal wellbeing and professional growth.
+              Skillher Coach helps women achieve balance, purpose, and success through personalized guidance for both personal wellbeing and professional growth.
             </p>
             <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
               <Link to="/signup">
@@ -34,7 +34,7 @@ const Hero = () => {
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-clara-sage/20 rounded-full blur-3xl"></div>
               <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-6">
                 <div className="aspect-video bg-clara-cream rounded-lg mb-6 flex items-center justify-center">
-                  <span className="font-serif text-3xl text-clara-charcoal/50">Coach Skillher</span>
+                  <span className="font-serif text-3xl text-clara-charcoal/50">Skillher Coach</span>
                 </div>
                 <div className="space-y-4">
                   <div className="h-4 bg-clara-lavender/20 rounded-full w-3/4"></div>
