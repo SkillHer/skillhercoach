@@ -55,7 +55,11 @@ const Hero = () => {
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-clara-sage/20 rounded-full blur-3xl"></div>
               <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-6">
                 <div className="aspect-video bg-clara-cream rounded-lg mb-6 flex items-center justify-center">
-                  <span className="font-serif text-3xl text-clara-charcoal/50">Skillher Coach</span>
+                  <img 
+                    src="/lovable-uploads/b665f060-0309-4955-bba1-4a4fe6334dd6.png" 
+                    alt="Skillher Coach" 
+                    className="w-full h-full object-cover rounded-lg"
+                  />
                 </div>
                 <div className="space-y-4">
                   <div className="h-4 bg-clara-lavender/20 rounded-full w-3/4"></div>
