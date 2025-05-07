@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
@@ -135,7 +134,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     }
   };
 
-  // Handle clear chat - removed confirmation prompt
+  // Handle clear chat
   const handleClearChat = () => {
     clearHistory();
     setShowSelector(true);
@@ -296,7 +295,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
         </div>
         
         {/* Show prompt suggestions for mobile users */}
-        {interest && messages.length <= 1 && (
+        {interest && (messages.length <= 1 || messages.length === 0) && (
           <div className="mt-4 md:hidden">
             <p className="text-sm font-medium text-gray-500 mb-2">Suggested questions:</p>
             <div className="flex overflow-x-auto pb-2 gap-2">
