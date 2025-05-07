@@ -53,9 +53,10 @@ const Chat = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow pt-20">
+      {/* Adjust the padding to ensure content is visible and not covered by footer */}
+      <main className="flex-grow pt-20 pb-16">
         <div className="container-custom">
-          <div className="flex flex-col h-[calc(100vh-12rem)]">
+          <div className="flex flex-col h-[calc(100vh-14rem)]">
             <ChatInterface user={chatUser} />
           </div>
         </div>
