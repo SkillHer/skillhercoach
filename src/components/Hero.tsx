@@ -1,12 +1,16 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Hero = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const handleLearnMore = () => {
     // Scroll to features if on home page, otherwise navigate based on auth state
@@ -54,12 +58,31 @@ const Hero = () => {
               <div className="absolute -top-6 -left-6 w-64 h-64 bg-clara-lavender/20 rounded-full blur-3xl"></div>
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-clara-sage/20 rounded-full blur-3xl"></div>
               <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-6">
-                <div className="aspect-video bg-clara-cream rounded-lg mb-6 flex items-center justify-center">
-                  <img 
-                    src="/lovable-uploads/b665f060-0309-4955-bba1-4a4fe6334dd6.png" 
-                    alt="Skillher Coach" 
-                    className="w-full h-full object-cover rounded-lg"
-                  />
+                <div className="aspect-video bg-clara-cream rounded-lg overflow-hidden">
+                  <AspectRatio ratio={16 / 9} className="rounded-lg relative">
+                    {!imageLoaded && !imageError && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Skeleton className="w-full h-full rounded-lg" />
+                      </div>
+                    )}
+                    
+                    <img
+                      src="/lovable-uploads/bcdab618-e711-4683-909b-ce31cae7f3ec.png"
+                      alt="Skillher Coach"
+                      className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                      onLoad={() => setImageLoaded(true)}
+                      onError={() => {
+                        console.error("Failed to load image");
+                        setImageError(true);
+                      }}
+                    />
+                    
+                    {imageError && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
+                        <p className="text-gray-500">Unable to load image</p>
+                      </div>
+                    )}
+                  </AspectRatio>
                 </div>
               </div>
             </div>
