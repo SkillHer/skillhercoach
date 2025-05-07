@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
+import Achievements from "./pages/Achievements";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +38,11 @@ const App = () => (
             <Route path="/chat" element={
               <ProtectedRoute>
                 <Chat />
+              </ProtectedRoute>
+            } />
+            <Route path="/achievements" element={
+              <ProtectedRoute>
+                <Achievements />
               </ProtectedRoute>
             } />
             
