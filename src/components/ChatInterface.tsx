@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
@@ -7,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import InterestSelector from './InterestSelector';
 import SuggestedPrompts from './SuggestedPrompts';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Define the message type
 interface Message {
@@ -29,6 +31,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   const { toast } = useToast();
   const [interest, setInterest] = useState<'career' | 'health' | null>(null);
   const [showSelector, setShowSelector] = useState(messages.length === 0);
+  const isMobile = useIsMobile();
   
   console.log("Current state - messages:", messages.length, "showSelector:", showSelector, "interest:", interest);
   
@@ -295,7 +298,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
         </div>
         
         {/* Show prompt suggestions for mobile users */}
-        {interest && (messages.length <= 1 || messages.length === 0) && (
+        {interest && (
           <div className="mt-4 md:hidden">
             <p className="text-sm font-medium text-gray-500 mb-2">Suggested questions:</p>
             <div className="flex overflow-x-auto pb-2 gap-2">
