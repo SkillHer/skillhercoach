@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
@@ -45,6 +46,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
 
   // Handle interest selection
   const handleInterestSelect = (selectedInterest: 'career' | 'health') => {
+    console.log("Interest selected:", selectedInterest);
     setInterest(selectedInterest);
     setShowSelector(false);
     

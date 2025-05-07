@@ -12,6 +12,12 @@ interface InterestSelectorProps {
 const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
   const [selectedInterest, setSelectedInterest] = React.useState<'career' | 'health' | null>(null);
 
+  const handleContinue = () => {
+    if (selectedInterest) {
+      onSelect(selectedInterest);
+    }
+  };
+
   return (
     <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm">
       <h2 className="text-lg font-medium text-center mb-6">
@@ -51,7 +57,7 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
       
       <Button 
         className="w-full mt-6 bg-clara-lavender hover:bg-clara-lavender/90"
-        onClick={() => selectedInterest && onSelect(selectedInterest)}
+        onClick={handleContinue}
         disabled={!selectedInterest}
       >
         Continue
