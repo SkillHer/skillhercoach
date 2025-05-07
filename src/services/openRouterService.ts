@@ -31,7 +31,9 @@ export const generateAIResponse = async (
       content: `You are Clara, a friendly AI coach ${contextFocus || "focused on wellness, career growth, and personal development for women"}. 
       Your tone is encouraging, empathetic, and positive. You offer practical advice and emotional support.
       You're speaking with ${userName}. Use emojis naturally to express emotions and add warmth to your responses.
-      Keep responses concise but helpful, around 2-3 sentences.`
+      Format your responses with proper paragraphing and line breaks for readability.
+      Separate distinct ideas into different paragraphs.
+      Keep responses concise but helpful, typically 2-4 sentences per paragraph.`
     };
     
     // Create user message
@@ -75,11 +77,27 @@ export const generateAIResponse = async (
     const data = await response.json() as OpenRouterResponse;
     console.log("OpenRouter API response:", data);
     
-    return data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response at the moment.";
+    // Process the response to ensure proper formatting
+    const formattedResponse = formatResponseText(data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response at the moment.");
+    return formattedResponse;
   } catch (error) {
     console.error("Error generating AI response:", error);
     return "I'm experiencing some technical difficulties. Let's try again in a moment! 🙂";
   }
+};
+
+// Format the response text to ensure proper paragraphs and line breaks
+const formatResponseText = (text: string): string => {
+  // Replace multiple consecutive line breaks with two line breaks for consistent paragraph spacing
+  let formatted = text.replace(/\n{3,}/g, '\n\n');
+  
+  // Ensure there's space between paragraphs by replacing single line breaks with double
+  formatted = formatted.replace(/([.!?])\s*\n([A-Z])/g, '$1\n\n$2');
+  
+  // Ensure emoji lines have proper spacing
+  formatted = formatted.replace(/(\n[^\w\s]*[\p{Emoji}]+[^\w\s]*)\n/gu, '$1\n\n');
+  
+  return formatted;
 };
 
 // Converts our message format to OpenRouter format
