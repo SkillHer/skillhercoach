@@ -8,19 +8,19 @@ const Testimonials = () => {
       quote: "SkillHer Coach helped me find balance between my demanding executive role and my personal wellbeing. The personalized coaching has been transformative.",
       name: "Sarah J.",
       title: "Marketing Director",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop"
+      image: "public/lovable-uploads/402fc8c3-03e6-4170-a770-75e2529f0058.png"
     },
     {
       quote: "The career coaching modules gave me the confidence to negotiate a promotion I'd been hesitant to pursue. SkillHer Coach's guidance was exactly what I needed.",
       name: "Michelle L.",
       title: "Senior Software Engineer",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=100&auto=format&fit=crop"
+      image: "public/lovable-uploads/e63a3f65-71b6-407d-a5af-b1a147b7349e.png"
     },
     {
       quote: "As a startup founder, I was burning out fast. The wellness coaching helped me create sustainable practices that improved both my health and my company.",
       name: "Aisha T.",
       title: "Founder & CEO",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&auto=format&fit=crop"
+      image: "public/lovable-uploads/95c52387-1454-41e2-9303-aa86c1d9c08c.png"
     }
   ];
 
