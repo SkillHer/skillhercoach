@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Heart, Star, Users, Medal, BadgeBeta } from "lucide-react";
+import { Heart, Star, Users, Medal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const Features = () => {
