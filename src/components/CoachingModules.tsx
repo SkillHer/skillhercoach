@@ -4,19 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { Progress } from "@/components/ui/progress";
-import { useToast } from "@/hooks/use-toast";
 
 const CoachingModules = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { toast } = useToast();
-
-  // Load progress from localStorage or initialize empty progress
-  const [moduleProgress, setModuleProgress] = React.useState(() => {
-    const savedProgress = localStorage.getItem('skillher_module_progress');
-    return savedProgress ? JSON.parse(savedProgress) : {};
-  });
 
   const wellnessModules = [
     {
@@ -85,27 +76,6 @@ const CoachingModules = () => {
         selectedInterest: category === 'wellness' ? 'health' : 'career' 
       } 
     });
-    
-    // Update progress for this module
-    const updatedProgress = {
-      ...moduleProgress,
-      [module.id]: (moduleProgress[module.id] || 0) + 25 // Increment by 25% each time
-    };
-    
-    // Cap at 100%
-    if (updatedProgress[module.id] > 100) {
-      updatedProgress[module.id] = 100;
-      
-      // Show achievement unlocked toast when reaching 100%
-      toast({
-        title: "Achievement Unlocked! 🏆",
-        description: `You've mastered "${module.title}"`,
-      });
-    }
-    
-    // Save updated progress
-    setModuleProgress(updatedProgress);
-    localStorage.setItem('skillher_module_progress', JSON.stringify(updatedProgress));
   };
 
   return (
@@ -137,15 +107,6 @@ const CoachingModules = () => {
                       )}
                     </div>
                     <p className="text-gray-600 mb-3">{module.description}</p>
-                    {moduleProgress[module.id] > 0 && (
-                      <div className="mt-3">
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Progress</span>
-                          <span>{moduleProgress[module.id]}%</span>
-                        </div>
-                        <Progress value={moduleProgress[module.id]} className="h-2" />
-                      </div>
-                    )}
                   </CardContent>
                 </Card>
               ))}
@@ -170,15 +131,6 @@ const CoachingModules = () => {
                       )}
                     </div>
                     <p className="text-gray-600 mb-3">{module.description}</p>
-                    {moduleProgress[module.id] > 0 && (
-                      <div className="mt-3">
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Progress</span>
-                          <span>{moduleProgress[module.id]}%</span>
-                        </div>
-                        <Progress value={moduleProgress[module.id]} className="h-2" />
-                      </div>
-                    )}
                   </CardContent>
                 </Card>
               ))}
