@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
@@ -33,6 +32,8 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   const [interest, setInterest] = useState<'career' | 'health' | null>(null);
   const [showSelector, setShowSelector] = useState(messages.length === 0);
   
+  console.log("Current state - messages:", messages.length, "showSelector:", showSelector, "interest:", interest);
+  
   // Scroll to bottom whenever messages change
   useEffect(() => {
     if (messagesEndRef.current && scrollAreaRef.current) {
@@ -46,7 +47,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
 
   // Handle interest selection
   const handleInterestSelect = (selectedInterest: 'career' | 'health') => {
-    console.log("Interest selected:", selectedInterest);
+    console.log("Interest selected in ChatInterface:", selectedInterest);
     setInterest(selectedInterest);
     setShowSelector(false);
     
@@ -55,14 +56,18 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
       ? `Hello ${user.name}! 👋 I'm Clara, your personal coach focused on women's career development. Whether you're looking to advance in your current role, negotiate a salary, or improve your work-life balance, I'm here to help! How can I support your career goals today? ✨`
       : `Hello ${user.name}! 👋 I'm Clara, your personal wellness coach focused on women's health. I can help with topics like stress management, fitness, nutrition, or hormonal health. What aspect of your wellbeing would you like to focus on today? ✨`;
       
+    // Ensure we have a valid timestamp
+    const timestamp = new Date();
+    
     const initialMessage: Message = {
-      id: Date.now().toString(),
+      id: timestamp.getTime().toString(),
       text: greetingText,
       sender: 'clara',
-      timestamp: new Date(),
+      timestamp: timestamp,
       emotion: 'cheerful'
     };
     
+    console.log("Adding initial message:", initialMessage);
     addMessage(initialMessage);
   };
   
@@ -181,8 +186,14 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     }
   };
 
-  // Show interest selector if no messages
+  // Debug messages on render
+  useEffect(() => {
+    console.log("ChatInterface rendering - showSelector:", showSelector, "messages length:", messages.length, "interest:", interest);
+  }, [showSelector, messages.length, interest]);
+
+  // Show interest selector if no messages or interest not selected yet
   if (showSelector) {
+    console.log("Showing interest selector");
     return (
       <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-clara-lavender/10 overflow-hidden">
         <div className="flex justify-between items-center p-3 border-b border-gray-200">

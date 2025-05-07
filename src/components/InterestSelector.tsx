@@ -12,7 +12,15 @@ interface InterestSelectorProps {
 const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
   const [selectedInterest, setSelectedInterest] = React.useState<'career' | 'health' | null>(null);
 
+  // Handle selection of interest
+  const handleInterestSelect = (interest: 'career' | 'health') => {
+    console.log("Setting selected interest to:", interest);
+    setSelectedInterest(interest);
+  };
+
+  // Handle continue button click - call the onSelect prop with the chosen interest
   const handleContinue = () => {
+    console.log("Continue button clicked, selected interest:", selectedInterest);
     if (selectedInterest) {
       onSelect(selectedInterest);
     }
@@ -27,10 +35,10 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
       <RadioGroup 
         className="gap-4"
         value={selectedInterest || ""}
-        onValueChange={(value) => setSelectedInterest(value as 'career' | 'health')}
+        onValueChange={(value) => handleInterestSelect(value as 'career' | 'health')}
       >
         <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors"
-             onClick={() => setSelectedInterest('career')}>
+             onClick={() => handleInterestSelect('career')}>
           <RadioGroupItem value="career" id="career" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -44,7 +52,7 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
         </div>
 
         <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors"
-             onClick={() => setSelectedInterest('health')}>
+             onClick={() => handleInterestSelect('health')}>
           <RadioGroupItem value="health" id="health" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
