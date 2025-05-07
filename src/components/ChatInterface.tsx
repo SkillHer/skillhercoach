@@ -263,15 +263,6 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
             <div ref={messagesEndRef} />
           </div>
         </div>
-        
-        {interest && (
-          <div className="w-64 border-l border-gray-200 p-4 hidden md:block overflow-y-auto">
-            <SuggestedPrompts 
-              interest={interest} 
-              onSelectPrompt={handleSelectPrompt} 
-            />
-          </div>
-        )}
       </div>
       
       <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4">
@@ -297,9 +288,9 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
           </Button>
         </div>
         
-        {/* Show prompt suggestions for mobile users */}
+        {/* Show prompt suggestions for both mobile and desktop */}
         {interest && (
-          <div className="mt-4 md:hidden">
+          <div className="mt-4">
             <p className="text-sm font-medium text-gray-500 mb-2">Suggested questions:</p>
             <div className="flex overflow-x-auto pb-2 gap-2">
               <SuggestedPrompts 
