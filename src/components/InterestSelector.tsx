@@ -27,13 +27,13 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm">
+    <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm w-full max-w-md mx-auto">
       <h2 className="text-lg font-medium text-center mb-6">
         What area would you like to focus on today?
       </h2>
       
       <RadioGroup 
-        className="gap-4"
+        className="flex flex-col gap-4"
         value={selectedInterest || ""}
         onValueChange={(value) => handleInterestSelect(value as 'career' | 'health' | 'other')}
       >
@@ -80,22 +80,23 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
         </div>
       </RadioGroup>
       
-      {/* Enhanced continue button with icon and animation */}
-      <Button 
-        className="w-full mt-6 bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-lg flex items-center justify-center"
-        onClick={handleContinue}
-        disabled={!selectedInterest}
-      >
-        <span>Continue</span>
-        <ArrowRight className="ml-2 animate-pulse" />
-      </Button>
-      
-      {/* Visual indicator when no interest is selected */}
-      {!selectedInterest && (
-        <p className="text-center text-sm text-gray-500 mt-2">
-          Please select an interest above to continue
-        </p>
-      )}
+      <div className="mt-6">
+        <Button 
+          className="w-full bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-white text-lg flex items-center justify-center"
+          onClick={handleContinue}
+          disabled={!selectedInterest}
+        >
+          <span>Continue</span>
+          <ArrowRight className="ml-2" />
+        </Button>
+        
+        {/* Visual indicator when no interest is selected */}
+        {!selectedInterest && (
+          <p className="text-center text-sm text-gray-500 mt-2">
+            Please select an interest above to continue
+          </p>
+        )}
+      </div>
     </div>
   );
 };
