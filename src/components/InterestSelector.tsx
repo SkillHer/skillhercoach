@@ -3,7 +3,7 @@ import React from 'react';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Briefcase, Heart } from "lucide-react";
+import { Briefcase, Heart, ArrowRight } from "lucide-react";
 
 interface InterestSelectorProps {
   onSelect: (interest: 'career' | 'health') => void;
@@ -66,13 +66,22 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
         </div>
       </RadioGroup>
       
+      {/* Enhanced continue button with icon and animation */}
       <Button 
-        className="w-full mt-6 bg-clara-lavender hover:bg-clara-lavender/90"
+        className="w-full mt-6 bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-lg flex items-center justify-center"
         onClick={handleContinue}
         disabled={!selectedInterest}
       >
-        Continue
+        <span>Continue</span>
+        <ArrowRight className="ml-2 animate-pulse" />
       </Button>
+      
+      {/* Visual indicator when no interest is selected */}
+      {!selectedInterest && (
+        <p className="text-center text-sm text-gray-500 mt-2">
+          Please select an interest above to continue
+        </p>
+      )}
     </div>
   );
 };
