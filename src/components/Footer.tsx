@@ -54,9 +54,9 @@ const Footer = () => {
             <p className="text-gray-300 mt-4">
               Skillher Coach is dedicated to empowering women through personalized career guidance and wellness coaching, helping them achieve balance and success in all aspects of life.
             </p>
-            <Link to="/signup" className="text-clara-gold hover:text-clara-gold/80 transition-colors font-medium mt-2 inline-block">
+            <a href="https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M" target="_blank" rel="noopener noreferrer" className="text-clara-gold hover:text-clara-gold/80 transition-colors font-medium mt-2 inline-block">
               Join the Community →
-            </Link>
+            </a>
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center md:text-left text-gray-400">
