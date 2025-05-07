@@ -23,7 +23,7 @@ const Features = () => {
       icon: <Medal className="h-8 w-8 text-clara-charcoal" />,
       title: "Achievement Tracking",
       description: "Monitor your progress, celebrate milestones, and visualize your growth in both wellness and career domains.",
-      badge: "closed beta"
+      badge: "Closed Beta"
     }
   ];
 
