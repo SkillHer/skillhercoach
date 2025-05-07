@@ -18,12 +18,15 @@ export interface OpenRouterResponse {
   }[];
 }
 
+// Maximum length for a single message before splitting
+const MAX_MESSAGE_LENGTH = 250;
+
 export const generateAIResponse = async (
   userMessage: string, 
   userName: string, 
   previousMessages: OpenRouterMessage[] = [],
   contextFocus: string = ""
-): Promise<string> => {
+): Promise<string[]> => {
   try {
     // Create system message for Clara's persona with optional context focus
     const systemMessage: OpenRouterMessage = {
@@ -77,12 +80,16 @@ export const generateAIResponse = async (
     const data = await response.json() as OpenRouterResponse;
     console.log("OpenRouter API response:", data);
     
-    // Process the response to ensure proper formatting
-    const formattedResponse = formatResponseText(data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response at the moment.");
-    return formattedResponse;
+    // Process and format the response
+    const responseText = data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response at the moment.";
+    const formattedResponse = formatResponseText(responseText);
+    
+    // Split the formatted response into multiple messages if it's too long
+    const messageChunks = splitIntoMessageChunks(formattedResponse);
+    return messageChunks;
   } catch (error) {
     console.error("Error generating AI response:", error);
-    return "I'm experiencing some technical difficulties. Let's try again in a moment! 🙂";
+    return ["I'm experiencing some technical difficulties. Let's try again in a moment! 🙂"];
   }
 };
 
@@ -98,6 +105,37 @@ const formatResponseText = (text: string): string => {
   formatted = formatted.replace(/(\n[^\w\s]*[\p{Emoji}]+[^\w\s]*)\n/gu, '$1\n\n');
   
   return formatted;
+};
+
+// Split long messages into smaller chunks based on paragraphs
+const splitIntoMessageChunks = (text: string): string[] => {
+  // If the text is short enough, just return it as is
+  if (text.length <= MAX_MESSAGE_LENGTH) {
+    return [text];
+  }
+  
+  // Split by paragraphs (double line breaks)
+  const paragraphs = text.split(/\n\n+/);
+  const chunks: string[] = [];
+  let currentChunk = "";
+  
+  for (const paragraph of paragraphs) {
+    // If adding this paragraph would exceed the limit, start a new chunk
+    if (currentChunk.length + paragraph.length > MAX_MESSAGE_LENGTH && currentChunk.length > 0) {
+      chunks.push(currentChunk.trim());
+      currentChunk = paragraph;
+    } else {
+      // Add paragraph to current chunk
+      currentChunk += (currentChunk ? "\n\n" : "") + paragraph;
+    }
+  }
+  
+  // Add the last chunk if not empty
+  if (currentChunk.trim()) {
+    chunks.push(currentChunk.trim());
+  }
+  
+  return chunks;
 };
 
 // Converts our message format to OpenRouter format

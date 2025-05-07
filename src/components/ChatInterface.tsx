@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
@@ -101,7 +100,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
         : "focused on women's health, wellness, fitness, nutrition, and hormonal balance";
       
       // Get AI response from OpenRouter with the enhanced context
-      const responseText = await generateAIResponse(
+      const responseTextArray = await generateAIResponse(
         input.trim(), 
         user.name, 
         previousMessages,
@@ -110,15 +109,23 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
       
       const emotion = detectEmotion(input.trim());
       
-      const claraResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        text: responseText,
-        sender: 'clara',
-        timestamp: new Date(),
-        emotion: emotion
-      };
-      
-      addMessage(claraResponse);
+      // Add each chunk as a separate message with a small delay between them
+      for (let i = 0; i < responseTextArray.length; i++) {
+        const messageText = responseTextArray[i];
+        const delay = i * 500; // 500ms delay between messages
+        
+        setTimeout(() => {
+          const claraResponse: Message = {
+            id: (Date.now() + i + 1).toString(),
+            text: messageText,
+            sender: 'clara',
+            timestamp: new Date(),
+            emotion: emotion
+          };
+          
+          addMessage(claraResponse);
+        }, delay);
+      }
     } catch (error) {
       console.error("Error in AI response:", error);
       
