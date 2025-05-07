@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin, Trophy } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -30,6 +31,9 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><Link to="/" className="text-gray-300 hover:text-white transition-colors">Home</Link></li>
               <li><Link to="/chat" className="text-gray-300 hover:text-white transition-colors">Chat with Coach</Link></li>
+              <li><Link to="/achievements" className="text-gray-300 hover:text-white transition-colors flex items-center">
+                <Trophy className="h-4 w-4 mr-1" /> Achievements
+              </Link></li>
               <li><a href="/#features" className="text-gray-300 hover:text-white transition-colors">Features</a></li>
               <li><a href="/#modules" className="text-gray-300 hover:text-white transition-colors">Coaching Modules</a></li>
               <li><a href="/#testimonials" className="text-gray-300 hover:text-white transition-colors">Testimonials</a></li>

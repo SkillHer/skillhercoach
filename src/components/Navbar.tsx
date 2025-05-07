@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Home } from 'lucide-react';
+import { Menu, X, Home, Trophy } from 'lucide-react';
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
@@ -44,6 +44,9 @@ const Navbar = () => {
                 {user ? (
                   <>
                     <Link to="/chat" className="text-gray-600 hover:text-clara-lavender transition-colors">Chat</Link>
+                    <Link to="/achievements" className="text-gray-600 hover:text-clara-lavender transition-colors flex items-center">
+                      <Trophy size={18} className="mr-1" /> Achievements
+                    </Link>
                     <Button variant="ghost" onClick={signOut}>Sign Out</Button>
                   </>
                 ) : (
@@ -141,6 +144,13 @@ const Navbar = () => {
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Chat
+                    </Link>
+                    <Link 
+                      to="/achievements" 
+                      className="text-gray-600 hover:text-clara-lavender transition-colors py-2 flex items-center"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Trophy size={18} className="mr-1" /> Achievements
                     </Link>
                     <Button 
                       variant="ghost" 
