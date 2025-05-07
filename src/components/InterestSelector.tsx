@@ -82,16 +82,6 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
       
       <div className="sticky bottom-0 pt-2 bg-white">
         <div className="space-y-3">
-          {/* WhatsApp Community Button */}
-          <Button 
-            className="w-full bg-white border border-clara-lavender text-clara-lavender hover:bg-clara-lavender/10 transition-all py-2 flex items-center justify-center"
-            variant="outline"
-            onClick={() => window.open('https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M', '_blank')}
-          >
-            <Link className="mr-2" />
-            <span>Join our WhatsApp Community</span>
-          </Button>
-          
           {/* Continue button with icon and animation */}
           <Button 
             className="w-full bg-clara-lavender hover:bg-clara-lavender/90 transition-all py-6 text-lg flex items-center justify-center"
@@ -108,6 +98,16 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
               Please select an interest above to continue
             </p>
           )}
+          
+          {/* WhatsApp Community Button - Now positioned after the continue button */}
+          <Button 
+            className="w-full bg-white border border-clara-lavender text-clara-lavender hover:bg-clara-lavender/10 transition-all py-2 flex items-center justify-center"
+            variant="outline"
+            onClick={() => window.open('https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M', '_blank')}
+          >
+            <Link className="mr-2" />
+            <span>Join our community</span>
+          </Button>
         </div>
       </div>
     </div>
