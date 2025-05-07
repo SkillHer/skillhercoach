@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -8,6 +8,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 const Hero = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleLearnMore = () => {
     // Scroll to features if on home page, otherwise navigate based on auth state
@@ -21,6 +22,16 @@ const Hero = () => {
     } else {
       navigate('/login');
     }
+  };
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    console.log("Image loaded successfully");
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    console.error("Image failed to load:", e);
+    // Fallback handling can be added here if needed
   };
 
   return (
@@ -54,12 +65,19 @@ const Hero = () => {
             <div className="relative">
               <div className="absolute -top-6 -left-6 w-64 h-64 bg-clara-lavender/20 rounded-full blur-3xl"></div>
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-clara-sage/20 rounded-full blur-3xl"></div>
-              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-2">
-                <AspectRatio ratio={1} className="w-full rounded-lg overflow-hidden">
+              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-4">
+                <AspectRatio ratio={1} className="w-full rounded-lg overflow-hidden bg-gray-100">
+                  {!imageLoaded && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-10 h-10 border-4 border-clara-lavender border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  )}
                   <img 
                     src="/lovable-uploads/ac0c403f-fd7e-4b72-bc7c-a79da174590c.png" 
                     alt="Skillher Coach" 
-                    className="w-full h-full object-cover rounded-lg"
+                    className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    onLoad={handleImageLoad}
+                    onError={handleImageError}
                   />
                 </AspectRatio>
               </div>
