@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Home } from 'lucide-react';
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const isLandingPage = location.pathname === '/';
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -46,12 +47,24 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link to="/login">
-                  <Button variant="ghost">Log In</Button>
-                </Link>
-                <Link to="/signup">
-                  <Button>Sign Up</Button>
-                </Link>
+                {!isAuthPage && (
+                  <>
+                    <Link to="/login">
+                      <Button variant="ghost">Log In</Button>
+                    </Link>
+                    <Link to="/signup">
+                      <Button>Sign Up</Button>
+                    </Link>
+                  </>
+                )}
+                {isAuthPage && (
+                  <Link to="/" className="flex items-center space-x-2">
+                    <Button variant="outline" className="flex items-center space-x-2">
+                      <Home size={18} />
+                      <span>Back to Home</span>
+                    </Button>
+                  </Link>
+                )}
               </>
             )}
           </div>
@@ -125,20 +138,36 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link 
-                  to="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="py-2"
-                >
-                  <Button variant="ghost" className="w-full justify-start">Log In</Button>
-                </Link>
-                <Link 
-                  to="/signup"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="py-2"
-                >
-                  <Button className="w-full">Sign Up</Button>
-                </Link>
+                {!isAuthPage && (
+                  <>
+                    <Link 
+                      to="/login"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="py-2"
+                    >
+                      <Button variant="ghost" className="w-full justify-start">Log In</Button>
+                    </Link>
+                    <Link 
+                      to="/signup"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="py-2"
+                    >
+                      <Button className="w-full">Sign Up</Button>
+                    </Link>
+                  </>
+                )}
+                {isAuthPage && (
+                  <Link 
+                    to="/" 
+                    className="flex items-center space-x-2 py-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <Button variant="outline" className="w-full flex items-center justify-center space-x-2">
+                      <Home size={18} />
+                      <span>Back to Home</span>
+                    </Button>
+                  </Link>
+                )}
               </>
             )}
           </div>
