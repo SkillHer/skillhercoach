@@ -17,7 +17,16 @@ export const useChatHistory = (userId: string) => {
     const savedMessages = localStorage.getItem(`skillherCoach_chat_${userId}`);
     if (savedMessages) {
       try {
-        setMessages(JSON.parse(savedMessages));
+        // Parse the saved messages
+        const parsedMessages = JSON.parse(savedMessages);
+        
+        // Convert string timestamps back to Date objects
+        const messagesWithDates = parsedMessages.map((msg: any) => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp)
+        }));
+        
+        setMessages(messagesWithDates);
       } catch (e) {
         console.error('Error loading chat history:', e);
         localStorage.removeItem(`skillherCoach_chat_${userId}`);

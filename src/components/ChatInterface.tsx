@@ -101,7 +101,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
         : "focused on women's health, wellness, fitness, nutrition, and hormonal balance";
       
       // Get AI response from OpenRouter with the enhanced context
-      const responseTextArray = await generateAIResponse(
+      const responseText = await generateAIResponse(
         input.trim(), 
         user.name, 
         previousMessages,
@@ -110,23 +110,15 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
       
       const emotion = detectEmotion(input.trim());
       
-      // Add each chunk as a separate message with a small delay between them
-      for (let i = 0; i < responseTextArray.length; i++) {
-        const messageText = responseTextArray[i];
-        const delay = i * 500; // 500ms delay between messages
-        
-        setTimeout(() => {
-          const skillherResponse: Message = {
-            id: (Date.now() + i + 1).toString(),
-            text: messageText,
-            sender: 'skillher',
-            timestamp: new Date(),
-            emotion: emotion
-          };
-          
-          addMessage(skillherResponse);
-        }, delay);
-      }
+      const skillherResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        text: responseText,
+        sender: 'skillher',
+        timestamp: new Date(),
+        emotion: emotion
+      };
+      
+      addMessage(skillherResponse);
     } catch (error) {
       console.error("Error in AI response:", error);
       
@@ -183,11 +175,11 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   const getMessageStyle = (emotion?: string) => {
     switch (emotion) {
       case 'empathetic':
-        return 'bg-purple-100 border-clara-lavender';
+        return 'bg-purple-100 border-skillher-lavender';
       case 'inspiring':
         return 'bg-blue-50 border-blue-300';
       case 'cheerful':
-        return 'bg-yellow-50 border-clara-gold';
+        return 'bg-yellow-50 border-skillher-gold';
       case 'assertive':
         return 'bg-orange-50 border-orange-300';
       default:
@@ -204,10 +196,10 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   if (showSelector) {
     console.log("Showing interest selector");
     return (
-      <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-clara-lavender/10 overflow-hidden">
+      <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-skillher-lavender/10 overflow-hidden">
         <div className="flex justify-between items-center p-3 border-b border-gray-200">
           <div className="flex items-center">
-            <MessageCircle size={18} className="text-clara-lavender mr-2" />
+            <MessageCircle size={18} className="text-skillher-lavender mr-2" />
             <span className="font-medium">Chat with Skillher Coach</span>
           </div>
         </div>
@@ -220,19 +212,19 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   }
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-clara-lavender/10 overflow-hidden">
+    <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-skillher-lavender/10 overflow-hidden">
       <div className="flex justify-between items-center p-3 border-b border-gray-200">
         <div className="flex items-center gap-2">
           <Button 
             variant="ghost" 
             size="sm"
             onClick={handleBackToSelector}
-            className="text-gray-500 hover:text-clara-lavender"
+            className="text-gray-500 hover:text-skillher-lavender"
           >
             <ArrowLeft size={16} className="mr-1" />
             Back
           </Button>
-          <MessageCircle size={18} className="text-clara-lavender mr-2" />
+          <MessageCircle size={18} className="text-skillher-lavender mr-2" />
           <span className="font-medium">Chat with Skillher Coach</span>
         </div>
         <Button 
@@ -257,11 +249,11 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
                 <div 
                   className={`max-w-[80%] p-3 rounded-lg border ${
                     message.sender === 'user' 
-                      ? 'bg-clara-lavender/10 border-clara-lavender/20' 
+                      ? 'bg-skillher-lavender/10 border-skillher-lavender/20' 
                       : getMessageStyle(message.emotion)
                   }`}
                 >
-                  <p className="text-sm md:text-base">{message.text}</p>
+                  <p className="text-sm md:text-base whitespace-pre-line">{message.text}</p>
                   <p className="text-xs text-gray-500 mt-1">
                     {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
@@ -286,7 +278,7 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
           <Button 
             type="submit" 
             disabled={isSubmitting || !input.trim()} 
-            className="bg-clara-lavender hover:bg-clara-lavender/90"
+            className="bg-skillher-lavender hover:bg-skillher-lavender/90"
           >
             {isSubmitting ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
