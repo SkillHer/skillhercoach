@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -53,14 +54,14 @@ const Hero = () => {
             <div className="relative">
               <div className="absolute -top-6 -left-6 w-64 h-64 bg-clara-lavender/20 rounded-full blur-3xl"></div>
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-clara-sage/20 rounded-full blur-3xl"></div>
-              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-6">
-                <div className="aspect-video bg-clara-cream rounded-lg mb-6 flex items-center justify-center">
+              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-2">
+                <AspectRatio ratio={1} className="w-full rounded-lg overflow-hidden">
                   <img 
-                    src="/lovable-uploads/b665f060-0309-4955-bba1-4a4fe6334dd6.png" 
+                    src="/lovable-uploads/ac0c403f-fd7e-4b72-bc7c-a79da174590c.png" 
                     alt="Skillher Coach" 
                     className="w-full h-full object-cover rounded-lg"
                   />
-                </div>
+                </AspectRatio>
               </div>
             </div>
           </div>
