@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 
 interface SuggestedPromptsProps {
-  interest: 'career' | 'health';
+  interest: 'career' | 'health' | 'other';
   onSelectPrompt: (prompt: string) => void;
   variant?: 'default' | 'mobile';
 }
@@ -26,7 +26,21 @@ const SuggestedPrompts = ({ interest, onSelectPrompt, variant = 'default' }: Sug
     "What nutritional needs should women prioritize?"
   ];
 
-  const prompts = interest === 'career' ? careerPrompts : healthPrompts;
+  const otherPrompts = [
+    "How can I improve my confidence and self-esteem?",
+    "What are some effective personal development strategies?",
+    "How can I build better relationships?",
+    "What are some ways to overcome challenges in my life?",
+    "How can I set and achieve my goals effectively?"
+  ];
+
+  // Select appropriate prompts based on the interest
+  let prompts = careerPrompts;
+  if (interest === 'health') {
+    prompts = healthPrompts;
+  } else if (interest === 'other') {
+    prompts = otherPrompts;
+  }
 
   // For mobile variant, show horizontal scrolling buttons
   if (variant === 'mobile') {
