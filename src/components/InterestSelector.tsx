@@ -27,13 +27,13 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm">
+    <div className="p-6 bg-white rounded-lg border border-clara-lavender/20 shadow-sm max-h-[90vh] overflow-y-auto">
       <h2 className="text-lg font-medium text-center mb-6">
         What area would you like to focus on today?
       </h2>
       
       <RadioGroup 
-        className="gap-4"
+        className="flex flex-col gap-4"
         value={selectedInterest || ""}
         onValueChange={(value) => handleInterestSelect(value as 'career' | 'health')}
       >
