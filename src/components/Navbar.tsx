@@ -7,21 +7,23 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 const Navbar = () => {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
+      console.log("Logging out user:", user?.id);
       await signOut();
+      
       toast({
         title: "Logged out successfully",
         description: "You have been logged out of your account.",
       });
-      // Force navigation to login page after logout
-      setTimeout(() => {
-        navigate('/login', { replace: true });
-      }, 100);
+      
+      console.log("Navigation to login page");
+      // Use replace to prevent going back to authenticated pages
+      navigate('/login', { replace: true });
     } catch (error) {
       console.error('Logout error:', error);
       toast({

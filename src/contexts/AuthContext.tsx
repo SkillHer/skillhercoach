@@ -56,6 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
+        console.log("Auth state change:", _event, session ? "session exists" : "no session");
         setSession(session);
         setUser(session?.user ?? null);
       }
@@ -117,12 +118,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     try {
+      // Clear local state first to ensure UI updates immediately
+      setSession(null);
+      setUser(null);
+      
+      // Then perform the actual signout
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       
-      // Clear user state after signout
-      setSession(null);
-      setUser(null);
+      console.log("Sign out successful, user state cleared");
     } catch (error) {
       console.error('Error signing out:', error);
       throw error;
