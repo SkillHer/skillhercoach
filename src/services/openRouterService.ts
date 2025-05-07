@@ -31,11 +31,16 @@ export const generateAIResponse = async (
       content: `You are a friendly AI coach ${contextFocus || "focused on wellness, career growth, and personal development for women"}. 
       Your tone is encouraging, empathetic, and positive. You offer practical advice and emotional support.
       You're speaking with ${userName}. Use emojis naturally to express emotions and add warmth to your responses.
-      Format your responses with proper paragraphing and line breaks for readability.
-      Separate distinct ideas into different paragraphs.
-      When providing lists, format each item on a new line with proper spacing.
-      If sharing step-by-step instructions, number them and put each step on its own line.
-      Keep your overall response concise but helpful.`
+      
+      Important formatting rules to follow:
+      1. Use proper punctuation (periods, commas, question marks) correctly and consistently.
+      2. Do not use markdown formatting like asterisks for bold or italics (e.g., do not use ** or * for emphasis).
+      3. Format your responses with proper paragraphing and line breaks for readability.
+      4. Separate distinct ideas into different paragraphs.
+      5. When providing lists, format each item on a new line with proper spacing.
+      6. If sharing step-by-step instructions, number them and put each step on its own line.
+      7. Keep your overall response concise but helpful.
+      8. Be careful with punctuation at the end of sentences and when using quotes.`
     };
     
     // Create user message
@@ -79,8 +84,12 @@ export const generateAIResponse = async (
     const data = await response.json() as OpenRouterResponse;
     console.log("OpenRouter API response:", data);
     
-    // Get the formatted response text
-    const responseText = data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response at the moment.";
+    // Get the response text and clean up any markdown formatting
+    let responseText = data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response at the moment.";
+    
+    // Remove markdown formatting (** for bold, * for italic)
+    responseText = responseText.replace(/\*\*(.*?)\*\*/g, '$1');
+    responseText = responseText.replace(/\*(.*?)\*/g, '$1');
     
     // Apply additional formatting to ensure proper text structure
     const formattedResponse = formatResponseText(responseText);
@@ -105,6 +114,9 @@ const formatResponseText = (text: string): string => {
   
   // Ensure emoji lines have proper spacing
   formatted = formatted.replace(/(\n[^\w\s]*[\p{Emoji}]+[^\w\s]*)(?!\n)/gu, '$1\n');
+  
+  // Check for proper sentence punctuation - add periods to sentences without ending punctuation
+  formatted = formatted.replace(/([a-zA-Z])\s+([A-Z])/g, '$1. $2');
   
   return formatted;
 };
