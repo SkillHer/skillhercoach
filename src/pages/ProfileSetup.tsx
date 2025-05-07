@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { useToast } from '@/hooks/use-toast';
 import getSupabaseClient from '../services/supabaseClient';
 import { User } from 'lucide-react';
+import SetupProfilesTable from '@/components/SetupProfilesTable';
 
 const ProfileSetup = () => {
   const { user } = useAuth();
@@ -16,11 +17,35 @@ const ProfileSetup = () => {
   const { toast } = useToast();
   const supabase = getSupabaseClient();
   const [loading, setLoading] = useState(false);
+  const [showTableSetup, setShowTableSetup] = useState(false);
   
   // Form state
   const [age, setAge] = useState('');
   const [nationality, setNationality] = useState('');
   const [occupation, setOccupation] = useState('');
+  
+  // Check if profiles table exists when component mounts
+  useEffect(() => {
+    const checkProfilesTable = async () => {
+      if (!supabase) return;
+      
+      try {
+        const { error } = await supabase
+          .from('profiles')
+          .select('id')
+          .limit(1);
+        
+        if (error && error.message.includes('does not exist')) {
+          setShowTableSetup(true);
+        }
+      } catch (error) {
+        console.error('Error checking profiles table:', error);
+        setShowTableSetup(true);
+      }
+    };
+    
+    checkProfilesTable();
+  }, [supabase]);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,22 +63,6 @@ const ProfileSetup = () => {
     setLoading(true);
     
     try {
-      // Check if the profiles table exists
-      const { error: tableCheckError } = await supabase
-        .from('profiles')
-        .select('id')
-        .limit(1);
-      
-      if (tableCheckError && tableCheckError.message.includes('does not exist')) {
-        // Profiles table doesn't exist - just proceed to chat without saving
-        toast({
-          title: "Setup Complete",
-          description: "Your profile setup is complete. The database table will be created later.",
-        });
-        navigate('/chat');
-        return;
-      }
-
       // Try to save profile data to Supabase
       const { error } = await supabase.from('profiles').upsert({
         id: user.id,
@@ -63,7 +72,15 @@ const ProfileSetup = () => {
         updated_at: new Date(),
       });
       
-      if (error) throw error;
+      if (error) {
+        if (error.message.includes('does not exist')) {
+          // Show table setup if we get a table doesn't exist error
+          setShowTableSetup(true);
+          setLoading(false);
+          return;
+        }
+        throw error;
+      }
       
       toast({
         title: "Profile Updated",
@@ -75,24 +92,31 @@ const ProfileSetup = () => {
     } catch (error: any) {
       console.error('Error saving profile:', error);
       
-      // Handle missing table error gracefully
-      if (error.message && error.message.includes('does not exist')) {
-        toast({
-          title: "Setup Complete",
-          description: "Your profile was saved in memory. Database setup pending.",
-        });
-        navigate('/chat');
-      } else {
-        toast({
-          title: "Update Failed",
-          description: "There was a problem with the database. Your information is saved locally.",
-          variant: "destructive",
-        });
-      }
+      toast({
+        title: "Update Failed",
+        description: "There was a problem saving your profile. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
   };
+
+  const handleTableSetupComplete = () => {
+    setShowTableSetup(false);
+    toast({
+      title: "Table Created",
+      description: "Profiles table created successfully. You can now complete your profile.",
+    });
+  };
+  
+  if (showTableSetup) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
+        <SetupProfilesTable onSetupComplete={handleTableSetupComplete} />
+      </div>
+    );
+  }
   
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
