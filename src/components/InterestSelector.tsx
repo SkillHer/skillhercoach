@@ -26,9 +26,11 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
       
       <RadioGroup 
         className="gap-4"
+        value={selectedInterest || ""}
         onValueChange={(value) => setSelectedInterest(value as 'career' | 'health')}
       >
-        <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors">
+        <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors"
+             onClick={() => setSelectedInterest('career')}>
           <RadioGroupItem value="career" id="career" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -41,7 +43,8 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
           </div>
         </div>
 
-        <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors">
+        <div className="flex items-start space-x-3 bg-purple-50 p-3 rounded-md cursor-pointer hover:bg-purple-100 transition-colors"
+             onClick={() => setSelectedInterest('health')}>
           <RadioGroupItem value="health" id="health" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
