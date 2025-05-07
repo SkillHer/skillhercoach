@@ -63,6 +63,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				anita: {
+					purple: '#8A4D76',
+					teal: '#4EAFB8',
+					pink: '#F2B5D4',
+					lavender: '#E0BBE4',
+					cream: '#FFF6F4'
+				},
 				clara: {
 					lavender: '#9d8ec7',
 					sage: '#a4c3b2',

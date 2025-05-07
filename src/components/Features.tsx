@@ -5,22 +5,22 @@ import { Heart, Star, Users, Medal } from "lucide-react";
 const Features = () => {
   const features = [
     {
-      icon: <Heart className="h-8 w-8 text-clara-lavender" />,
+      icon: <Heart className="h-8 w-8 text-anita-pink" />,
       title: "Wellness Coaching",
       description: "Personalized mindfulness practices, stress management techniques, and wellness routines tailored to your lifestyle and preferences."
     },
     {
-      icon: <Star className="h-8 w-8 text-clara-gold" />,
+      icon: <Star className="h-8 w-8 text-anita-teal" />,
       title: "Career Growth",
       description: "Strategic career planning, leadership development, and professional skills enhancement designed specifically for women in the workplace."
     },
     {
-      icon: <Users className="h-8 w-8 text-clara-sage" />,
+      icon: <Users className="h-8 w-8 text-anita-purple" />,
       title: "Community Support",
       description: "Connect with like-minded women on similar journeys, share experiences, and build meaningful professional relationships."
     },
     {
-      icon: <Medal className="h-8 w-8 text-clara-charcoal" />,
+      icon: <Medal className="h-8 w-8 text-anita-teal" />,
       title: "Achievement Tracking",
       description: "Monitor your progress, celebrate milestones, and visualize your growth in both wellness and career domains.",
       badge: "Closed Beta"
@@ -28,7 +28,7 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="py-16 bg-clara-cream">
+    <section id="features" className="py-16 bg-anita-cream">
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">How SkillHer Coach Empowers You</h2>
@@ -46,7 +46,7 @@ const Features = () => {
               <div className="mb-4 flex justify-between items-center">
                 <div>{feature.icon}</div>
                 {feature.badge && (
-                  <span className="bg-clara-lavender text-white text-xs px-2.5 py-0.5 rounded-full">
+                  <span className="bg-anita-purple text-white text-xs px-2.5 py-0.5 rounded-full">
                     {feature.badge}
                   </span>
                 )}

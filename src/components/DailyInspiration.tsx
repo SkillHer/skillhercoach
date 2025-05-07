@@ -38,8 +38,8 @@ const DailyInspiration = () => {
           </p>
         </div>
 
-        <Card className="border border-clara-lavender/20 overflow-hidden">
-          <div className="clara-gradient h-3" />
+        <Card className="border border-anita-lavender/20 overflow-hidden">
+          <div className="bg-gradient-to-r from-anita-purple to-anita-teal h-3" />
           <CardContent className="p-8 text-center">
             <p className="font-serif text-xl md:text-2xl italic text-gray-800 mb-4">
               "{quote}"
@@ -48,7 +48,7 @@ const DailyInspiration = () => {
             <Button 
               onClick={getRandomQuote}
               variant="outline" 
-              className="border-clara-lavender text-clara-lavender hover:bg-clara-lavender/10"
+              className="border-anita-purple text-anita-purple hover:bg-anita-purple/10"
             >
               New Quote
             </Button>
