@@ -106,7 +106,7 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
             onClick={() => window.open('https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M', '_blank')}
           >
             <Link className="mr-2" />
-            <span>Join our community</span>
+            <span>Chat with other members of our community</span>
           </Button>
         </div>
       </div>
