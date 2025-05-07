@@ -61,12 +61,6 @@ const Hero = () => {
                     className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
-                <div className="space-y-4">
-                  <div className="h-4 bg-clara-lavender/20 rounded-full w-3/4"></div>
-                  <div className="h-4 bg-clara-sage/20 rounded-full w-full"></div>
-                  <div className="h-4 bg-clara-lavender/20 rounded-full w-5/6"></div>
-                  <div className="h-10 bg-clara-lavender rounded-lg w-1/2 mt-6"></div>
-                </div>
               </div>
             </div>
           </div>
