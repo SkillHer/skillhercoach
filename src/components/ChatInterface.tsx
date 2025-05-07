@@ -1,7 +1,7 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Send, MessageCircle, Trash2 } from "lucide-react";
+import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
 import { useChatHistory } from '../hooks/useChatHistory';
 import { generateAIResponse, formatMessagesForOpenRouter } from '../services/openRouterService';
 import { useToast } from "@/hooks/use-toast";
@@ -135,17 +135,21 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
     }
   };
 
+  // Handle clear chat - removed confirmation prompt
   const handleClearChat = () => {
-    // Show confirmation before clearing
-    if (window.confirm("Are you sure you want to clear the chat history?")) {
-      clearHistory();
-      setShowSelector(true);
-      setInterest(null);
-      toast({
-        title: "Chat cleared",
-        description: "Your chat history has been cleared.",
-      });
-    }
+    clearHistory();
+    setShowSelector(true);
+    setInterest(null);
+    toast({
+      title: "Chat cleared",
+      description: "Your chat history has been cleared.",
+    });
+  };
+  
+  // Handle back to selector button
+  const handleBackToSelector = () => {
+    setShowSelector(true);
+    setInterest(null);
   };
   
   // Simple emotion detection (placeholder for more sophisticated analysis)
@@ -208,7 +212,16 @@ const ChatInterface = ({ user }: ChatInterfaceProps) => {
   return (
     <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-clara-lavender/10 overflow-hidden">
       <div className="flex justify-between items-center p-3 border-b border-gray-200">
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={handleBackToSelector}
+            className="text-gray-500 hover:text-clara-lavender"
+          >
+            <ArrowLeft size={16} className="mr-1" />
+            Back
+          </Button>
           <MessageCircle size={18} className="text-clara-lavender mr-2" />
           <span className="font-medium">Chat with Clara</span>
         </div>
