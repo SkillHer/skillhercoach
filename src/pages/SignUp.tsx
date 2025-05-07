@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -6,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Eye, EyeOff, ArrowRight, User } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, User } from 'lucide-react';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -88,6 +89,10 @@ const SignUp = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
+          <Link to="/" className="flex items-center text-primary hover:underline mb-4">
+            <ArrowLeft className="mr-1 h-4 w-4" />
+            Back to Home
+          </Link>
           <div className="flex justify-center mb-4">
             <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
               <User className="h-6 w-6 text-primary" />

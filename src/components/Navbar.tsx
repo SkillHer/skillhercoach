@@ -32,22 +32,22 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         {!isMobile && (
           <div className="flex items-center space-x-6">
-            <Link to="/" className="text-gray-600 hover:text-clara-lavender transition-colors">Home</Link>
-            {isLandingPage && (
+            {!isAuthPage && (
               <>
-                <a href="#features" className="text-gray-600 hover:text-clara-lavender transition-colors">Features</a>
-                <a href="#modules" className="text-gray-600 hover:text-clara-lavender transition-colors">Modules</a>
-                <a href="#testimonials" className="text-gray-600 hover:text-clara-lavender transition-colors">Testimonials</a>
-              </>
-            )}
-            {user ? (
-              <>
-                <Link to="/chat" className="text-gray-600 hover:text-clara-lavender transition-colors">Chat</Link>
-                <Button variant="ghost" onClick={signOut}>Sign Out</Button>
-              </>
-            ) : (
-              <>
-                {!isAuthPage && (
+                <Link to="/" className="text-gray-600 hover:text-clara-lavender transition-colors">Home</Link>
+                {isLandingPage && (
+                  <>
+                    <a href="#features" className="text-gray-600 hover:text-clara-lavender transition-colors">Features</a>
+                    <a href="#modules" className="text-gray-600 hover:text-clara-lavender transition-colors">Modules</a>
+                    <a href="#testimonials" className="text-gray-600 hover:text-clara-lavender transition-colors">Testimonials</a>
+                  </>
+                )}
+                {user ? (
+                  <>
+                    <Link to="/chat" className="text-gray-600 hover:text-clara-lavender transition-colors">Chat</Link>
+                    <Button variant="ghost" onClick={signOut}>Sign Out</Button>
+                  </>
+                ) : (
                   <>
                     <Link to="/login">
                       <Button variant="ghost">Log In</Button>
@@ -57,15 +57,17 @@ const Navbar = () => {
                     </Link>
                   </>
                 )}
-                {isAuthPage && (
-                  <Link to="/" className="flex items-center space-x-2">
-                    <Button variant="outline" className="flex items-center space-x-2">
-                      <Home size={18} />
-                      <span>Back to Home</span>
-                    </Button>
-                  </Link>
-                )}
               </>
+            )}
+            
+            {/* Back to Home button for Auth pages - Always visible on desktop */}
+            {isAuthPage && (
+              <Link to="/" className="ml-auto">
+                <Button variant="outline" className="flex items-center space-x-2">
+                  <Home size={18} />
+                  <span>Back to Home</span>
+                </Button>
+              </Link>
             )}
           </div>
         )}
@@ -82,63 +84,77 @@ const Navbar = () => {
       {isMobile && isMenuOpen && (
         <div className="container-custom py-4 bg-white border-t">
           <div className="flex flex-col space-y-4">
-            <Link 
-              to="/" 
-              className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            {isLandingPage && (
-              <>
-                <a 
-                  href="#features" 
-                  className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Features
-                </a>
-                <a 
-                  href="#modules" 
-                  className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Modules
-                </a>
-                <a 
-                  href="#testimonials" 
-                  className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Testimonials
-                </a>
-                <div className="border-t my-2"></div>
-              </>
+            {/* Back to Home button for Auth pages - Always at the top on mobile */}
+            {isAuthPage && (
+              <Link 
+                to="/" 
+                className="flex items-center space-x-2 py-2 mb-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Button variant="outline" className="w-full flex items-center justify-center space-x-2">
+                  <Home size={18} />
+                  <span>Back to Home</span>
+                </Button>
+              </Link>
             )}
             
-            {user ? (
+            {!isAuthPage && (
               <>
                 <Link 
-                  to="/chat" 
+                  to="/" 
                   className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Chat
+                  Home
                 </Link>
-                <Button 
-                  variant="ghost" 
-                  onClick={() => {
-                    signOut();
-                    setIsMenuOpen(false);
-                  }}
-                  className="justify-start px-0 hover:bg-transparent"
-                >
-                  Sign Out
-                </Button>
-              </>
-            ) : (
-              <>
-                {!isAuthPage && (
+                {isLandingPage && (
+                  <>
+                    <a 
+                      href="#features" 
+                      className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Features
+                    </a>
+                    <a 
+                      href="#modules" 
+                      className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Modules
+                    </a>
+                    <a 
+                      href="#testimonials" 
+                      className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Testimonials
+                    </a>
+                    <div className="border-t my-2"></div>
+                  </>
+                )}
+                
+                {user ? (
+                  <>
+                    <Link 
+                      to="/chat" 
+                      className="text-gray-600 hover:text-clara-lavender transition-colors py-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Chat
+                    </Link>
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => {
+                        signOut();
+                        setIsMenuOpen(false);
+                      }}
+                      className="justify-start px-0 hover:bg-transparent"
+                    >
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
                   <>
                     <Link 
                       to="/login"
@@ -155,18 +171,6 @@ const Navbar = () => {
                       <Button className="w-full">Sign Up</Button>
                     </Link>
                   </>
-                )}
-                {isAuthPage && (
-                  <Link 
-                    to="/" 
-                    className="flex items-center space-x-2 py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <Button variant="outline" className="w-full flex items-center justify-center space-x-2">
-                      <Home size={18} />
-                      <span>Back to Home</span>
-                    </Button>
-                  </Link>
                 )}
               </>
             )}
