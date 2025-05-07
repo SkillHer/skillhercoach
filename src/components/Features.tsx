@@ -30,7 +30,7 @@ const Features = () => {
     <section id="features" className="py-16 bg-clara-cream">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">How CoachClara Empowers You</h2>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">How Skillher Coach Empowers You</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Our unique approach integrates wellness and career development into a cohesive coaching experience.
           </p>
