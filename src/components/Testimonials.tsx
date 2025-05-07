@@ -30,7 +30,7 @@ const Testimonials = () => {
         <div className="text-center mb-16">
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">Women Empowered by Skillher Coach</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Hear from women who have transformed their wellness practices and advanced their careers with Skillher Coach.
+            Hear from women who have experienced remarkable transitions both personally & professionally with SkillHerCoach.
           </p>
         </div>
 
