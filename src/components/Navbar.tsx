@@ -25,7 +25,7 @@ const Navbar = () => {
         
         {/* Logo and Name */}
         <Link to="/" className="flex items-center space-x-2">
-          <span className="font-serif text-2xl font-bold">Skillher<span className="text-clara-lavender">Coach</span></span>
+          <span className="font-serif text-2xl font-bold">SkillHer<span className="text-clara-lavender">Coach</span></span>
         </Link>
 
         {/* Desktop Navigation */}

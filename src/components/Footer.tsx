@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Linkedin } from 'lucide-react';
@@ -11,7 +12,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div>
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <span className="font-serif text-2xl font-bold text-white">Skillher<span className="text-clara-gold">Coach</span></span>
+              <span className="font-serif text-2xl font-bold text-white">SkillHer<span className="text-clara-gold">Coach</span></span>
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
               Your AI-powered partner for holistic personal development, focused on empowering women to achieve balance between wellness and career success.
@@ -43,7 +44,7 @@ const Footer = () => {
               <li><Link to="/chat" className="text-gray-300 hover:text-white transition-colors">Chat Dashboard</Link></li>
             </ul>
             <p className="text-gray-300 mt-4">
-              Skillher Coach is dedicated to empowering women through personalized career guidance and wellness coaching, helping them achieve balance and success in all aspects of life.
+              SkillHer Coach is dedicated to empowering women through personalized career guidance and wellness coaching, helping them achieve balance and success in all aspects of life.
             </p>
             <a href="https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M" target="_blank" rel="noopener noreferrer" className="text-clara-gold hover:text-clara-gold/80 transition-colors font-medium mt-2 inline-block">
               Join the Community →
@@ -51,7 +52,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center md:text-left text-gray-400">
-          <p>&copy; {currentYear} Skillher Coach. All rights reserved.</p>
+          <p>&copy; {currentYear} SkillHer Coach. All rights reserved.</p>
         </div>
       </div>
     </footer>

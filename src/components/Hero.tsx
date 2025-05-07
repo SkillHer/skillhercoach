@@ -43,7 +43,7 @@ const Hero = () => {
               Your Personal AI Coach for <span className="text-clara-lavender">Wellness</span> & <span className="text-clara-sage">Career</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto md:mx-0">
-              Skillher Coach helps women achieve balance, purpose, and success through personalized guidance for both personal wellbeing and professional growth.
+              SkillHer Coach helps women achieve balance, purpose, and success through personalized guidance for both personal wellbeing and professional growth.
             </p>
             <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
               <Link to={user ? "/chat" : "/signup"}>
