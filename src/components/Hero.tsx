@@ -41,7 +41,7 @@ const Hero = () => {
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
               Your Personal AI Coach for <span className="text-clara-lavender">Wellness</span> & <span className="text-clara-sage">Career</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto md:mx-0">SkillHer Coach helps women upskill, achieve balance, purpose, and success through personalized guidance for both personal wellbeing and professional growth.</p>
+            <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto md:mx-0">SkillHer Coach helps women learn, achieve balance, purpose, and success through personalized guidance for both personal wellbeing and professional growth.</p>
             <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
               <Link to={user ? "/chat" : "/signup"}>
                 <Button size="lg" className="bg-clara-lavender hover:bg-clara-lavender/90">
