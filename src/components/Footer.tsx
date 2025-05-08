@@ -1,22 +1,16 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Linkedin, Mail } from 'lucide-react';
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
-  return (
-    <footer className="bg-anita-purple text-white">
+  return <footer className="bg-anita-purple text-white">
       <div className="container-custom py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div>
             <Link to="/" className="flex items-center space-x-2 mb-4">
               <span className="font-serif text-2xl font-bold text-white">SkillHer<span className="text-anita-lavender">Coach</span></span>
             </Link>
-            <p className="text-gray-300 mb-6 max-w-md">
-              Your AI-powered partner for holistic personal development, focused on empowering women to achieve balance between wellness and career success.
-            </p>
+            <p className="text-gray-300 mb-6 max-w-md">Your AI-powered partner for holistic personal development & professional development, focused on empowering women to achieve balance between wellness and career success.</p>
             <div className="flex space-x-4">
               <a href="https://www.instagram.com/skillherorg/#" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
                 <Instagram className="h-6 w-6" />
@@ -58,8 +52,6 @@ const Footer = () => {
           <p>&copy; {currentYear} SkillHer Coach. All rights reserved.</p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
