@@ -1,15 +1,14 @@
-
 import React from 'react';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Heart, ArrowRight, MoreHorizontal, Link } from "lucide-react";
-
 interface InterestSelectorProps {
   onSelect: (interest: 'career' | 'health' | 'other') => void;
 }
-
-const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
+const InterestSelector = ({
+  onSelect
+}: InterestSelectorProps) => {
   const [selectedInterest, setSelectedInterest] = React.useState<'career' | 'health' | 'other' | null>(null);
 
   // Handle selection of interest
@@ -23,20 +22,13 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
       onSelect(selectedInterest);
     }
   };
-
-  return (
-    <div className="p-6 bg-white rounded-lg border border-anita-lavender/20 shadow-sm max-h-[80vh] overflow-y-auto">
+  return <div className="p-6 bg-white rounded-lg border border-anita-lavender/20 shadow-sm max-h-[80vh] overflow-y-auto">
       <h2 className="text-lg font-medium text-center mb-6">
         What area would you like to focus on today?
       </h2>
       
-      <RadioGroup 
-        className="gap-4 mb-6"
-        value={selectedInterest || ""}
-        onValueChange={(value) => handleInterestSelect(value as 'career' | 'health' | 'other')}
-      >
-        <div className="flex items-start space-x-3 bg-anita-purple/10 p-3 rounded-md cursor-pointer hover:bg-anita-purple/20 transition-colors"
-             onClick={() => handleInterestSelect('career')}>
+      <RadioGroup className="gap-4 mb-6" value={selectedInterest || ""} onValueChange={value => handleInterestSelect(value as 'career' | 'health' | 'other')}>
+        <div className="flex items-start space-x-3 bg-anita-purple/10 p-3 rounded-md cursor-pointer hover:bg-anita-purple/20 transition-colors" onClick={() => handleInterestSelect('career')}>
           <RadioGroupItem value="career" id="career" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -49,8 +41,7 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
           </div>
         </div>
 
-        <div className="flex items-start space-x-3 bg-anita-pink/10 p-3 rounded-md cursor-pointer hover:bg-anita-pink/20 transition-colors"
-             onClick={() => handleInterestSelect('health')}>
+        <div className="flex items-start space-x-3 bg-anita-pink/10 p-3 rounded-md cursor-pointer hover:bg-anita-pink/20 transition-colors" onClick={() => handleInterestSelect('health')}>
           <RadioGroupItem value="health" id="health" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -63,8 +54,7 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
           </div>
         </div>
         
-        <div className="flex items-start space-x-3 bg-anita-lavender/10 p-3 rounded-md cursor-pointer hover:bg-anita-lavender/20 transition-colors"
-             onClick={() => handleInterestSelect('other')}>
+        <div className="flex items-start space-x-3 bg-anita-lavender/10 p-3 rounded-md cursor-pointer hover:bg-anita-lavender/20 transition-colors" onClick={() => handleInterestSelect('other')}>
           <RadioGroupItem value="other" id="other" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -81,34 +71,23 @@ const InterestSelector = ({ onSelect }: InterestSelectorProps) => {
       <div className="sticky bottom-0 pt-2 bg-white">
         <div className="space-y-3">
           {/* Continue button with icon and animation */}
-          <Button 
-            className="w-full bg-anita-purple hover:bg-anita-purple/90 text-white transition-all py-6 text-lg flex items-center justify-center"
-            onClick={handleContinue}
-            disabled={!selectedInterest}
-          >
+          <Button onClick={handleContinue} disabled={!selectedInterest} className="w-full text-white transition-all py-6 text-lg flex items-center justify-center bg-violet-500 hover:bg-violet-400">
             <span>Continue</span>
             <ArrowRight className="ml-2 animate-pulse" />
           </Button>
           
           {/* Visual indicator when no interest is selected */}
-          {!selectedInterest && (
-            <p className="text-center text-sm text-gray-500 mt-2">
+          {!selectedInterest && <p className="text-center text-sm text-gray-500 mt-2">
               Please select an interest above to continue
-            </p>
-          )}
+            </p>}
           
           {/* WhatsApp Community Button */}
-          <Button 
-            className="w-full bg-anita-teal hover:bg-anita-teal/90 text-white transition-all py-6 text-lg flex items-center justify-center"
-            onClick={() => window.open('https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M', '_blank')}
-          >
+          <Button onClick={() => window.open('https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M', '_blank')} className="w-full text-white transition-all py-6 text-lg flex items-center justify-center bg-violet-500 hover:bg-violet-400">
             <span>Join our community</span>
             <ArrowRight className="ml-2" />
           </Button>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default InterestSelector;
