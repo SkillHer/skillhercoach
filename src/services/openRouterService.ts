@@ -1,7 +1,8 @@
 
 // OpenRouter API service for enhancing Skillher Coach with AI capabilities
 
-const OPENROUTER_API_KEY = "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";
+// Updated API key - you'll need to swap this with your own valid key in a production environment
+const OPENROUTER_API_KEY = "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";
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 export interface OpenRouterMessage {
@@ -60,7 +61,7 @@ export const generateAIResponse = async (
     
     console.log("Sending request to OpenRouter:", messages);
     
-    // Make API call to OpenRouter
+    // Make API call to OpenRouter with improved error handling
     const response = await fetch(OPENROUTER_API_URL, {
       method: "POST",
       headers: {
@@ -80,7 +81,7 @@ export const generateAIResponse = async (
     if (!response.ok) {
       const errorData = await response.json();
       console.error("OpenRouter API error:", errorData);
-      throw new Error(`API error: ${response.status}`);
+      throw new Error(`API error: ${response.status} - ${errorData.error?.message || "Unknown error"}`);
     }
     
     const data = await response.json() as OpenRouterResponse;
@@ -100,7 +101,12 @@ export const generateAIResponse = async (
   } catch (error) {
     console.error("Error generating AI response:", error);
     
-    // Provide a more helpful fallback response
+    // Provide a more specific fallback response based on the error
+    if (error instanceof Error && error.message.includes("401")) {
+      return "I'm having trouble with my connection right now. It seems there might be an authentication issue with my AI service. Please try again in a moment, or contact support if this issue persists. 🙂";
+    }
+    
+    // General fallback response
     return "I'm having trouble connecting to my knowledge base right now. This could be due to high traffic or a temporary outage. Please try asking your question again in a moment, or refresh the page if the issue persists. Thank you for your patience! 🙂";
   }
 };
