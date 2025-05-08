@@ -19,6 +19,54 @@ export interface OpenRouterResponse {
   }[];
 }
 
+// Function to test API connectivity
+export const testApiConnectivity = async (): Promise<{ success: boolean; message: string }> => {
+  try {
+    const response = await fetch(OPENROUTER_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+        "HTTP-Referer": window.location.origin,
+        "X-Title": "Skillher Coach"
+      },
+      body: JSON.stringify({
+        model: "anthropic/claude-3-haiku",
+        messages: [
+          { role: "system", content: "Test connection" },
+          { role: "user", content: "Hello" }
+        ],
+        max_tokens: 10
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("API test failed:", errorData);
+      
+      if (response.status === 401) {
+        return { 
+          success: false, 
+          message: "Authentication failed. API key may be invalid or revoked." 
+        };
+      }
+      
+      return { 
+        success: false, 
+        message: `API error: ${response.status} - ${errorData.error?.message || "Unknown error"}` 
+      };
+    }
+    
+    return { success: true, message: "Connection successful" };
+  } catch (error) {
+    console.error("API test error:", error);
+    return { 
+      success: false, 
+      message: error instanceof Error ? error.message : "Unknown connection error" 
+    };
+  }
+};
+
 export const generateAIResponse = async (
   userMessage: string, 
   userName: string, 
