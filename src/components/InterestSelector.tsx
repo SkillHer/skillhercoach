@@ -83,7 +83,7 @@ const InterestSelector = ({
           
           {/* WhatsApp Community Button */}
           <Button onClick={() => window.open('https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M', '_blank')} className="w-full text-white transition-all py-6 text-lg flex items-center justify-center bg-violet-500 hover:bg-violet-400">
-            <span>Chat with Community Members</span>
+            <span>Community Members Chat</span>
             <ArrowRight className="ml-2" />
           </Button>
         </div>
