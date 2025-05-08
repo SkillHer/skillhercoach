@@ -1,15 +1,14 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
-import { Send, MessageCircle, Trash2, ArrowLeft, AlertCircle } from "lucide-react";
+import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
 import { useChatHistory } from '../hooks/useChatHistory';
-import { generateAIResponse, formatMessagesForOpenRouter, testApiConnectivity } from '../services/openRouterService';
+import { generateAIResponse, formatMessagesForOpenRouter } from '../services/openRouterService';
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import InterestSelector from './InterestSelector';
 import SuggestedPrompts from './SuggestedPrompts';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 // Define the message type
 interface Message {
@@ -35,12 +34,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   const [interest, setInterest] = useState<'career' | 'health' | 'other' | null>(selectedInterest || null);
   const [showSelector, setShowSelector] = useState(messages.length === 0 && !selectedInterest);
   const isMobile = useIsMobile();
-  const [apiError, setApiError] = useState<string | null>(null);
-  const [apiStatus, setApiStatus] = useState<{ connected: boolean; message: string }>({ 
-    connected: true, 
-    message: '' 
-  });
-  const [isCheckingConnection, setIsCheckingConnection] = useState(false);
   
   // Scroll to bottom whenever messages change
   useEffect(() => {
@@ -48,11 +41,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
-  
-  // Test API connectivity on component mount
-  useEffect(() => {
-    checkApiConnection();
-  }, []);
 
   // Process initialPrompt and selectedInterest if provided
   useEffect(() => {
@@ -69,39 +57,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
       setInput(initialPrompt);
     }
   }, [initialPrompt, messages.length]);
-  
-  // Check API connectivity
-  const checkApiConnection = async () => {
-    setIsCheckingConnection(true);
-    try {
-      const result = await testApiConnectivity();
-      setApiStatus({ 
-        connected: result.success, 
-        message: result.message 
-      });
-      
-      if (!result.success) {
-        console.warn("API connectivity test failed:", result.message);
-        setApiError(result.message);
-        toast({
-          variant: "destructive",
-          title: "API Connection Issue",
-          description: result.message,
-        });
-      } else {
-        // Clear any previous API errors if connection is now successful
-        setApiError(null);
-      }
-    } catch (error) {
-      console.error("Error checking API connectivity:", error);
-      setApiStatus({ 
-        connected: false, 
-        message: error instanceof Error ? error.message : "Unknown error checking API connection" 
-      });
-    } finally {
-      setIsCheckingConnection(false);
-    }
-  };
   
   // Handle interest selection
   const handleInterestSelect = (selectedInterest: 'career' | 'health' | 'other') => {
@@ -154,7 +109,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
     if (!input.trim()) return;
     
     setIsSubmitting(true);
-    setApiError(null); // Reset any previous API errors
     
     // Add user message
     const userMessage: Message = {
@@ -168,14 +122,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
     setInput('');
     
     try {
-      // Check API connection if there was a previous error
-      if (!apiStatus.connected) {
-        await checkApiConnection();
-        if (!apiStatus.connected) {
-          throw new Error("API connection is currently unavailable");
-        }
-      }
-      
       // Format previous messages for OpenRouter
       const previousMessages = formatMessagesForOpenRouter(messages);
       
@@ -211,10 +157,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
     } catch (error) {
       console.error("Error in AI response:", error);
       
-      // Set API error message
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      setApiError("We're experiencing connection issues with our AI service. Please try again in a moment.");
-      
       // Fallback response if API fails
       const fallbackResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -242,7 +184,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
     clearHistory();
     setShowSelector(true);
     setInterest(null);
-    setApiError(null);
     toast({
       title: "Chat cleared",
       description: "Your chat history has been cleared.",
@@ -253,19 +194,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   const handleBackToSelector = () => {
     setShowSelector(true);
     setInterest(null);
-    setApiError(null);
-  };
-  
-  // Manual retry connection
-  const handleRetryConnection = async () => {
-    setApiError(null);
-    await checkApiConnection();
-    toast({
-      title: "Connection Check",
-      description: apiStatus.connected 
-        ? "Connection to AI service restored!" 
-        : "Still having issues connecting to AI service.",
-    });
   };
   
   // Simple emotion detection (placeholder for more sophisticated analysis)
@@ -348,25 +276,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
       
       <div className="flex flex-grow overflow-hidden">
         <div className="flex-grow overflow-y-auto p-4 bg-anita-cream/30">
-          {!apiStatus.connected && (
-            <Alert variant="destructive" className="mb-4 animate-fade-in">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>API Connection Issue</AlertTitle>
-              <AlertDescription className="flex flex-col gap-2">
-                <p>There's a problem connecting to our AI service. {apiStatus.message}</p>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={handleRetryConnection}
-                  disabled={isCheckingConnection}
-                  className="self-start"
-                >
-                  {isCheckingConnection ? "Checking..." : "Retry Connection"}
-                </Button>
-              </AlertDescription>
-            </Alert>
-          )}
-          
           <div className="space-y-4">
             {messages.map((message) => (
               <div 
@@ -389,14 +298,6 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
                 </div>
               </div>
             ))}
-            {apiError && (
-              <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm animate-fade-in">
-                {apiError}
-                <p className="mt-1 text-xs">
-                  Please try again or refresh the page if this issue persists.
-                </p>
-              </div>
-            )}
             <div ref={messagesEndRef} />
           </div>
         </div>
@@ -410,11 +311,11 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
             className="flex-grow border-anita-lavender/30 focus-visible:ring-anita-purple"
-            disabled={isSubmitting || !apiStatus.connected}
+            disabled={isSubmitting}
           />
           <Button 
             type="submit" 
-            disabled={isSubmitting || !input.trim() || !apiStatus.connected} 
+            disabled={isSubmitting || !input.trim()} 
             className="bg-anita-purple hover:bg-anita-purple/90 text-white"
           >
             {isSubmitting ? (

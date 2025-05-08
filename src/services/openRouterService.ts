@@ -1,8 +1,8 @@
 
 // OpenRouter API service for enhancing Skillher Coach with AI capabilities
 
-// Updated API key - you'll need to swap this with your own valid key in a production environment
-const OPENROUTER_API_KEY = "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";
+// Updated API key
+const OPENROUTER_API_KEY = "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";
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 export interface OpenRouterMessage {
@@ -18,54 +18,6 @@ export interface OpenRouterResponse {
     };
   }[];
 }
-
-// Function to test API connectivity
-export const testApiConnectivity = async (): Promise<{ success: boolean; message: string }> => {
-  try {
-    const response = await fetch(OPENROUTER_API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-        "HTTP-Referer": window.location.origin,
-        "X-Title": "Skillher Coach"
-      },
-      body: JSON.stringify({
-        model: "anthropic/claude-3-haiku",
-        messages: [
-          { role: "system", content: "Test connection" },
-          { role: "user", content: "Hello" }
-        ],
-        max_tokens: 10
-      })
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("API test failed:", errorData);
-      
-      if (response.status === 401) {
-        return { 
-          success: false, 
-          message: "Authentication failed. API key may be invalid or revoked." 
-        };
-      }
-      
-      return { 
-        success: false, 
-        message: `API error: ${response.status} - ${errorData.error?.message || "Unknown error"}` 
-      };
-    }
-    
-    return { success: true, message: "Connection successful" };
-  } catch (error) {
-    console.error("API test error:", error);
-    return { 
-      success: false, 
-      message: error instanceof Error ? error.message : "Unknown connection error" 
-    };
-  }
-};
 
 export const generateAIResponse = async (
   userMessage: string, 
