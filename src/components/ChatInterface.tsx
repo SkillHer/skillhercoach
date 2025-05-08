@@ -205,30 +205,30 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
     }
   };
 
-  // Style based on emotion
+  // Style based on emotion - updated for consistent color scheme
   const getMessageStyle = (emotion?: string) => {
     switch (emotion) {
       case 'empathetic':
-        return 'bg-anita-lavender/20 border-anita-lavender';
+        return 'bg-anita-lavender/20 border-anita-lavender text-gray-800';
       case 'inspiring':
-        return 'bg-anita-teal/20 border-anita-teal';
+        return 'bg-anita-purple/20 border-anita-purple text-gray-800';
       case 'cheerful':
-        return 'bg-anita-pink/20 border-anita-pink';
+        return 'bg-anita-pink/20 border-anita-pink text-gray-800';
       case 'assertive':
-        return 'bg-anita-teal/20 border-anita-teal';
+        return 'bg-anita-teal/20 border-anita-teal text-gray-800';
       default:
-        return 'bg-gray-50 border-gray-200';
+        return 'bg-white/90 border-gray-200 text-gray-800';
     }
   };
 
   // Show interest selector if no messages or interest not selected yet
   if (showSelector) {
     return (
-      <div className="flex flex-col h-full bg-anita-cream rounded-xl shadow-md border border-anita-lavender/20 overflow-hidden">
-        <div className="flex justify-between items-center p-3 border-b border-gray-200">
+      <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-anita-lavender/30 overflow-hidden">
+        <div className="flex justify-between items-center p-3 border-b border-anita-lavender/20 bg-anita-purple/10">
           <div className="flex items-center">
             <MessageCircle size={18} className="text-anita-purple mr-2" />
-            <span className="font-medium">Chat with Skillher Coach</span>
+            <span className="font-medium text-anita-purple">Chat with Skillher Coach</span>
           </div>
         </div>
         
@@ -240,26 +240,26 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   }
 
   return (
-    <div className="flex flex-col h-full bg-anita-cream rounded-xl shadow-md border border-anita-lavender/20 overflow-hidden">
-      <div className="flex justify-between items-center p-3 border-b border-gray-200">
+    <div className="flex flex-col h-full bg-white rounded-xl shadow-md border border-anita-lavender/30 overflow-hidden">
+      <div className="flex justify-between items-center p-3 border-b border-anita-lavender/20 bg-anita-purple/10">
         <div className="flex items-center gap-2">
           <Button 
             variant="ghost" 
             size="sm"
             onClick={handleBackToSelector}
-            className="text-gray-500 hover:text-anita-purple"
+            className="text-anita-purple hover:bg-anita-lavender/20 hover:text-anita-purple"
           >
             <ArrowLeft size={16} className="mr-1" />
             Back
           </Button>
-          <MessageCircle size={18} className="text-anita-purple mr-2" />
-          <span className="font-medium">Chat with Skillher Coach</span>
+          <MessageCircle size={18} className="text-anita-purple mr-1" />
+          <span className="font-medium text-anita-purple">Chat with Skillher Coach</span>
         </div>
         <Button 
           variant="ghost" 
           size="sm"
           onClick={handleClearChat}
-          className="text-gray-500 hover:text-red-500"
+          className="text-anita-purple hover:bg-anita-lavender/20 hover:text-red-500"
         >
           <Trash2 size={16} className="mr-1" />
           Clear Chat
@@ -267,22 +267,25 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
       </div>
       
       <div className="flex flex-grow overflow-hidden">
-        <div className="flex-grow overflow-y-auto p-4">
+        <div className="flex-grow overflow-y-auto p-4 bg-anita-cream/30">
           <div className="space-y-4">
             {messages.map((message) => (
               <div 
                 key={message.id} 
-                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
               >
                 <div 
-                  className={`max-w-[80%] p-3 rounded-lg border ${
+                  className={`max-w-[85%] md:max-w-[75%] p-3 rounded-lg border shadow-sm ${
                     message.sender === 'user' 
-                      ? 'bg-anita-purple/10 border-anita-purple/20' 
+                      ? 'bg-anita-purple/20 border-anita-purple/30 text-gray-800' 
                       : getMessageStyle(message.emotion)
                   }`}
+                  style={{ wordBreak: 'break-word', hyphens: 'auto' }}
                 >
-                  <p className="text-sm md:text-base whitespace-pre-line">{message.text}</p>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-sm md:text-base whitespace-pre-line leading-relaxed">
+                    {message.text}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-2 text-right">
                     {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
@@ -293,14 +296,14 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
         </div>
       </div>
       
-      <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4">
+      <form onSubmit={handleSubmit} className="border-t border-anita-lavender/20 p-4 bg-white">
         <div className="flex items-center gap-2">
           <Input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-grow"
+            className="flex-grow border-anita-lavender/30 focus-visible:ring-anita-purple"
             disabled={isSubmitting}
           />
           <Button 
@@ -316,10 +319,10 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
           </Button>
         </div>
         
-        {/* Show prompt suggestions for both mobile and desktop */}
+        {/* Show prompt suggestions with updated styling */}
         {interest && (
           <div className="mt-4">
-            <p className="text-sm font-medium text-gray-500 mb-2">Suggested questions:</p>
+            <p className="text-sm font-medium text-anita-purple mb-2">Suggested questions:</p>
             <div className="flex overflow-x-auto pb-2 gap-2">
               <SuggestedPrompts 
                 interest={interest}

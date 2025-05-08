@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ChatInterface from '../components/ChatInterface';
@@ -24,11 +24,11 @@ const Chat = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-white via-anita-lavender/10 to-anita-purple/10">
       <Navbar />
       <main className="flex-grow pt-20">
         <div className="container-custom">
-          <div className="flex flex-col h-[calc(100vh-5rem)]">
+          <div className="flex flex-col h-[calc(100vh-5rem)] pb-4">
             <ChatInterface 
               user={chatUser} 
               initialPrompt={initialPrompt}
