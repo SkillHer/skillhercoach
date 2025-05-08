@@ -40,7 +40,9 @@ export const generateAIResponse = async (
       5. When providing lists, format each item on a new line with proper spacing.
       6. If sharing step-by-step instructions, number them and put each step on its own line.
       7. Keep your overall response concise but helpful.
-      8. Be careful with punctuation at the end of sentences and when using quotes.`
+      8. Be careful with punctuation at the end of sentences and when using quotes.
+      9. Never break words across lines - ensure proper word wrapping.
+      10. Ensure sentences are complete and not truncated.`
     };
     
     // Create user message
@@ -91,7 +93,7 @@ export const generateAIResponse = async (
     responseText = responseText.replace(/\*\*(.*?)\*\*/g, '$1');
     responseText = responseText.replace(/\*(.*?)\*/g, '$1');
     
-    // Apply additional formatting to ensure proper text structure
+    // Apply enhanced formatting to ensure proper text structure
     const formattedResponse = formatResponseText(responseText);
     
     return formattedResponse;
@@ -101,7 +103,7 @@ export const generateAIResponse = async (
   }
 };
 
-// Format the response text to ensure proper paragraphs and line breaks
+// Enhanced formatting function to ensure proper paragraphs and line breaks
 const formatResponseText = (text: string): string => {
   // Ensure consistent paragraph breaks (at least two line breaks between paragraphs)
   let formatted = text.replace(/\n{3,}/g, '\n\n');
@@ -117,6 +119,12 @@ const formatResponseText = (text: string): string => {
   
   // Check for proper sentence punctuation - add periods to sentences without ending punctuation
   formatted = formatted.replace(/([a-zA-Z])\s+([A-Z])/g, '$1. $2');
+  
+  // Ensure no words are broken across lines
+  formatted = formatted.replace(/(\w)-\n(\w)/g, '$1$2');
+  
+  // Ensure all sentences end with proper punctuation
+  formatted = formatted.replace(/([a-zA-Z])(\n|$)/g, '$1.$2');
   
   return formatted;
 };

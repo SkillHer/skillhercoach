@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
@@ -205,19 +206,19 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
     }
   };
 
-  // Style based on emotion - updated for consistent color scheme
+  // Style based on emotion - updated with enhanced purple/lilac scheme
   const getMessageStyle = (emotion?: string) => {
     switch (emotion) {
       case 'empathetic':
-        return 'bg-anita-lavender/20 border-anita-lavender text-gray-800';
+        return 'bg-purple-100 border-purple-300 text-gray-800';
       case 'inspiring':
         return 'bg-anita-purple/20 border-anita-purple text-gray-800';
       case 'cheerful':
-        return 'bg-anita-pink/20 border-anita-pink text-gray-800';
+        return 'bg-anita-lavender/30 border-anita-lavender text-gray-800';
       case 'assertive':
-        return 'bg-anita-teal/20 border-anita-teal text-gray-800';
+        return 'bg-purple-200 border-purple-400 text-gray-800';
       default:
-        return 'bg-white/90 border-gray-200 text-gray-800';
+        return 'bg-white/90 border-purple-100 text-gray-800';
     }
   };
 
@@ -280,9 +281,8 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
                       ? 'bg-anita-purple/20 border-anita-purple/30 text-gray-800' 
                       : getMessageStyle(message.emotion)
                   }`}
-                  style={{ wordBreak: 'break-word', hyphens: 'auto' }}
                 >
-                  <p className="text-sm md:text-base whitespace-pre-line leading-relaxed">
+                  <p className="text-sm md:text-base whitespace-pre-line leading-relaxed break-words">
                     {message.text}
                   </p>
                   <p className="text-xs text-gray-500 mt-2 text-right">
