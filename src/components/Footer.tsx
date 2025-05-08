@@ -10,7 +10,7 @@ const Footer = () => {
             <Link to="/" className="flex items-center space-x-2 mb-4">
               <span className="font-serif text-2xl font-bold text-white">SkillHer<span className="text-anita-lavender">Coach</span></span>
             </Link>
-            <p className="text-gray-300 mb-6 max-w-md">Your AI-powered partner for holistic personal development & professional development, focused on empowering women to achieve balance between wellness and career success.</p>
+            <p className="text-gray-300 mb-6 max-w-md">Your AI-powered partner for holistic personal & professional development, focused on empowering women to achieve balance between wellness and career success.</p>
             <div className="flex space-x-4">
               <a href="https://www.instagram.com/skillherorg/#" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
                 <Instagram className="h-6 w-6" />
