@@ -1,7 +1,7 @@
 
 // OpenRouter API service for enhancing Skillher Coach with AI capabilities
 
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = "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";
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 export interface OpenRouterMessage {
@@ -99,7 +99,9 @@ export const generateAIResponse = async (
     return formattedResponse;
   } catch (error) {
     console.error("Error generating AI response:", error);
-    return "I'm experiencing some technical difficulties. Let's try again in a moment! 🙂";
+    
+    // Provide a more helpful fallback response
+    return "I'm having trouble connecting to my knowledge base right now. This could be due to high traffic or a temporary outage. Please try asking your question again in a moment, or refresh the page if the issue persists. Thank you for your patience! 🙂";
   }
 };
 

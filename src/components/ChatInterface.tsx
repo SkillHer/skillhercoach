@@ -34,6 +34,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   const [interest, setInterest] = useState<'career' | 'health' | 'other' | null>(selectedInterest || null);
   const [showSelector, setShowSelector] = useState(messages.length === 0 && !selectedInterest);
   const isMobile = useIsMobile();
+  const [apiError, setApiError] = useState<string | null>(null);
   
   // Scroll to bottom whenever messages change
   useEffect(() => {
@@ -109,6 +110,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
     if (!input.trim()) return;
     
     setIsSubmitting(true);
+    setApiError(null); // Reset any previous API errors
     
     // Add user message
     const userMessage: Message = {
@@ -157,16 +159,26 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
     } catch (error) {
       console.error("Error in AI response:", error);
       
+      // Set API error message
+      setApiError("We're experiencing connection issues with our AI service. Please try again in a moment.");
+      
       // Fallback response if API fails
       const fallbackResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I'm having trouble connecting right now. Let's try again in a moment! 🙂",
+        text: "I'm having trouble connecting right now. Please try again in a moment or refresh the page if the issue persists. 🙂",
         sender: 'skillher',
         timestamp: new Date(),
         emotion: 'empathetic'
       };
       
       addMessage(fallbackResponse);
+      
+      // Show toast with error message
+      toast({
+        variant: "destructive",
+        title: "Connection Error",
+        description: "Could not connect to our AI service. Please try again later.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -177,6 +189,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
     clearHistory();
     setShowSelector(true);
     setInterest(null);
+    setApiError(null);
     toast({
       title: "Chat cleared",
       description: "Your chat history has been cleared.",
@@ -187,6 +200,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   const handleBackToSelector = () => {
     setShowSelector(true);
     setInterest(null);
+    setApiError(null);
   };
   
   // Simple emotion detection (placeholder for more sophisticated analysis)
@@ -291,6 +305,14 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
                 </div>
               </div>
             ))}
+            {apiError && (
+              <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
+                {apiError}
+                <p className="mt-1 text-xs">
+                  Please try again or refresh the page if this issue persists.
+                </p>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
         </div>
