@@ -13,17 +13,17 @@ import {
 const Testimonials = () => {
   const isMobile = useIsMobile();
   const testimonials = [{
-    quote: "SkillHer Coach helped provided me with guidance in putting together my resume and prepared me to interview successfully to land my very first internship.",
+    quote: "SkillHer Coach built my confidence, provided me with guidance in putting together my resume and prepared me to interview successfully to land my very first internship.",
     name: "Derinsola A.",
-    title: "Student",
+    title: "Undergraduate Student",
     image: "/lovable-uploads/834d91fb-488f-4fd9-b17b-10aec4974328.png"
   }, {
     quote: "SkillHer Coach helped me find balance between my demanding career, my fashion business and my personal wellbeing. The personalized coaching has been transformative.",
     name: "Monilola O.",
-    title: "Fashion Entrepreneur",
+    title: "Marketer & Fashion Entrepreneur",
     image: "/lovable-uploads/bc7e2e26-eefa-42db-98d8-940766bd33ac.png"
   }, {
-    quote: "As a student in a new country, I was struggling to settle in & balance school. The coaching helped me with sustainable practices that improved both my confidence & performance.",
+    quote: "As a student in a new country, I was struggling to settle in & balance school work. The coaching helped me with sustainable practices that improved both my confidence & performance.",
     name: "Oyindamola A.",
     title: "Accountant & Postgraduate Student",
     image: "/lovable-uploads/95c52387-1454-41e2-9303-aa86c1d9c08c.png"
