@@ -3,12 +3,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Heart, ArrowRight, MoreHorizontal, Link } from "lucide-react";
-
 interface InterestSelectorProps {
   onSelect: (interest: 'career' | 'health' | 'other') => void;
   userName?: string;
 }
-
 const InterestSelector = ({
   onSelect,
   userName = 'there'
@@ -26,7 +24,6 @@ const InterestSelector = ({
       onSelect(selectedInterest);
     }
   };
-
   return <div className="p-6 bg-white rounded-lg border border-anita-lavender/20 shadow-sm max-h-[80vh] overflow-y-auto">
       <h2 className="text-lg font-medium text-center mb-2">
         Hello, {userName}! 👋
@@ -41,7 +38,7 @@ const InterestSelector = ({
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <Briefcase size={18} className="text-anita-teal" />
-              <Label htmlFor="career" className="font-medium cursor-pointer">Career Development</Label>
+              <Label htmlFor="career" className="font-medium cursor-pointer">Career & Business Development</Label>
             </div>
             <p className="text-sm text-gray-500">
               Get guidance on career growth, leadership, work-life balance, and overcoming workplace challenges.
@@ -98,5 +95,4 @@ const InterestSelector = ({
       </div>
     </div>;
 };
-
 export default InterestSelector;
