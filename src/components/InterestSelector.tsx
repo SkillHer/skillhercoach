@@ -1,20 +1,21 @@
+
 import React from 'react';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Heart, ArrowRight, MoreHorizontal, Link } from "lucide-react";
 interface InterestSelectorProps {
-  onSelect: (interest: 'career' | 'health' | 'other') => void;
+  onSelect: (interest: 'career' | 'health' | 'business' | 'other') => void;
   userName?: string;
 }
 const InterestSelector = ({
   onSelect,
   userName = 'there'
 }: InterestSelectorProps) => {
-  const [selectedInterest, setSelectedInterest] = React.useState<'career' | 'health' | 'other' | null>(null);
+  const [selectedInterest, setSelectedInterest] = React.useState<'career' | 'health' | 'business' | 'other' | null>(null);
 
   // Handle selection of interest
-  const handleInterestSelect = (interest: 'career' | 'health' | 'other') => {
+  const handleInterestSelect = (interest: 'career' | 'health' | 'business' | 'other') => {
     setSelectedInterest(interest);
   };
 
@@ -32,16 +33,29 @@ const InterestSelector = ({
         What area would you like to focus on today?
       </h3>
       
-      <RadioGroup className="gap-4 mb-6" value={selectedInterest || ""} onValueChange={value => handleInterestSelect(value as 'career' | 'health' | 'other')}>
+      <RadioGroup className="gap-4 mb-6" value={selectedInterest || ""} onValueChange={value => handleInterestSelect(value as 'career' | 'health' | 'business' | 'other')}>
         <div className="flex items-start space-x-3 bg-anita-purple/10 p-3 rounded-md cursor-pointer hover:bg-anita-purple/20 transition-colors" onClick={() => handleInterestSelect('career')}>
           <RadioGroupItem value="career" id="career" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <Briefcase size={18} className="text-anita-teal" />
-              <Label htmlFor="career" className="font-medium cursor-pointer">Career & Business Development</Label>
+              <Label htmlFor="career" className="font-medium cursor-pointer">Career Development</Label>
             </div>
             <p className="text-sm text-gray-500">
               Get guidance on career growth, leadership, work-life balance, and overcoming workplace challenges.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-start space-x-3 bg-anita-teal/10 p-3 rounded-md cursor-pointer hover:bg-anita-teal/20 transition-colors" onClick={() => handleInterestSelect('business')}>
+          <RadioGroupItem value="business" id="business" className="mt-1" />
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <Link size={18} className="text-anita-teal" />
+              <Label htmlFor="business" className="font-medium cursor-pointer">Business Development</Label>
+            </div>
+            <p className="text-sm text-gray-500">
+              Explore entrepreneurship, business strategy, marketing, financial planning, and growth opportunities.
             </p>
           </div>
         </div>

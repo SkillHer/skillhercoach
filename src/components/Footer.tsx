@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Linkedin, Mail } from 'lucide-react';
@@ -10,7 +11,7 @@ const Footer = () => {
             <Link to="/" className="flex items-center space-x-2 mb-4">
               <span className="font-serif text-2xl font-bold text-white">SkillHer<span className="text-anita-lavender">Coach</span></span>
             </Link>
-            <p className="text-gray-300 mb-6 max-w-md">Your AI-powered partner for holistic personal & professional development, focused on empowering women to achieve balance between wellness and career success.</p>
+            <p className="text-gray-300 mb-6 max-w-md">Your AI-powered partner for holistic personal & professional development, focused on empowering women to achieve balance between wellness, career success, and business growth.</p>
             <div className="flex space-x-4">
               <a href="https://www.instagram.com/skillherorg/#" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
                 <Instagram className="h-6 w-6" />
@@ -41,7 +42,7 @@ const Footer = () => {
               <li><Link to="/chat" className="text-gray-300 hover:text-white transition-colors">Chat Dashboard</Link></li>
             </ul>
             <p className="text-gray-300 mt-4">
-              SkillHer Coach is dedicated to empowering women through personalized career guidance and wellness coaching, helping them achieve balance and success in all aspects of life.
+              SkillHer Coach is dedicated to empowering women through personalized career guidance, business mentorship, and wellness coaching, helping them achieve balance and success in all aspects of life.
             </p>
             <a href="https://chat.whatsapp.com/BpBvDDGp3TIKHPhNWMgL9M" target="_blank" rel="noopener noreferrer" className="text-anita-lavender hover:text-anita-lavender/80 transition-colors font-medium mt-2 inline-block">
               Join the Community →
