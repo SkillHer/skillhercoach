@@ -94,7 +94,7 @@ const CoachingModules = () => {
 
           {/* Career Modules */}
           <div>
-            <h3 className="font-serif text-2xl font-bold mb-6 text-clara-sage">Career Coaching & Upskilling</h3>
+            <h3 className="font-serif text-2xl font-bold mb-6 text-clara-sage">Career & Business Coaching </h3>
             <div className="space-y-6">
               {careerModules.map(module => <Card key={module.id} className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => handleModuleClick(module, 'career')}>
                   <CardContent className="p-6">
