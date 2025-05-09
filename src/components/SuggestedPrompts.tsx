@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 
 interface SuggestedPromptsProps {
-  interest: 'career' | 'health' | 'other';
+  interest: 'career' | 'health' | 'business' | 'other';
   onSelectPrompt: (prompt: string) => void;
   variant?: 'default' | 'mobile';
 }
@@ -34,6 +34,29 @@ const SuggestedPrompts = ({ interest, onSelectPrompt, variant = 'default' }: Sug
     "Tips for negotiating flexible work arrangements?",
     "How can I recover from a career setback or failure?",
     "What skills will be most valuable in the future job market?"
+  ];
+
+  const allBusinessPrompts = [
+    "How do I write an effective business plan?",
+    "What are the key steps to start my own business?",
+    "How can I secure funding for my startup?",
+    "What marketing strategies work best for small businesses?",
+    "How do I build a strong brand identity?",
+    "What legal considerations should I be aware of when starting a business?",
+    "How can I effectively manage cash flow in my business?",
+    "What's the best way to price my products or services?",
+    "How do I identify my target market and reach them?",
+    "What are effective customer acquisition strategies?",
+    "How can I scale my business operations efficiently?",
+    "What should I consider when hiring my first employees?",
+    "How do I create passive income streams in my business?",
+    "What are the best digital marketing strategies for new businesses?",
+    "How can I leverage social media to grow my business?",
+    "What are effective ways to handle business competition?",
+    "How can I improve my business's online presence?",
+    "What financial metrics should I monitor in my business?",
+    "How do I create effective partnerships or strategic alliances?",
+    "What are the most common mistakes new entrepreneurs make?"
   ];
 
   const allHealthPrompts = [
@@ -90,7 +113,7 @@ const SuggestedPrompts = ({ interest, onSelectPrompt, variant = 'default' }: Sug
     return shuffled.slice(0, count);
   };
 
-  // Randomize prompts on component mount
+  // Randomize prompts on component mount and when interest changes
   useEffect(() => {
     let selectedPrompts: string[] = [];
     
@@ -98,6 +121,8 @@ const SuggestedPrompts = ({ interest, onSelectPrompt, variant = 'default' }: Sug
       selectedPrompts = getRandomPrompts(allCareerPrompts);
     } else if (interest === 'health') {
       selectedPrompts = getRandomPrompts(allHealthPrompts);
+    } else if (interest === 'business') {
+      selectedPrompts = getRandomPrompts(allBusinessPrompts);
     } else {
       selectedPrompts = getRandomPrompts(allOtherPrompts);
     }

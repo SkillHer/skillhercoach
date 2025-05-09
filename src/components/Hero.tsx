@@ -44,7 +44,7 @@ const Hero = () => {
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 md:pr-12 text-center md:text-left">
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Your Personal AI Coach for <span className="text-anita-lavender">Wellness</span>, <span className="text-anita-sage">Career</span> & <span className="text-anita-teal">Business</span>
+              Your Personal AI Coach for <span className="text-anita-lavender">Wellness</span>, <span className="text-anita-sage">Career</span> & <span className="text-anita-purple">Business</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto md:mx-0">SkillHer Coach helps women learn, achieve balance, purpose, and success through personalized guidance for wellbeing, professional growth, and business development.</p>
             <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">

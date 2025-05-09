@@ -3,11 +3,13 @@ import React from 'react';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Briefcase, Heart, ArrowRight, MoreHorizontal, Link } from "lucide-react";
+import { Briefcase, Heart, ArrowRight, MoreHorizontal, Handshake } from "lucide-react";
+
 interface InterestSelectorProps {
   onSelect: (interest: 'career' | 'health' | 'business' | 'other') => void;
   userName?: string;
 }
+
 const InterestSelector = ({
   onSelect,
   userName = 'there'
@@ -25,7 +27,9 @@ const InterestSelector = ({
       onSelect(selectedInterest);
     }
   };
-  return <div className="p-6 bg-white rounded-lg border border-anita-lavender/20 shadow-sm max-h-[80vh] overflow-y-auto">
+
+  return (
+    <div className="p-6 bg-white rounded-lg border border-anita-lavender/20 shadow-sm max-h-[80vh] overflow-y-auto">
       <h2 className="text-lg font-medium text-center mb-2">
         Hello, {userName}! 👋
       </h2>
@@ -47,11 +51,11 @@ const InterestSelector = ({
           </div>
         </div>
 
-        <div className="flex items-start space-x-3 bg-anita-teal/10 p-3 rounded-md cursor-pointer hover:bg-anita-teal/20 transition-colors" onClick={() => handleInterestSelect('business')}>
+        <div className="flex items-start space-x-3 bg-anita-purple/20 p-3 rounded-md cursor-pointer hover:bg-anita-purple/30 transition-colors" onClick={() => handleInterestSelect('business')}>
           <RadioGroupItem value="business" id="business" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <Link size={18} className="text-anita-teal" />
+              <Handshake size={18} className="text-anita-purple" />
               <Label htmlFor="business" className="font-medium cursor-pointer">Business Development</Label>
             </div>
             <p className="text-sm text-gray-500">
@@ -107,6 +111,8 @@ const InterestSelector = ({
           </Button>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default InterestSelector;
