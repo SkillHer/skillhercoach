@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Send, MessageCircle, Trash2, ArrowLeft } from "lucide-react";
@@ -241,7 +240,10 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
         </div>
         
         <div className="flex-grow flex items-center justify-center p-4">
-          <InterestSelector onSelect={handleInterestSelect} />
+          <InterestSelector 
+            onSelect={handleInterestSelect}
+            userName={user.name}
+          />
         </div>
       </div>
     );

@@ -3,11 +3,15 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Heart, ArrowRight, MoreHorizontal, Link } from "lucide-react";
+
 interface InterestSelectorProps {
   onSelect: (interest: 'career' | 'health' | 'other') => void;
+  userName?: string;
 }
+
 const InterestSelector = ({
-  onSelect
+  onSelect,
+  userName = 'there'
 }: InterestSelectorProps) => {
   const [selectedInterest, setSelectedInterest] = React.useState<'career' | 'health' | 'other' | null>(null);
 
@@ -22,10 +26,14 @@ const InterestSelector = ({
       onSelect(selectedInterest);
     }
   };
+
   return <div className="p-6 bg-white rounded-lg border border-anita-lavender/20 shadow-sm max-h-[80vh] overflow-y-auto">
-      <h2 className="text-lg font-medium text-center mb-6">
-        What area would you like to focus on today?
+      <h2 className="text-lg font-medium text-center mb-2">
+        Hello, {userName}! 👋
       </h2>
+      <h3 className="text-base text-center mb-6 text-gray-600">
+        What area would you like to focus on today?
+      </h3>
       
       <RadioGroup className="gap-4 mb-6" value={selectedInterest || ""} onValueChange={value => handleInterestSelect(value as 'career' | 'health' | 'other')}>
         <div className="flex items-start space-x-3 bg-anita-purple/10 p-3 rounded-md cursor-pointer hover:bg-anita-purple/20 transition-colors" onClick={() => handleInterestSelect('career')}>
@@ -90,4 +98,5 @@ const InterestSelector = ({
       </div>
     </div>;
 };
+
 export default InterestSelector;
