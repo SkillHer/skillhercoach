@@ -105,3 +105,36 @@
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background-color: rgba(128, 90, 213, 0.5);
 }
+
+/* Added improved hover styles for chat selections */
+.hover-effect-chat {
+  @apply transition-all duration-200;
+}
+
+/* Interest selector hover effects */
+.interest-option:hover {
+  @apply bg-anita-purple/30 border-anita-purple;
+}
+
+/* Business interest option specific hover */
+.interest-option.business:hover {
+  @apply bg-anita-purple/40 border-anita-purple;
+}
+
+/* Career interest option specific hover */
+.interest-option.career:hover {
+  @apply bg-anita-teal/30 border-anita-teal;
+}
+
+/* Health interest option specific hover */
+.interest-option.health:hover {
+  @apply bg-anita-pink/30 border-anita-pink;
+}
+
+/* Chat component hover effects */
+.chat-selection:hover, 
+.suggested-prompt:hover {
+  @apply bg-anita-purple/30 text-gray-800 border-anita-purple shadow-md;
+  transform: translateY(-2px);
+}
+

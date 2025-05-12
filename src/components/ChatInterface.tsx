@@ -21,7 +21,7 @@ interface Message {
 interface ChatInterfaceProps {
   user: { id: string; name: string; profile: Record<string, any> };
   initialPrompt?: string;
-  selectedInterest?: 'career' | 'health' | 'other';
+  selectedInterest?: 'career' | 'health' | 'business' | 'other';
 }
 
 const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceProps) => {
@@ -30,7 +30,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   const { messages, addMessage, clearHistory } = useChatHistory(user.id);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const [interest, setInterest] = useState<'career' | 'health' | 'other' | null>(selectedInterest || null);
+  const [interest, setInterest] = useState<'career' | 'health' | 'business' | 'other' | null>(selectedInterest || null);
   const [showSelector, setShowSelector] = useState(messages.length === 0 && !selectedInterest);
   const isMobile = useIsMobile();
   
@@ -58,7 +58,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   }, [initialPrompt, messages.length]);
   
   // Handle interest selection
-  const handleInterestSelect = (selectedInterest: 'career' | 'health' | 'other') => {
+  const handleInterestSelect = (selectedInterest: 'career' | 'health' | 'business' | 'other') => {
     console.log("Interest selected in ChatInterface:", selectedInterest);
     setInterest(selectedInterest);
     setShowSelector(false);
@@ -70,6 +70,8 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
       greetingText = `Hello ${user.name}! 👋 I'm your Skillher Coach, focused on women's career development. Whether you're looking to advance in your current role, negotiate a salary, or improve your work-life balance, I'm here to help! How can I support your career goals today? ✨`;
     } else if (selectedInterest === 'health') {
       greetingText = `Hello ${user.name}! 👋 I'm your Skillher Coach, focused on women's health. I can help with topics like stress management, fitness, nutrition, or hormonal health. What aspect of your wellbeing would you like to focus on today? ✨`;
+    } else if (selectedInterest === 'business') {
+      greetingText = `Hello ${user.name}! 👋 I'm your Skillher Coach, focused on women's business development. I can help with topics like networking, leadership, and career advancement. What aspect of your business would you like to focus on today? ✨`;
     } else {
       greetingText = `Hello ${user.name}! 👋 I'm your Skillher Coach. I'm here to support you with whatever's on your mind today. Feel free to ask about any topic you'd like to discuss, and we can explore it together! ✨`;
     }
@@ -130,6 +132,8 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
         interestContext = "focused on women's career development, leadership skills, workplace challenges, and professional growth";
       } else if (interest === 'health') {
         interestContext = "focused on women's health, wellness, fitness, nutrition, and hormonal balance";
+      } else if (interest === 'business') {
+        interestContext = "focused on women's business development, networking, leadership, and career advancement";
       } else {
         interestContext = "focused on providing personalized guidance and support for women across various aspects of their personal and professional lives";
       }
@@ -216,15 +220,15 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
   const getMessageStyle = (emotion?: string) => {
     switch (emotion) {
       case 'empathetic':
-        return 'bg-purple-100 border-purple-300 text-gray-800';
+        return 'bg-purple-100 border-purple-300 text-gray-800 hover-effect-chat';
       case 'inspiring':
-        return 'bg-anita-purple/20 border-anita-purple text-gray-800';
+        return 'bg-anita-purple/20 border-anita-purple text-gray-800 hover-effect-chat';
       case 'cheerful':
-        return 'bg-anita-lavender/30 border-anita-lavender text-gray-800';
+        return 'bg-anita-lavender/30 border-anita-lavender text-gray-800 hover-effect-chat';
       case 'assertive':
-        return 'bg-purple-200 border-purple-400 text-gray-800';
+        return 'bg-purple-200 border-purple-400 text-gray-800 hover-effect-chat';
       default:
-        return 'bg-white/90 border-purple-100 text-gray-800';
+        return 'bg-white/90 border-purple-100 text-gray-800 hover-effect-chat';
     }
   };
 
@@ -285,7 +289,7 @@ const ChatInterface = ({ user, initialPrompt, selectedInterest }: ChatInterfaceP
                 className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
               >
                 <div 
-                  className={`max-w-[85%] md:max-w-[75%] p-3 rounded-lg border shadow-sm ${
+                  className={`max-w-[85%] md:max-w-[75%] p-3 rounded-lg border shadow-sm chat-selection transition-all ${
                     message.sender === 'user' 
                       ? 'bg-anita-purple/20 border-anita-purple/30 text-gray-800' 
                       : getMessageStyle(message.emotion)
