@@ -151,7 +151,7 @@
 /* Business option hover */
 .interest-selector-option.business:hover, 
 .interest-selector-option.business:focus-within {
-  @apply bg-anita-purple/30 border-anita-purple;
+  @apply bg-anita-purple/20 border-anita-purple;
 }
 
 /* Career option hover */
