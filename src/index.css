@@ -138,3 +138,36 @@
   transform: translateY(-2px);
 }
 
+/* Enhanced interest selector hover effects for better contrast */
+.interest-selector-option {
+  @apply transition-all duration-200 border border-transparent;
+}
+
+.interest-selector-option:hover, 
+.interest-selector-option:focus-within {
+  @apply shadow-md border-opacity-100 text-gray-800 transform -translate-y-1;
+}
+
+/* Business option hover */
+.interest-selector-option.business:hover, 
+.interest-selector-option.business:focus-within {
+  @apply bg-anita-purple/30 border-anita-purple;
+}
+
+/* Career option hover */
+.interest-selector-option.career:hover, 
+.interest-selector-option.career:focus-within {
+  @apply bg-anita-teal/20 border-anita-teal;
+}
+
+/* Health option hover */
+.interest-selector-option.health:hover, 
+.interest-selector-option.health:focus-within {
+  @apply bg-anita-pink/20 border-anita-pink;
+}
+
+/* Other option hover */
+.interest-selector-option.other:hover, 
+.interest-selector-option.other:focus-within {
+  @apply bg-anita-lavender/30 border-anita-lavender;
+}

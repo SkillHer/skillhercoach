@@ -38,7 +38,7 @@ const InterestSelector = ({
       </h3>
       
       <RadioGroup className="gap-4 mb-6" value={selectedInterest || ""} onValueChange={value => handleInterestSelect(value as 'career' | 'health' | 'business' | 'other')}>
-        <div className="flex items-start space-x-3 bg-anita-purple/10 p-3 rounded-md cursor-pointer hover:bg-anita-purple/20 transition-colors" onClick={() => handleInterestSelect('career')}>
+        <div className={`interest-selector-option career flex items-start space-x-3 bg-anita-purple/10 p-3 rounded-md cursor-pointer transition-colors`} onClick={() => handleInterestSelect('career')}>
           <RadioGroupItem value="career" id="career" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -51,7 +51,7 @@ const InterestSelector = ({
           </div>
         </div>
 
-        <div className="flex items-start space-x-3 bg-anita-purple/20 p-3 rounded-md cursor-pointer hover:bg-anita-purple/30 transition-colors" onClick={() => handleInterestSelect('business')}>
+        <div className={`interest-selector-option business flex items-start space-x-3 bg-anita-purple/20 p-3 rounded-md cursor-pointer transition-colors`} onClick={() => handleInterestSelect('business')}>
           <RadioGroupItem value="business" id="business" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -64,7 +64,7 @@ const InterestSelector = ({
           </div>
         </div>
 
-        <div className="flex items-start space-x-3 bg-anita-pink/10 p-3 rounded-md cursor-pointer hover:bg-anita-pink/20 transition-colors" onClick={() => handleInterestSelect('health')}>
+        <div className={`interest-selector-option health flex items-start space-x-3 bg-anita-pink/10 p-3 rounded-md cursor-pointer transition-colors`} onClick={() => handleInterestSelect('health')}>
           <RadioGroupItem value="health" id="health" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -77,7 +77,7 @@ const InterestSelector = ({
           </div>
         </div>
         
-        <div className="flex items-start space-x-3 bg-anita-lavender/10 p-3 rounded-md cursor-pointer hover:bg-anita-lavender/20 transition-colors" onClick={() => handleInterestSelect('other')}>
+        <div className={`interest-selector-option other flex items-start space-x-3 bg-anita-lavender/10 p-3 rounded-md cursor-pointer transition-colors`} onClick={() => handleInterestSelect('other')}>
           <RadioGroupItem value="other" id="other" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
