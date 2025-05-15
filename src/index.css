@@ -1,4 +1,5 @@
 
+/* Base styles for the app, most styling is done with Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -151,7 +152,7 @@
 /* Business option hover */
 .interest-selector-option.business:hover, 
 .interest-selector-option.business:focus-within {
-  @apply bg-anita-purple/20 border-anita-purple;
+  @apply bg-anita-pink/20 border-anita-pink;
 }
 
 /* Career option hover */
