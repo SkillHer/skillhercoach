@@ -64,7 +64,7 @@ const InterestSelector = ({
           </div>
         </div>
 
-        <div className={`interest-selector-option health flex items-start space-x-3 bg-anita-pink/10 p-3 rounded-md cursor-pointer transition-colors`} onClick={() => handleInterestSelect('health')}>
+        <div className={`interest-selector-option health flex items-start space-x-3 bg-anita-lavender/10 p-3 rounded-md cursor-pointer transition-colors`} onClick={() => handleInterestSelect('health')}>
           <RadioGroupItem value="health" id="health" className="mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
