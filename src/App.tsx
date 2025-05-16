@@ -11,7 +11,6 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
-import ProfileSetup from "./pages/ProfileSetup";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,12 +37,6 @@ const App = () => (
             <Route path="/chat" element={
               <ProtectedRoute>
                 <Chat />
-              </ProtectedRoute>
-            } />
-            
-            <Route path="/profile-setup" element={
-              <ProtectedRoute>
-                <ProfileSetup />
               </ProtectedRoute>
             } />
             

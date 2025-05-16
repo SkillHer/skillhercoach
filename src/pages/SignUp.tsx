@@ -23,7 +23,7 @@ const SignUp = () => {
   const { toast } = useToast();
 
   // Get redirect path and initialPrompt from location state
-  const redirectPath = location.state?.redirectAfterLogin || '/profile-setup';
+  const redirectPath = location.state?.redirectAfterLogin || '/chat';
   const initialPrompt = location.state?.initialPrompt || null;
 
   const toggleShowPassword = () => {
@@ -75,12 +75,12 @@ const SignUp = () => {
         description: "Your account has been created.",
       });
 
-      // Store initialPrompt in localStorage to use it after the profile setup
+      // Store initialPrompt in localStorage to use it after login
       if (initialPrompt) {
         localStorage.setItem('pendingPrompt', initialPrompt);
       }
 
-      // Redirect to profile setup or chat
+      // Redirect to chat directly instead of profile setup
       if (data?.user) {
         navigate(redirectPath);
       }

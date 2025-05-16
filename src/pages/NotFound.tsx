@@ -32,16 +32,9 @@ const NotFound = () => {
               <Button className="bg-anita-purple hover:bg-anita-purple/90 text-white">Return to Home</Button>
             </Link>
             {user ? (
-              <>
-                <Link to="/chat">
-                  <Button variant="outline" className="border-anita-purple text-anita-purple hover:bg-anita-purple/10">Go to Chat</Button>
-                </Link>
-                <Link to="/profile-setup">
-                  <Button variant="outline" className="border-anita-purple text-anita-purple hover:bg-anita-purple/10">
-                    Complete Profile
-                  </Button>
-                </Link>
-              </>
+              <Link to="/chat">
+                <Button variant="outline" className="border-anita-purple text-anita-purple hover:bg-anita-purple/10">Go to Chat</Button>
+              </Link>
             ) : (
               <Link to="/login">
                 <Button variant="outline" className="border-anita-purple text-anita-purple hover:bg-anita-purple/10">
