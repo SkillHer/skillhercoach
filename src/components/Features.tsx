@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Heart, Star, Users, Medal } from "lucide-react";
+
 const Features = () => {
   const features = [{
     icon: <Heart className="h-8 w-8 text-anita-pink" />,
@@ -9,7 +10,7 @@ const Features = () => {
   }, {
     icon: <Star className="h-8 w-8 text-anita-teal" />,
     title: "Career & Business Growth",
-    description: "Strategic career planning, business development strategies, leadership training, and professional skills enhancement for women in the workplace and entrepreneurship."
+    description: "Strategic career planning, leadership training, and business development support for women in the workplace and entrepreneurship."
   }, {
     icon: <Users className="h-8 w-8 text-anita-purple" />,
     title: "Community Support",
@@ -20,6 +21,7 @@ const Features = () => {
     description: "Monitor your progress, celebrate milestones, and visualize your growth in both wellness and career domains.",
     badge: "Closed Beta"
   }];
+
   return <section id="features" className="py-16 bg-anita-cream">
       <div className="container-custom">
         <div className="text-center mb-16">
@@ -42,4 +44,5 @@ const Features = () => {
       </div>
     </section>;
 };
+
 export default Features;
