@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Heart, Star, Users, Medal } from "lucide-react";
 const Features = () => {
@@ -7,8 +8,8 @@ const Features = () => {
     description: "Personalized mindfulness practices, stress management techniques, and wellness routines tailored to your lifestyle and preferences."
   }, {
     icon: <Star className="h-8 w-8 text-anita-teal" />,
-    title: "Career Growth",
-    description: "Strategic career planning, leadership development, and professional skills enhancement designed specifically for women in the workplace."
+    title: "Career & Business Growth",
+    description: "Strategic career planning, business development strategies, leadership training, and professional skills enhancement for women in the workplace and entrepreneurship."
   }, {
     icon: <Users className="h-8 w-8 text-anita-purple" />,
     title: "Community Support",
