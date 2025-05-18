@@ -10,7 +10,8 @@ const Features = () => {
   }, {
     icon: <Star className="h-8 w-8 text-anita-teal" />,
     title: "Career & Business Growth",
-    description: "Strategic career planning, leadership training, and business development support for women in the workplace and entrepreneurship."
+    description: "Strategic career planning, leadership training, and business development support for women in the workplace and entrepreneurship.",
+    titleClassName: "text-[0.95rem] sm:text-base md:text-lg"
   }, {
     icon: <Users className="h-8 w-8 text-anita-purple" />,
     title: "Community Support",
@@ -37,7 +38,7 @@ const Features = () => {
                     {feature.badge}
                   </span>}
               </div>
-              <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+              <h3 className={`text-xl font-semibold mb-3 ${feature.titleClassName || ''}`}>{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
             </div>)}
         </div>
