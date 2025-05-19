@@ -10,7 +10,7 @@ const Features = () => {
   }, {
     icon: <Star className="h-8 w-8 text-anita-teal" />,
     title: "Career & Business Growth",
-    description: "Career insights, business strategies and professional skills development for women in the workplace and entrepreneurship.",
+    description: "Career insights, business strategies, leadership and professional skills development for women in the workplace and entrepreneurship.",
     titleClassName: "text-[0.95rem] sm:text-base md:text-lg"
   }, {
     icon: <Users className="h-8 w-8 text-anita-purple" />,
