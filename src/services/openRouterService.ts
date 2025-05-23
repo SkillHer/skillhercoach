@@ -111,10 +111,28 @@ export const generateAIResponse = async (
   }
 };
 
-// Enhanced formatting function to ensure proper paragraphs and line breaks
+// Enhanced formatting function to ensure proper paragraphs, punctuation, and line breaks
 const formatResponseText = (text: string): string => {
+  // Normalize whitespace first (replace multiple spaces with single space)
+  let formatted = text.replace(/[ \t]+/g, ' ');
+  
+  // Fix spacing after punctuation (ensure space after periods, commas, question marks, exclamation points)
+  formatted = formatted.replace(/([.!?,;:])(?=[a-zA-Z0-9])/g, '$1 ');
+  
+  // Fix spacing before punctuation (remove space before periods, commas, etc.)
+  formatted = formatted.replace(/\s+([.!?,;:])/g, '$1');
+  
+  // Fix spacing with parentheses and quotation marks
+  formatted = formatted.replace(/\(\s+/g, '(');  // Remove space after opening parenthesis
+  formatted = formatted.replace(/\s+\)/g, ')');  // Remove space before closing parenthesis
+  formatted = formatted.replace(/"\s+/g, '"');   // Remove space after opening quote
+  formatted = formatted.replace(/\s+"/g, '"');   // Remove space before closing quote
+  
+  // Fix spacing with emoji (ensure space before emoji if preceded by text)
+  formatted = formatted.replace(/([a-zA-Z0-9])(\p{Emoji})/gu, '$1 $2');
+  
   // Ensure consistent paragraph breaks (at least two line breaks between paragraphs)
-  let formatted = text.replace(/\n{3,}/g, '\n\n');
+  formatted = formatted.replace(/\n{3,}/g, '\n\n');
   
   // Ensure list items are properly formatted with line breaks
   formatted = formatted.replace(/(\n[•\-\*]\s[^\n]+)(?!\n)/g, '$1\n');
@@ -122,17 +140,32 @@ const formatResponseText = (text: string): string => {
   // Ensure numbered lists are properly formatted
   formatted = formatted.replace(/(\n\d+\.\s[^\n]+)(?!\n)/g, '$1\n');
   
-  // Ensure emoji lines have proper spacing
-  formatted = formatted.replace(/(\n[^\w\s]*[\p{Emoji}]+[^\w\s]*)(?!\n)/gu, '$1\n');
-  
-  // Check for proper sentence punctuation - add periods to sentences without ending punctuation
-  formatted = formatted.replace(/([a-zA-Z])\s+([A-Z])/g, '$1. $2');
+  // Fix sentences missing periods before new sentences
+  formatted = formatted.replace(/([a-zA-Z0-9])(\s+[A-Z])/g, '$1.$2');
   
   // Ensure no words are broken across lines
   formatted = formatted.replace(/(\w)-\n(\w)/g, '$1$2');
   
-  // Ensure all sentences end with proper punctuation
-  formatted = formatted.replace(/([a-zA-Z])(\n|$)/g, '$1.$2');
+  // Ensure all sentences end with proper punctuation if they don't already
+  formatted = formatted.replace(/([a-zA-Z0-9])(\s*\n|\s*$)/g, (match, p1, p2) => {
+    // Only add period if the sentence doesn't already end with punctuation
+    if (!/[.!?,;:]$/.test(p1)) {
+      return p1 + '.' + p2;
+    }
+    return match;
+  });
+  
+  // Fix double periods
+  formatted = formatted.replace(/\.+/g, '.');
+  
+  // Fix spacing with periods at the end of sentences (ensure single space after period)
+  formatted = formatted.replace(/\.(\s*)([A-Z])/g, '. $2');
+  
+  // Fix line breaks after periods at the end of paragraphs
+  formatted = formatted.replace(/\.\n/g, '.\n\n');
+  
+  // Trim extra whitespace at the beginning and end
+  formatted = formatted.trim();
   
   return formatted;
 };
