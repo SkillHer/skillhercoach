@@ -29,6 +29,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!supabase) {
+      console.warn("⚠️ Supabase client not initialized. Authentication features will be disabled.");
+      toast({
+        title: "Database Connection Required",
+        description: "Please enable Lovable Cloud to use authentication features.",
+        variant: "destructive",
+      });
       setLoading(false);
       return;
     }
@@ -40,10 +46,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSession(initialSession);
         setUser(initialSession?.user ?? null);
       } catch (error) {
-        console.error('Error fetching initial session:', error);
+        console.error('❌ Error fetching initial session:', error);
         toast({
           title: "Authentication Error",
-          description: "Failed to initialize authentication.",
+          description: "Failed to connect to authentication service. Please check your connection.",
           variant: "destructive",
         });
       } finally {
@@ -69,7 +75,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signUp = async (email: string, password: string, name: string) => {
     if (!supabase) {
-      return { error: new Error('Supabase client not initialized'), data: null };
+      const error = new Error('Database connection required. Please enable Lovable Cloud.');
+      toast({
+        title: "Connection Required",
+        description: "Please enable Lovable Cloud to use authentication.",
+        variant: "destructive",
+      });
+      return { error, data: null };
     }
 
     try {
@@ -87,14 +99,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       return { error: null, data: result.data };
     } catch (error: any) {
-      console.error('Error signing up:', error);
+      console.error('❌ Error signing up:', error);
       return { error, data: null };
     }
   };
 
   const signIn = async (email: string, password: string) => {
     if (!supabase) {
-      return { error: new Error('Supabase client not initialized'), data: null };
+      const error = new Error('Database connection required. Please enable Lovable Cloud.');
+      toast({
+        title: "Connection Required",
+        description: "Please enable Lovable Cloud to use authentication.",
+        variant: "destructive",
+      });
+      return { error, data: null };
     }
 
     try {
@@ -107,13 +125,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       return { error: null, data: result.data };
     } catch (error: any) {
-      console.error('Error signing in:', error);
+      console.error('❌ Error signing in:', error);
       return { error, data: null };
     }
   };
 
   const signOut = async () => {
     if (!supabase) {
+      toast({
+        title: "Connection Required",
+        description: "Cannot sign out without database connection.",
+        variant: "destructive",
+      });
       throw new Error('Supabase client not initialized');
     }
 
@@ -126,9 +149,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       
-      console.log("Sign out successful, user state cleared");
+      console.log("✓ Sign out successful, user state cleared");
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error('❌ Error signing out:', error);
       throw error;
     }
   };
