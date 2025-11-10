@@ -1,9 +1,7 @@
 
-// OpenRouter API service for enhancing Skillher Coach with AI capabilities
+// AI service for Skillher Coach using Lovable AI
 
-// Updated API key
-const OPENROUTER_API_KEY = "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";
-const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
+const CHAT_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 export interface OpenRouterMessage {
   role: "system" | "user" | "assistant";
@@ -26,69 +24,46 @@ export const generateAIResponse = async (
   contextFocus: string = ""
 ): Promise<string> => {
   try {
-    // Create system message for Skillher Coach's persona with optional context focus
-    const systemMessage: OpenRouterMessage = {
-      role: "system",
-      content: `You are a friendly AI coach ${contextFocus || "focused on wellness, career growth, and personal development for women"}. 
-      Your tone is encouraging, empathetic, and positive. You offer practical advice and emotional support.
-      You're speaking with ${userName}. Use emojis naturally to express emotions and add warmth to your responses.
-      
-      Important formatting rules to follow:
-      1. Use proper punctuation (periods, commas, question marks) correctly and consistently.
-      2. Do not use markdown formatting like asterisks for bold or italics (e.g., do not use ** or * for emphasis).
-      3. Format your responses with proper paragraphing and line breaks for readability.
-      4. Separate distinct ideas into different paragraphs.
-      5. When providing lists, format each item on a new line with proper spacing.
-      6. If sharing step-by-step instructions, number them and put each step on its own line.
-      7. Keep your overall response concise but helpful.
-      8. Be careful with punctuation at the end of sentences and when using quotes.
-      9. Never break words across lines - ensure proper word wrapping.
-      10. Ensure sentences are complete and not truncated.`
-    };
-    
-    // Create user message
-    const userMessageObj: OpenRouterMessage = {
-      role: "user",
-      content: userMessage
-    };
-    
-    // Combine all messages (limited to last 10 for context)
-    const messages = [
-      systemMessage,
+    // Add the current user message to the conversation
+    const allMessages = [
       ...previousMessages.slice(-10),
-      userMessageObj
+      { role: "user" as const, content: userMessage }
     ];
     
-    console.log("Sending request to OpenRouter:", messages);
+    console.log("Sending request to Lovable AI chat function");
     
-    // Make API call to OpenRouter with improved error handling
-    const response = await fetch(OPENROUTER_API_URL, {
+    // Call the edge function
+    const response = await fetch(CHAT_FUNCTION_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-        "HTTP-Referer": window.location.origin,
-        "X-Title": "Skillher Coach"
+        "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
       body: JSON.stringify({
-        model: "anthropic/claude-3-haiku",
-        messages,
-        temperature: 0.7,
-        max_tokens: 600
+        messages: allMessages,
+        userName,
+        interestContext: contextFocus
       })
     });
     
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error("OpenRouter API error:", errorData);
-      throw new Error(`API error: ${response.status} - ${errorData.error?.message || "Unknown error"}`);
+      const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
+      console.error("AI function error:", response.status, errorData);
+      
+      if (response.status === 429) {
+        throw new Error("Rate limit exceeded. Please try again in a moment.");
+      }
+      if (response.status === 402) {
+        throw new Error("AI credits exhausted. Please contact support.");
+      }
+      
+      throw new Error(`API error: ${response.status} - ${errorData.error || "Unknown error"}`);
     }
     
-    const data = await response.json() as OpenRouterResponse;
-    console.log("OpenRouter API response:", data);
+    const data = await response.json();
+    console.log("AI response received");
     
-    // Get the response text and clean up any markdown formatting
-    let responseText = data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response at the moment.";
+    let responseText = data.message || "I'm sorry, I couldn't generate a response at the moment.";
     
     // Remove markdown formatting (** for bold, * for italic)
     responseText = responseText.replace(/\*\*(.*?)\*\*/g, '$1');
