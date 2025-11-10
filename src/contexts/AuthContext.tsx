@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Session } from '@supabase/supabase-js';
-import getSupabaseClient from '../services/supabaseClient';
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 interface AuthContextType {
@@ -25,20 +25,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
-  const supabase = getSupabaseClient();
 
   useEffect(() => {
-    if (!supabase) {
-      console.warn("⚠️ Supabase client not initialized. Authentication features will be disabled.");
-      toast({
-        title: "Database Connection Required",
-        description: "Please enable Lovable Cloud to use authentication features.",
-        variant: "destructive",
-      });
-      setLoading(false);
-      return;
-    }
-
     // Get initial session
     const initializeAuth = async () => {
       try {
@@ -71,27 +59,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, []);
 
   const signUp = async (email: string, password: string, name: string) => {
-    if (!supabase) {
-      const error = new Error('Database connection required. Please enable Lovable Cloud.');
-      toast({
-        title: "Connection Required",
-        description: "Please enable Lovable Cloud to use authentication.",
-        variant: "destructive",
-      });
-      return { error, data: null };
-    }
-
     try {
+      const redirectUrl = `${window.location.origin}/`;
+      
       const result = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             full_name: name,
-          }
+          },
+          emailRedirectTo: redirectUrl
         }
       });
 
@@ -105,16 +86,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signIn = async (email: string, password: string) => {
-    if (!supabase) {
-      const error = new Error('Database connection required. Please enable Lovable Cloud.');
-      toast({
-        title: "Connection Required",
-        description: "Please enable Lovable Cloud to use authentication.",
-        variant: "destructive",
-      });
-      return { error, data: null };
-    }
-
     try {
       const result = await supabase.auth.signInWithPassword({
         email,
@@ -131,15 +102,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signOut = async () => {
-    if (!supabase) {
-      toast({
-        title: "Connection Required",
-        description: "Cannot sign out without database connection.",
-        variant: "destructive",
-      });
-      throw new Error('Supabase client not initialized');
-    }
-
     try {
       // Clear local state first to ensure UI updates immediately
       setSession(null);
