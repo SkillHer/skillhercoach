@@ -72,7 +72,18 @@ Important formatting rules to follow:
     }
 
     const data = await response.json();
-    const aiMessage = data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response.";
+    let aiMessage = data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response.";
+    
+    // Clean up markdown formatting and special characters
+    aiMessage = aiMessage
+      .replace(/\*\*(.+?)\*\*/g, '$1')  // Remove bold **text**
+      .replace(/\*(.+?)\*/g, '$1')      // Remove italic *text*
+      .replace(/`(.+?)`/g, '$1')        // Remove code `text`
+      .replace(/#{1,6}\s/g, '')         // Remove markdown headers
+      .replace(/\[(.+?)\]\(.+?\)/g, '$1') // Convert links to plain text
+      .replace(/_{2,}(.+?)_{2,}/g, '$1') // Remove underline __text__
+      .replace(/~{2}(.+?)~{2}/g, '$1')  // Remove strikethrough ~~text~~
+      .trim();
 
     return new Response(
       JSON.stringify({ message: aiMessage }),
